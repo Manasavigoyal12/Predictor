@@ -1,0 +1,5752 @@
+<!DOCTYPE html>
+<!--
+  Jharkhand College Predictor deployment:
+  1. Keep this HTML file, banner.webp, send-otp.php and verify-otp.php in the same directory.
+  2. Update CONFIG.N8N_WEBHOOK_URL before deployment if your webhook address is different.
+  3. College names and NEET 2025 cutoff rank/score values are taken from:
+     https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php
+  4. The source does not provide fee or seat-intake data; this build does not invent them.
+  5. Recheck all eligibility and cutoff details after official Jharkhand NEET UG 2026 notices are published.
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jharkhand NEET 2026 College Predictor | Government &amp; Private MBBS Tool</title>
+  <meta name="description" content="Predict Jharkhand MBBS college chances using NEET 2025 category-wise cutoff ranks and scores for 6 government and 3 private medical colleges.">
+  <!-- Discover and prioritise the LCP image before fonts and other styles. -->
+  <link
+    rel="preload"
+    as="image"
+    href="banner.webp"
+    type="image/webp"
+    fetchpriority="high"
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts: non-render-blocking. The URL already uses display=swap. -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@600&display=swap"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@600&display=swap"
+    >
+  </noscript>
+
+  <!-- Local Font Awesome subset with font-display:swap in all.min.css. -->
+  <link
+    rel="stylesheet"
+    href="fontawesome/css/all.min.css"
+    media="print"
+    onload="this.media='all'"
+  >
+  <noscript>
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+  </noscript>
+  
+  <style>
+    /* ─────────── BASE ─────────── */
+    :root {
+      --white: #FFFFFF;
+      --amber: #B45309;
+      --amber-lt: #FFFBEB;
+      --red: #DC2626;
+      --red-lt: #FEF2F2;
+      --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --serif: "Lora", Georgia, serif;
+      --r: 10px;
+      --r-lg: 16px;
+      --r-xl: 24px;
+      --sh-btn: 0 4px 14px rgba(224, 90, 43, .40);
+      --navy: #082447;
+      --navy2: #0b2f5d;
+      --navy3: #073765;
+      --blue: #0d6dcc;
+      --blue2: #1685ed;
+      --blue-lt: #edf6ff;
+      --orange: #f25a2a;
+      --orange2: #df4519;
+      --paper: #f5f9ff;
+      --ink: #182b45;
+      --ink2: #445872;
+      --muted: #6f8198;
+      --bd: #dce8f5;
+      --green: #18a765;
+      --green-lt: #eafaf2;
+      --sh-card: 0 16px 42px rgba(4, 28, 57, .08);
+      --sh-hero: 0 30px 80px rgba(4, 28, 57, .18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      background: radial-gradient(circle at 12% 0%, rgba(13, 109, 204, .08), transparent 26%),
+        radial-gradient(circle at 90% 20%, rgba(242, 90, 42, .08), transparent 24%),
+        linear-gradient(180deg, #fff 0%, #f5f9ff 56%, #fff 100%);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    /* ─────────── HEADER ─────────── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(11, 37, 69, 0.10);
+      box-shadow: 0 8px 28px rgba(11, 37, 69, 0.08);
+    }
+
+    .header-wrap {
+      max-width: 1180px;
+      min-height: 72px;
+      margin: 0 auto;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .header-logo {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .header-logo img {
+      height: 46px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .header-nav {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .header-nav a {
+      position: relative;
+      color: #0b2545;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+
+    .header-nav a::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -9px;
+      width: 0;
+      height: 2px;
+      border-radius: 20px;
+      background: #f25a2a;
+      transform: translateX(-50%);
+      transition: width 0.2s ease;
+    }
+
+    .header-nav a:hover {
+      color: #f25a2a;
+    }
+
+    .header-nav a:hover::after {
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .header-btn {
+      height: 42px;
+      padding: 0 16px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .header-btn i {
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .call-btn {
+      color: #0b2545;
+      background: #ffffff;
+      border: 1px solid rgba(11, 37, 69, 0.18);
+      box-shadow: 0 6px 18px rgba(11, 37, 69, 0.06);
+    }
+
+    .call-btn:hover {
+      color: #f25a2a;
+      border-color: rgba(242, 90, 42, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .whatsapp-btn {
+      color: #ffffff;
+      background: linear-gradient(135deg, #f25a2a, #e1491d);
+      box-shadow: 0 10px 24px rgba(242, 90, 42, 0.28);
+    }
+
+    .whatsapp-btn:hover {
+      background: linear-gradient(135deg, #ff6839, #e1491d);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(242, 90, 42, 0.38);
+    }
+
+    @media (max-width: 900px) {
+      .header-wrap {
+        min-height: 66px;
+        padding: 11px 18px;
+      }
+
+      .header-nav {
+        display: none;
+      }
+
+      .header-logo img {
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .header-wrap {
+        min-height: 60px;
+        padding: 10px 14px;
+        gap: 12px;
+      }
+
+      .header-logo img {
+        height: 36px;
+      }
+
+      .header-actions {
+        gap: 7px;
+      }
+
+      .header-btn {
+        height: 38px;
+        padding: 0 11px;
+        border-radius: 9px;
+        font-size: 12px;
+      }
+
+      .call-btn span {
+        display: none;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .header-logo img {
+        height: 32px;
+      }
+
+      .header-btn {
+        height: 36px;
+        padding: 0 9px;
+        font-size: 11px;
+      }
+
+      .whatsapp-btn span {
+        display: none;
+      }
+    }
+
+    /* ─────────── HERO ─────────── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      background: linear-gradient(135deg, #061f3f, #073765);
+      min-height: 430px !important;
+      padding: 0 20px !important;
+    }
+
+    /* Real image element instead of a CSS-only background:
+       this lets the browser apply fetchpriority=high directly to the LCP image. */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: center right;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px) 0 0 / 30px 30px,
+        radial-gradient(circle at 18% 22%, rgba(242, 90, 42, .22), transparent 25%),
+        linear-gradient(90deg, rgba(6, 31, 63, .98) 0%, rgba(6, 31, 63, .93) 31%, rgba(7, 55, 101, .76) 54%, rgba(7, 55, 101, .30) 76%, rgba(7, 55, 101, .08) 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: left;
+      position: relative;
+      z-index: 2;
+      padding: 58px 0 96px !important;
+    }
+
+    .hero-content {
+      max-width: 660px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .18);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 9px 16px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #19b865;
+      box-shadow: 0 0 0 4px rgba(25, 184, 101, .20);
+    }
+
+    .hero h1 {
+      margin: 0 0 18px;
+      font-family: var(--serif);
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -1px;
+      color: #fff;
+      max-width: 750px !important;
+      font-size: clamp(34px, 4.5vw, 54px) !important;
+    }
+
+    .hero h1 b {
+      color: var(--orange);
+      font-family: var(--sans);
+      font-weight: 950;
+      font-style: normal;
+    }
+
+    .hero-sub {
+      margin: 0 0 28px;
+      color: rgba(255, 255, 255, .86);
+      line-height: 1.78;
+      max-width: 700px !important;
+      font-size: 16px !important;
+      margin-bottom: 22px !important;
+    }
+
+    .hero-btn {
+      height: 50px;
+      padding: 0 24px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--orange), var(--orange2));
+      font-size: 14px;
+      font-weight: 950;
+      text-decoration: none;
+      box-shadow: 0 15px 34px rgba(242, 90, 42, 0.32);
+      transition: 0.22s ease;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 42px rgba(242, 90, 42, 0.42);
+    }
+
+    .hero-btn span {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 190px;
+      background: linear-gradient(180deg, transparent 0%, rgba(245, 249, 255, .92) 82%, #f5f9ff 100%);
+      pointer-events: none;
+    }
+
+    .trust-chip {
+      min-height: 40px;
+      padding: 0 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .09);
+      border: 1px solid rgba(255, 255, 255, .18);
+      color: rgba(255, 255, 255, .94);
+      font-size: 12px;
+      font-weight: 850;
+      backdrop-filter: blur(8px);
+    }
+
+    .trust-chip svg {
+      color: #19b865;
+    }
+
+    .hero-stats {
+      justify-content: flex-start;
+      margin: 0;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .08);
+      backdrop-filter: blur(12px);
+      padding: 14px 18px !important;
+      max-width: 650px !important;
+    }
+
+    .hstat {
+      min-width: 120px;
+    }
+
+    .hstat-num {
+      font-weight: 950;
+      color: #fff;
+    }
+
+    .hstat-lbl {
+      color: rgba(255, 255, 255, .66);
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .hero-wave {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      z-index: 3;
+      margin: 0;
+      height: 48px !important;
+    }
+
+    /* ─────────── TOOL AND FORMS ─────────── */
+    .tool-shell {
+      margin-top: -50px !important;
+      padding-bottom: 52px !important;
+      max-width: 1120px;
+      margin: 86px auto 0;
+      padding: 0 20px 54px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .tool-card {
+      padding: 0;
+      margin-top: -40px;
+      align-items: stretch;
+      max-width: 1140px !important;
+      margin: 0 auto !important;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      background: #ffffff;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid #dfeaf6;
+      box-shadow: 0 28px 70px rgba(8, 36, 71, 0.14);
+      min-height: 390px;
+    }
+
+    .progress-wrap {
+      min-height: 410px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      padding: 28px 26px;
+      background: radial-gradient(circle at 20% 12%, rgba(13, 109, 204, 0.22), transparent 32%),
+        radial-gradient(circle at 88% 10%, rgba(242, 90, 42, 0.16), transparent 30%),
+        linear-gradient(180deg, #082447 0%, #073765 100%);
+      color: #ffffff;
+      position: relative;
+    }
+
+    .steps {
+      display: grid;
+      gap: 24px;
+      counter-reset: step;
+    }
+
+    .step {
+      flex: 1;
+      text-align: left;
+      padding: 2px 0 0 64px;
+      position: relative;
+      min-height: 48px;
+      padding-left: 62px;
+      display: flex;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .step::before {
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 7px;
+      transition: .3s;
+      margin: 0;
+      box-shadow: none;
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1.8px solid rgba(255, 255, 255, 0.20);
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 14px;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    .step::after {
+      z-index: 1;
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 44px;
+      width: 2px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .step:last-child::after {
+      display: none;
+    }
+
+    .step.active::before {
+      background: #f25a2a;
+      border-color: #f25a2a;
+      color: #ffffff;
+      box-shadow: 0 12px 26px rgba(242, 90, 42, 0.34);
+    }
+
+    .step.done::before {
+      content: "✓";
+      font-family: inherit;
+      font-weight: 900;
+      background: #18a765;
+      border-color: #18a765;
+      color: #ffffff;
+    }
+
+    .step.active {
+      color: #ffffff;
+    }
+
+    .step.done {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .tool-body {
+      min-height: 410px !important;
+      padding: 26px 30px 28px;
+      background: radial-gradient(circle at 95% 0%, rgba(13, 109, 204, 0.05), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    }
+
+    .tool-title {
+      margin-bottom: 7px;
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 1.18;
+      color: #082447;
+      letter-spacing: -0.45px;
+      margin: 0 0 5px;
+    }
+
+    .tool-desc {
+      margin-bottom: 26px;
+      font-size: 13px;
+      color: #6f8198;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .form-row {
+      margin-bottom: 13px !important;
+      margin: 0;
+    }
+
+    .form-row label,
+    .form-row-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #082447;
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .req {
+      color: #dc2626;
+      margin-left: -3px;
+    }
+
+    .inp {
+      width: 100%;
+      height: 43px;
+      padding: 0 14px;
+      border: 1.7px solid #dce8f5;
+      border-radius: 13px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: #182b45;
+      background: #ffffff;
+      outline: none;
+      transition: 0.18s ease;
+    }
+
+    .inp:focus {
+      border-color: #0d6dcc;
+      box-shadow: 0 0 0 4px rgba(13, 109, 204, 0.10);
+    }
+
+    .inp.err {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.10);
+    }
+
+    .inp::placeholder {
+      color: #9aa8b8;
+      font-weight: 600;
+    }
+
+    select.inp {
+      cursor: pointer;
+      appearance: none;
+      padding-right: 38px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236f8198' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+    }
+
+    .inp-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field-err {
+      color: #dc2626;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .field-err.show {
+      display: block;
+    }
+
+    .toggle-wrap {
+      height: 43px;
+      display: flex;
+      gap: 5px;
+      background: #f4f8fd;
+      border-radius: 13px;
+      padding: 4px;
+      border: 1.7px solid #dce8f5;
+    }
+
+    .toggle-btn {
+      min-height: 40px !important;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      flex: 1;
+      min-width: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      color: #6f8198;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 0 8px;
+    }
+
+    .toggle-btn.active {
+      background: #0d6dcc;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(13, 109, 204, 0.20);
+    }
+
+    .phone-wrap {
+      height: 43px;
+      display: flex;
+      border: 1.7px solid #dce8f5;
+      border-radius: 13px;
+      overflow: hidden;
+      background: #ffffff;
+      transition: 0.18s ease;
+    }
+
+    .phone-wrap:focus-within {
+      border-color: #0d6dcc;
+      box-shadow: 0 0 0 4px rgba(13, 109, 204, 0.10);
+    }
+
+    .phone-wrap.err {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.10);
+    }
+
+    .phone-prefix {
+      min-width: 74px;
+      padding: 0 12px;
+      background: #f4f8fd;
+      border-right: 1.7px solid #dce8f5;
+      color: #082447;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .phone-wrap input {
+      height: 44px !important;
+      border: none;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+      padding: 0 13px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: #182b45;
+    }
+
+    .otp-grid {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 18px 0 5px;
+    }
+
+    .otp-box {
+      background: #fff;
+      width: 54px;
+      height: 58px;
+      border: 1.8px solid #dce8f5;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 950;
+      color: #082447;
+      font-family: var(--sans);
+      outline: none;
+      transition: 0.18s ease;
+    }
+
+    .otp-box:focus {
+      border-color: #0d6dcc;
+      box-shadow: 0 0 0 4px rgba(13, 109, 204, 0.10);
+    }
+
+    .otp-timer {
+      text-align: center;
+      font-size: 12px;
+      color: #6f8198;
+      margin-top: 10px;
+      font-weight: 750;
+    }
+
+    .btn {
+      letter-spacing: -.01em;
+      width: 100%;
+      min-height: 46px;
+      padding: 0 22px;
+      border-radius: 13px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-size: 13px;
+      font-weight: 950;
+      transition: 0.18s ease;
+      text-align: center;
+    }
+
+    .btn:active {
+      transform: scale(0.99);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f25a2a, #df4519);
+      color: #ffffff;
+      box-shadow: 0 14px 30px rgba(242, 90, 42, 0.30);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #ff6839, var(--orange2));
+      transform: translateY(-1px);
+      box-shadow: 0 18px 38px rgba(242, 90, 42, 0.38);
+    }
+
+    .btn-primary:disabled {
+      background: #c0cbd8;
+      color: #ffffff;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: #0d6dcc;
+      border: 1.7px solid #dce8f5;
+    }
+
+    .btn-secondary:hover {
+      color: var(--blue);
+      background: #edf6ff;
+      border-color: #b9d9f7;
+    }
+
+    .btn-blue {
+      background: #0d6dcc;
+      color: #ffffff;
+    }
+
+    .btn-blue:hover {
+      background: var(--navy3);
+    }
+
+    .btn-wa {
+      background: #25d366;
+      color: #ffffff;
+    }
+
+    .btn-wa:hover {
+      background: #1ebe57;
+    }
+
+    .btn-sm {
+      width: auto;
+      min-height: 42px;
+      border-radius: 11px;
+      padding: 0 15px;
+      font-size: 12px;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255, 255, 255, .4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: inline-block;
+    }
+
+    .preview-wrap {
+      position: relative;
+      margin: 16px 0 18px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid #dfeaf6;
+      box-shadow: 0 14px 34px rgba(8, 36, 71, 0.07);
+    }
+
+    .preview-cards {
+      display: grid;
+      gap: 1px;
+      background: #dfeaf6;
+    }
+
+    .preview-card {
+      background: #ffffff;
+      padding: 13px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .preview-name {
+      font-size: 13px;
+      font-weight: 900;
+      color: #082447;
+    }
+
+    .preview-dist {
+      font-size: 11px;
+      color: #6f8198;
+      margin-top: 2px;
+    }
+
+    .preview-pct {
+      font-size: 15px;
+      font-weight: 950;
+      color: #18a765;
+    }
+
+    .preview-blur {
+      filter: blur(5px);
+    }
+
+    .blur-lock {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(248, 250, 251, 0.58);
+      backdrop-filter: blur(2px);
+    }
+
+    .blur-lock-inner {
+      border: 1px solid #e1ebf5;
+      background: #ffffff;
+      box-shadow: 0 14px 34px rgba(8, 36, 71, 0.12);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #082447;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cta-btns .btn {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .finalcta .btn {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .sticky-bar .btn {
+      padding: 12px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .progress-wrap::before {
+      min-height: 34px;
+      content: "Prediction Steps";
+      display: inline-flex;
+      align-items: center;
+      height: 34px;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 26px;
+    }
+
+    .progress-wrap::after {
+      content: "Enter details, verify mobile number and unlock your personalised college prediction report.";
+      display: block;
+      margin-top: 28px;
+      padding: 14px 15px;
+      border-radius: 16px;
+      color: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 650;
+    }
+
+    .inp,
+    .phone-wrap,
+    .toggle-wrap {
+      border: 1.8px solid #dce7f3;
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .inp:focus,
+    .phone-wrap:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(13, 109, 204, .10);
+    }
+
+    .inp.err,
+    .phone-wrap.err {
+      border-color: #e04444 !important;
+      box-shadow: 0 0 0 4px rgba(224, 68, 68, .10) !important;
+    }
+
+    #screen-input .tool-title,
+    #screen-otp .tool-title,
+    #screen-tool-result .tool-title {
+      font-size: 25px !important;
+    }
+
+    .tool-result-panel {
+      height: 100%;
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .result-ready-actions .btn {
+      width: auto;
+      flex: 1 1 180px;
+    }
+
+    body.results-generated .tool-shell {
+      padding-bottom: 22px !important;
+    }
+
+    .tool-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .tool-mini-badge {
+      flex-shrink: 0;
+      height: 36px;
+      padding: 0 13px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #edf6ff;
+      color: #0d6dcc;
+      border: 1px solid #d8ebff;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px 16px;
+    }
+
+    .form-row.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-row label i,
+    .form-row-label i {
+      width: 14px;
+      color: #0d6dcc;
+      font-size: 12px;
+    }
+
+    .phone-wrap input::placeholder {
+      color: #9aa8b8;
+      font-weight: 600;
+    }
+
+    .form-safe-note {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      color: #6f8198;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: -2px;
+    }
+
+    .form-safe-note i {
+      color: #18a765;
+    }
+
+    .otp-label {
+      text-align: center;
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      color: #082447;
+      margin-bottom: 3px;
+    }
+
+    .otp-sub {
+      text-align: center;
+      font-size: 12px;
+      color: #6f8198;
+      margin-bottom: 6px;
+    }
+
+    /* ─────────── UTILITIES ─────────── */
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.4;
+    }
+
+    .check-row input {
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+      accent-color: var(--blue);
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .tbl-group td {
+      background: var(--paper);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      color: var(--ink2);
+      border-bottom: 1px solid var(--bd);
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    #screen-input.active,
+    #screen-otp.active,
+    #screen-tool-result.active {
+      display: block !important;
+    }
+
+    /* ─────────── RESULTS ─────────── */
+    .result-summary {
+      margin-bottom: 20px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      border-radius: 26px;
+      padding: 30px;
+      background: radial-gradient(circle at 92% 12%, rgba(13, 109, 204, .28), transparent 30%), radial-gradient(circle at 10% 18%, rgba(242, 90, 42, .18), transparent 28%), linear-gradient(135deg, #061f3f, #073765);
+      box-shadow: 0 22px 55px rgba(4, 28, 57, .18);
+    }
+
+    .rs-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .rs-score-lbl {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .6);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .rs-score {
+      line-height: 1;
+      color: var(--white);
+      font-size: 48px;
+      font-weight: 950;
+    }
+
+    .rs-meta {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .7);
+      margin-top: 6px;
+    }
+
+    .rs-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .rs-pill {
+      text-align: center;
+      min-width: 96px;
+      border-radius: 18px;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .18);
+      backdrop-filter: blur(8px);
+    }
+
+    .rs-pill-num {
+      color: var(--white);
+      font-size: 25px;
+      font-weight: 950;
+    }
+
+    .rs-pill-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .65);
+      margin-top: 2px;
+      letter-spacing: .03em;
+    }
+
+    .results-main {
+      margin: 0 auto;
+      padding: 42px 20px 118px;
+      max-width: 1180px !important;
+    }
+
+    .tabs {
+      display: flex;
+      position: sticky;
+      top: 76px;
+      z-index: 20;
+      gap: 8px;
+      padding: 8px;
+      margin-bottom: 22px;
+      border-radius: 18px;
+      border: 1px solid #dfeaf6;
+      box-shadow: 0 12px 30px rgba(4, 28, 57, .08);
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(12px);
+    }
+
+    .tab {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      font-family: var(--sans);
+      padding: 11px 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: .15s;
+      min-height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      font-size: 13px;
+      font-weight: 950;
+      color: #53657c;
+    }
+
+    .tab.active {
+      background: var(--navy);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(8, 36, 71, .15);
+    }
+
+    .card {
+      background: var(--white);
+      box-shadow: var(--sh-card);
+      border-radius: 24px;
+      padding: 28px;
+    }
+
+    .card-title {
+      margin-bottom: 4px;
+      color: var(--navy);
+      font-size: 21px;
+      font-weight: 950;
+    }
+
+    .card-sub {
+      font-size: 13px;
+      margin-bottom: 20px;
+      color: #63758c;
+      line-height: 1.65;
+    }
+
+    .result-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 18px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid #dfeaf6;
+      box-shadow: 0 12px 30px rgba(4, 28, 57, .06);
+    }
+
+    .view-toggle {
+      display: flex;
+      overflow: hidden;
+      background: var(--white);
+      border: 1.5px solid #dce7f3;
+      border-radius: 13px;
+    }
+
+    .view-btn {
+      font-size: 13px;
+      cursor: pointer;
+      background: var(--white);
+      color: var(--muted);
+      border: none;
+      transition: .15s;
+      min-height: 40px;
+      padding: 0 18px;
+      font-weight: 950;
+    }
+
+    .view-btn.active {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .export-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .report-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      background: var(--white);
+      border-radius: 22px;
+      border: 1px solid #dfeaf6;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 660px;
+    }
+
+    .report-table thead tr {
+      color: var(--white);
+      background: var(--navy);
+    }
+
+    .report-table thead th {
+      text-align: left;
+      text-transform: uppercase;
+      white-space: nowrap;
+      padding: 14px;
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: .08em;
+    }
+
+    .report-table thead th.center {
+      text-align: center;
+    }
+
+    .report-table tbody tr {
+      border-bottom: 1px solid var(--bd);
+      transition: background .12s;
+    }
+
+    .report-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .report-table tbody tr:hover {
+      background: var(--blue-lt);
+    }
+
+    .report-table td {
+      color: var(--ink);
+      vertical-align: middle;
+      padding: 14px;
+      border-bottom: 1px solid #e8f0f8;
+    }
+
+    .report-table td.col-sno {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      width: 38px;
+    }
+
+    .report-table td.col-name {
+      line-height: 1.3;
+      font-weight: 950;
+      color: var(--navy);
+    }
+
+    .report-table td.col-rank {
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .report-table td.center {
+      text-align: center;
+    }
+
+    .type-badge {
+      letter-spacing: .03em;
+      display: inline-block;
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    .type-aiims {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .type-govt {
+      background: #DBEAFE;
+      color: #1D4ED8;
+    }
+
+    .type-private {
+      background: #FCE7F3;
+      color: #9D174D;
+    }
+
+    .type-esic {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .type-deemed {
+      background: #EDE9FE;
+      color: #5B21B6;
+    }
+
+    .type-asmc {
+      background: #E0F2FE;
+      color: #0369A1;
+    }
+
+    .pct-cell {
+      min-width: 78px;
+    }
+
+    .pct-num {
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .pct-bar {
+      margin-top: 4px;
+      overflow: hidden;
+      height: 7px;
+      border-radius: 99px;
+      background: #dfe8f2;
+    }
+
+    .pct-fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: width .8s ease;
+    }
+
+    .pct-hi {
+      color: var(--green);
+    }
+
+    .pct-fill-hi {
+      background: var(--green);
+    }
+
+    .pct-mid {
+      color: var(--amber);
+    }
+
+    .pct-fill-mid {
+      background: var(--amber);
+    }
+
+    .pct-lo {
+      color: var(--blue);
+    }
+
+    .pct-fill-lo {
+      background: var(--blue);
+    }
+
+    .college-card {
+      background: var(--white);
+      border: 1px solid var(--bd);
+      border-radius: var(--r-lg);
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+
+    .cc-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .cc-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    .cc-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .cc-pct {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .cc-pct .pct-num {
+      font-size: 22px;
+    }
+
+    .cc-pct-lbl {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .cc-stats {
+      display: flex;
+      gap: 18px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--bd);
+    }
+
+    .cc-stat {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cc-stat strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1px;
+    }
+
+    .section-hdr {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 24px 0 14px;
+    }
+
+    .section-hdr h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .count-badge {
+      background: var(--blue);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 15px;
+      margin: 12px 0;
+      font-size: 13px;
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+
+    .alert-info {
+      background: #edf6ff;
+      color: #082447;
+      border-left: 4px solid #0d6dcc;
+    }
+
+    .alert-warn {
+      background: var(--amber-lt);
+      color: #92400E;
+      border-left: 3px solid var(--amber);
+    }
+
+    .alert-success {
+      background: var(--green-lt);
+      color: #065F46;
+      border-left: 3px solid var(--green);
+    }
+
+    .alert-danger {
+      background: var(--red-lt);
+      color: #991B1B;
+      border-left: 3px solid var(--red);
+    }
+
+    .alert-icon {
+      color: #0d6dcc;
+      font-size: 16px;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--ink2);
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend .sw {
+      width: 22px;
+      height: 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .score-bar-wrap {
+      margin: 14px 0;
+    }
+
+    .score-lbl {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .score-lbl span:first-child {
+      font-weight: 600;
+      color: var(--ink2);
+    }
+
+    .score-lbl span:last-child {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .score-bg {
+      height: 10px;
+      background: var(--bd);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .score-fill {
+      height: 100%;
+      border-radius: 20px;
+      transition: width 1s ease;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--bd);
+      font-size: 14px;
+      color: var(--ink2);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .checklist li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .schedule-item {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--bd);
+    }
+
+    .schedule-item:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--blue);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .schedule-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .schedule-date {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy), var(--navy3));
+      border-radius: var(--r-xl);
+      padding: 30px;
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    .cta-section h3 {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .cta-section p {
+      color: rgba(255, 255, 255, .72);
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .abroad-hook {
+      background: linear-gradient(135deg, #0A1F3D, #1A3A6E);
+      border-radius: var(--r-xl);
+      padding: 28px;
+      text-align: center;
+      border: 1.5px solid rgba(30, 143, 232, .28);
+      margin-top: 22px;
+    }
+
+    .abroad-hook h3 {
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .abroad-hook p {
+      color: rgba(255, 255, 255, .72);
+      font-size: 14px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .abroad-countries {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .country-pill {
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .2);
+      color: rgba(255, 255, 255, .9);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .result-summary::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, .08) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: .34;
+      pointer-events: none;
+    }
+
+    .result-summary>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card,
+    .report-wrap,
+    .college-card,
+    .faq,
+    .hiw-card,
+    .feat {
+      background: #fff;
+      border: 1px solid #dfeaf6;
+      box-shadow: 0 14px 36px rgba(4, 28, 57, .07);
+    }
+
+    .abroad-hook,
+    .cta-section,
+    .finalcta {
+      border-radius: 26px;
+      background: radial-gradient(circle at 88% 10%, rgba(13, 109, 204, .26), transparent 30%), linear-gradient(135deg, #061f3f, #073765);
+      box-shadow: 0 20px 48px rgba(4, 28, 57, .15);
+    }
+
+    .abroad-hook h3,
+    .cta-section h3 {
+      color: #fff;
+      font-size: 22px;
+      font-weight: 950;
+      font-family: var(--sans);
+      font-style: normal;
+    }
+
+    .result-ready-card {
+      border-radius: 24px;
+      padding: 24px;
+      background: radial-gradient(circle at 94% 10%, rgba(13, 109, 204, .10), transparent 32%),
+        radial-gradient(circle at 8% 12%, rgba(242, 90, 42, .08), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid #dfeaf6;
+      box-shadow: 0 18px 44px rgba(4, 28, 57, .08);
+    }
+
+    .result-ready-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: #19b865;
+      box-shadow: 0 12px 26px rgba(25, 184, 101, .24);
+      font-size: 22px;
+      font-weight: 950;
+      margin-bottom: 14px;
+    }
+
+    .result-ready-card h3 {
+      color: var(--navy);
+      font-size: 25px;
+      line-height: 1.18;
+      font-weight: 950;
+      letter-spacing: -.4px;
+      margin: 0 0 8px;
+    }
+
+    .result-ready-card p {
+      color: #61728a;
+      font-size: 14px;
+      line-height: 1.65;
+      margin: 0 0 16px;
+    }
+
+    .result-profile-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .result-profile-item {
+      padding: 12px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid #e2edf8;
+    }
+
+    .result-profile-item small {
+      display: block;
+      color: #718198;
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .result-profile-item b {
+      display: block;
+      color: var(--navy);
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 950;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .result-ready-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    body.results-generated .results-main {
+      padding-top: 10px !important;
+    }
+
+    /* ─────────── LANDING SECTIONS ─────────── */
+    .section {
+      margin: 0 auto;
+      max-width: none;
+      width: 100%;
+      padding: 78px max(20px, calc((100vw - 1180px)/2));
+      padding-top: 62px !important;
+      padding-bottom: 62px !important;
+    }
+
+    .section-eyebrow {
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--orange);
+      background: #fff4ed;
+      border: 1px solid #ffd8c7;
+      width: fit-content;
+      margin: 0 auto 14px;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .section-h2 {
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      font-family: var(--serif);
+      font-style: normal;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -.4px;
+    }
+
+    .section-lead {
+      font-size: 15px;
+      text-align: center;
+      margin: 0 auto 40px;
+      color: #60728b;
+      line-height: 1.75;
+      max-width: 680px;
+    }
+
+    .hiw-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .hiw-card {
+      background: var(--white);
+      border: 1px solid var(--bd);
+      text-align: center;
+      box-shadow: var(--sh-card);
+      border-radius: 22px;
+      padding: 28px;
+    }
+
+    .hiw-num {
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      background: #edf6ff;
+      color: var(--blue);
+      font-weight: 950;
+    }
+
+    .hiw-card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .hiw-card p {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .feat {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--white);
+      border: 1px solid var(--bd);
+      border-radius: 20px;
+      padding: 22px;
+    }
+
+    .feat-ic {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      background: #edf6ff;
+      color: var(--blue);
+    }
+
+    .feat h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .feat p {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.55;
+    }
+
+    .faq-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq {
+      background: var(--white);
+      border: 1px solid var(--bd);
+      margin-bottom: 12px;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .faq-q {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      font-family: var(--sans);
+      text-align: left;
+      padding: 18px 20px;
+      font-size: 15px;
+      color: var(--navy);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-weight: 950;
+    }
+
+    .faq-q .chev {
+      transition: .2s;
+      flex-shrink: 0;
+      color: var(--blue);
+    }
+
+    .faq.open .chev {
+      transform: rotate(180deg);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+      padding: 0 20px;
+    }
+
+    .faq.open .faq-a {
+      max-height: 400px;
+      padding-bottom: 18px;
+    }
+
+    .faq-a p {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+
+    .finalcta {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 78px 20px;
+      border-radius: 0;
+    }
+
+    .finalcta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 600px 400px at 50% 50%, rgba(26, 111, 181, .25), transparent 70%);
+    }
+
+    .finalcta-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .finalcta h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      color: var(--white);
+      margin-bottom: 12px;
+      line-height: 1.2;
+      font-family: var(--serif);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .finalcta p {
+      color: rgba(255, 255, 255, .72);
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+
+    .hiw-card h3,
+    .feat h4 {
+      color: var(--navy);
+      font-weight: 950;
+    }
+
+    /* ─────────── FOOTER AND STICKY BAR ─────────── */
+    .footer {
+      color: rgba(255, 255, 255, .6);
+      padding: 40px 20px 28px;
+      font-size: 13px;
+      background: #061527;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .footer-brand {
+      max-width: 320px;
+    }
+
+    .footer-brand p {
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    .footer-contact {
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .footer-contact a {
+      color: rgba(255, 255, 255, .8);
+    }
+
+    .footer-bottom {
+      padding-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, .45);
+    }
+
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border-top: 1.5px solid var(--bd);
+      padding: 10px 16px;
+      display: none;
+      gap: 10px;
+      z-index: 150;
+      box-shadow: 0 -4px 16px rgba(10, 31, 61, .10);
+    }
+
+    /* ─────────── RENDERING PERFORMANCE ─────────── */
+    /* Skip layout/paint for sections that are well below the initial viewport. */
+    .section,
+    .finalcta,
+    .footer {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 720px;
+    }
+
+    @media (max-width: 768px) {
+      /* Backdrop blur is expensive on low-end mobile GPUs. */
+      .site-header,
+      .hero-badge,
+      .hero-stats,
+      .trust-chip,
+      .tabs,
+      .rs-pill,
+      .blur-lock {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+      }
+
+      .hero-bg {
+        object-position: 70% center;
+      }
+
+      .site-header {
+        background: #fff;
+      }
+    }
+
+    /* ─────────── PROFESSIONAL PRINT REPORT ─────────── */
+    #professionalPrintReport {
+      display: none;
+    }
+
+    .pro-report-doc {
+      color: #17243b;
+      background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .pro-report-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 20px;
+      border-radius: 14px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #082447, #0d6dcc);
+      margin-bottom: 12px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .pro-report-brand {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      opacity: .88;
+      margin-bottom: 6px;
+    }
+
+    .pro-report-header h1 {
+      margin: 0 0 5px;
+      font-size: 24px;
+      line-height: 1.18;
+      letter-spacing: -.3px;
+    }
+
+    .pro-report-header p {
+      margin: 0;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .82);
+      line-height: 1.45;
+    }
+
+    .pro-report-date {
+      min-width: 105px;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, .86);
+    }
+
+    .pro-report-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pro-report-card {
+      border: 1px solid #dce8f5;
+      border-radius: 11px;
+      background: #fbfdff;
+      padding: 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .pro-report-card small {
+      display: block;
+      color: #64748b;
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 4px;
+    }
+
+    .pro-report-card b {
+      display: block;
+      color: #082447;
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 900;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pro-report-section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin: 12px 0 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #e5edf6;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .pro-report-section-title h2 {
+      margin: 0;
+      color: #082447;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .pro-report-section-title p {
+      margin: 0;
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .pro-report-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 9.8px;
+      border: 1px solid #dce8f5;
+    }
+
+    .pro-report-table thead {
+      display: table-header-group;
+    }
+
+    .pro-report-table thead tr {
+      background: #082447;
+      color: #ffffff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .pro-report-table th {
+      padding: 7px 6px;
+      border: 1px solid #082447;
+      font-size: 8.5px;
+      font-weight: 900;
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .pro-report-table td {
+      padding: 6px;
+      border: 1px solid #e5edf6;
+      color: #26384f;
+      vertical-align: top;
+      line-height: 1.32;
+    }
+
+    .pro-report-table tbody tr:nth-child(even) td {
+      background: #f8fbff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .pro-report-table tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .pro-report-table .pro-college-name {
+      color: #082447;
+      font-weight: 900;
+    }
+
+    .pro-badge {
+      display: inline-block;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 8px;
+      font-weight: 900;
+      white-space: nowrap;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .pro-badge-govt,
+    .pro-badge-asmc,
+    .pro-badge-esic {
+      color: #0b5daf;
+      background: #edf6ff;
+      border: 1px solid #d8ebff;
+    }
+
+    .pro-badge-private,
+    .pro-badge-deemed {
+      color: #9d174d;
+      background: #fce7f3;
+      border: 1px solid #f9c9dd;
+    }
+
+    .pro-prob {
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .pro-prob-hi {
+      color: #087344;
+    }
+
+    .pro-prob-mid {
+      color: #a45a00;
+    }
+
+    .pro-prob-lo {
+      color: #0b5daf;
+    }
+
+    .pro-report-note {
+      margin-top: 9px;
+      padding: 9px 11px;
+      border-radius: 10px;
+      border: 1px solid #f5d2a8;
+      background: #fff8ec;
+      color: #7c3a08;
+      font-size: 9.5px;
+      line-height: 1.45;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .pro-report-footer {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid #e5edf6;
+      color: #64748b;
+      font-size: 9px;
+      line-height: 1.45;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* ─────────── RESPONSIVE / PRINT ─────────── */
+    @media (max-width: 600px) {
+      .nav-call span {
+        display: none;
+      }
+
+      .feat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        min-height: auto;
+        padding-bottom: 86px;
+      }
+
+      .hero-inner {
+        padding: 52px 0 36px;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding: 0 16px 76px;
+      }
+
+      .hero-inner {
+        padding: 40px 0 30px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero-sub {
+        font-size: 14px;
+      }
+
+      .hero-btn {
+        width: 100%;
+      }
+
+      .hero-stats-wrap {
+        bottom: -72px;
+        padding: 0 14px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr 1fr;
+        border-radius: 18px;
+      }
+
+      .hstat {
+        min-height: 82px;
+        padding: 18px 10px;
+      }
+
+      .hstat-num {
+        font-size: 24px;
+      }
+
+      .hstat-lbl {
+        font-size: 10px;
+      }
+
+      .tool-shell {
+        margin-top: 104px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .tool-body {
+        padding: 20px;
+      }
+
+      .progress-wrap {
+        padding: 18px 18px 0;
+      }
+
+      .topnav-inner {
+        min-height: 64px;
+        padding: 10px 14px;
+      }
+
+      .brand {
+        font-size: 13px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+      }
+
+      .nav-call {
+        min-height: 38px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero-sub {
+        font-size: 14px;
+      }
+
+      .steps {
+        padding: 0;
+      }
+
+      .step {
+        font-size: 10px;
+      }
+
+      .step::before {
+        width: 36px;
+        height: 36px;
+      }
+
+      .step::after {
+        top: 18px;
+      }
+
+      .otp-box {
+        width: 52px;
+        height: 58px;
+      }
+
+      .cta-btns {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .inp-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .otp-box {
+        width: 48px;
+        height: 56px;
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hiw-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sticky-bar {
+        display: flex;
+      }
+
+      .results-main {
+        padding-bottom: 90px;
+      }
+
+      .hero {
+        padding: 0 16px;
+        background: linear-gradient(90deg, rgba(6, 31, 63, .98), rgba(7, 55, 101, .86)), var(--hero-bg-img) center/cover no-repeat;
+        min-height: auto !important;
+      }
+
+      .hero-inner {
+        text-align: center;
+        padding: 42px 0 86px !important;
+      }
+
+      .hero h1,
+      .hero-sub {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-trust {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        margin: 0 auto;
+      }
+
+      .hstat {
+        flex: 0 0 50%;
+      }
+
+      .hstat:nth-child(2)::after {
+        display: none;
+      }
+
+      .tool-shell {
+        margin-top: 80px;
+        padding: 0 14px 45px;
+      }
+
+      .tool-card {
+        border-radius: 22px;
+      }
+
+      .tool-title {
+        font-size: 23px;
+      }
+
+      .inp-row {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        top: 65px;
+        overflow: auto;
+        scrollbar-width: none;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        min-width: 150px;
+      }
+
+      .rs-pills {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .rs-pill {
+        min-width: 0;
+        padding: 11px 8px;
+      }
+
+      .result-controls {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .view-toggle,
+      .export-btns {
+        width: 100%;
+      }
+
+      .view-btn,
+      .export-btns .btn {
+        flex: 1;
+      }
+
+      .cc-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero h1 {
+        font-size: 32px !important;
+      }
+
+      .tool-body {
+        padding: 22px 16px;
+      }
+
+      .result-profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .result-ready-actions .btn {
+        flex-basis: 100%;
+      }
+
+      .tool-head {
+        display: block;
+      }
+
+      .tool-mini-badge {
+        margin-top: 12px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row.full {
+        grid-column: auto;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 9mm;
+      }
+
+      .topnav,
+      .hero,
+      .sticky-bar,
+      .tabs,
+      .progress-wrap,
+      .result-controls,
+      .cta-section,
+      .abroad-hook,
+      .section,
+      .finalcta,
+      .footer,
+      .view-toggle,
+      .export-btns,
+      .btn,
+      #tab-analysis,
+      #tab-next,
+      .screen:not(.active),
+      .legend,
+      #print-only-head {
+        display: none !important;
+      }
+
+      body {
+        background: #fff !important;
+      }
+
+      .results-main {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+
+      .result-summary {
+        background: #0A1F3D !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin-bottom: 8mm;
+      }
+
+      #print-only-head {
+        display: block !important;
+        margin-bottom: 6mm;
+      }
+
+      .report-wrap {
+        overflow: visible !important;
+        border: 1px solid #ccc;
+      }
+
+      .report-table {
+        min-width: 0 !important;
+        width: 100% !important;
+        font-size: 9px !important;
+        table-layout: fixed;
+      }
+
+      .report-table thead tr {
+        background: #0A1F3D !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .report-table th,
+      .report-table td {
+        padding: 5px 6px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .report-table tbody tr {
+        break-inside: avoid;
+      }
+
+      .pct-bar {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .type-badge {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      body.is-professional-printing {
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      body.is-professional-printing>*:not(#professionalPrintReport) {
+        display: none !important;
+      }
+
+      body.is-professional-printing #professionalPrintReport {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+      }
+
+      body.is-professional-printing .pro-report-doc {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      body.is-professional-printing .pro-report-header {
+        border-radius: 9px !important;
+        padding: 13px 15px !important;
+        margin-bottom: 8px !important;
+      }
+
+      body.is-professional-printing .pro-report-header h1 {
+        font-size: 20px !important;
+      }
+
+      body.is-professional-printing .pro-report-grid {
+        gap: 6px !important;
+        margin-bottom: 8px !important;
+      }
+
+      body.is-professional-printing .pro-report-card {
+        padding: 7px 8px !important;
+        border-radius: 8px !important;
+      }
+
+      body.is-professional-printing .pro-report-table {
+        font-size: 8.7px !important;
+      }
+
+      body.is-professional-printing .pro-report-table th,
+      body.is-professional-printing .pro-report-table td {
+        padding: 4.7px 5px !important;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .tool-card {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-wrap {
+        min-height: auto !important;
+        padding: 22px;
+      }
+
+      .progress-wrap::before {
+        margin-bottom: 18px;
+      }
+
+      .progress-wrap::after {
+        margin-top: 20px;
+      }
+
+      .steps {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+      }
+
+      .step {
+        align-items: center;
+        padding: 0;
+        min-height: auto;
+        padding-left: 0;
+        padding-top: 52px;
+        justify-content: center;
+        text-align: center;
+        font-size: 11px;
+      }
+
+      .step::before {
+        position: relative;
+        top: auto;
+        margin: 0 auto 9px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .step::after {
+        left: calc(50% + 22px);
+        top: 21px;
+        width: calc(100% - 44px);
+        height: 2px;
+      }
+
+      .tool-body {
+        padding: 28px 24px;
+        min-height: auto !important;
+      }
+
+      .result-profile-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .otp-box {
+        width: 47px;
+        height: 54px;
+        font-size: 22px;
+      }
+
+      .toggle-btn {
+        font-size: 11px;
+      }
+    }
+
+
+    /* ─────────── FINAL RESPONSIVE HARDENING ─────────── */
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      max-width: 100%;
+    }
+
+    .header-wrap,
+    .hero-inner,
+    .tool-shell,
+    .results-main,
+    .footer-inner {
+      width: 100%;
+    }
+
+    .hero h1,
+    .hero-sub,
+    .tool-title,
+    .card-title,
+    .section-h2,
+    .college-card,
+    .alert,
+    .footer,
+    .result-summary {
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    .cta-btns a,
+    .result-ready-actions a,
+    .finalcta a,
+    .abroad-hook a,
+    .sticky-bar a {
+      min-width: 0;
+    }
+
+    .report-wrap {
+      max-width: 100%;
+      overscroll-behavior-inline: contain;
+    }
+
+    @media screen and (max-width: 1180px) {
+      .header-wrap,
+      .hero-inner,
+      .results-main,
+      .footer-inner {
+        max-width: 100%;
+      }
+
+      .section {
+        padding-left: 28px !important;
+        padding-right: 28px !important;
+      }
+    }
+
+    @media screen and (max-width: 980px) {
+      .header-wrap {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .hero {
+        background-position: 64% center;
+      }
+
+      .tool-shell {
+        max-width: 820px;
+        margin-top: -38px !important;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .tool-card {
+        grid-template-columns: 1fr !important;
+        min-height: 0;
+      }
+
+      .progress-wrap {
+        min-height: 0 !important;
+        padding: 22px 24px !important;
+      }
+
+      .progress-wrap::after {
+        margin-top: 18px;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+      }
+
+      .step {
+        min-width: 0;
+        min-height: 68px;
+        padding: 50px 8px 0 !important;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .step::before {
+        position: absolute !important;
+        left: 50% !important;
+        top: 0 !important;
+        margin: 0 !important;
+        transform: translateX(-50%) !important;
+      }
+
+      .step::after {
+        left: calc(50% + 22px) !important;
+        top: 20px !important;
+        width: calc(100% - 44px) !important;
+        height: 2px !important;
+      }
+
+      .tool-body {
+        min-height: 0 !important;
+      }
+
+      .result-profile-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hiw-grid {
+        gap: 16px;
+      }
+    }
+
+    @media screen and (max-width: 760px) {
+      body {
+        padding-bottom: calc(74px + env(safe-area-inset-bottom));
+      }
+
+      .site-header {
+        position: sticky;
+      }
+
+      .header-wrap {
+        min-height: 62px;
+        padding: 10px 14px;
+        gap: 10px;
+      }
+
+      .header-logo img {
+        height: 38px;
+        max-width: 150px;
+      }
+
+      .header-actions {
+        gap: 7px;
+      }
+
+      .header-btn {
+        min-width: 40px;
+        height: 40px;
+        padding: 0 11px;
+      }
+
+      .hero {
+        padding: 0 16px !important;
+        background-position: center;
+      }
+
+      .hero-inner {
+        padding: 42px 0 72px !important;
+      }
+
+      .hero-content {
+        width: 100%;
+      }
+
+      .hero-badge {
+        max-width: 100%;
+        white-space: normal;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.35;
+      }
+
+      .hero h1 {
+        max-width: 620px !important;
+        font-size: clamp(30px, 8.3vw, 42px) !important;
+        line-height: 1.08;
+      }
+
+      .hero h1 br {
+        display: none;
+      }
+
+      .hero-sub {
+        max-width: 620px !important;
+        font-size: 14px !important;
+        line-height: 1.65;
+      }
+
+      .hero-btn {
+        width: min(100%, 360px);
+      }
+
+      .tool-shell {
+        margin-top: -34px !important;
+        padding: 0 12px 36px !important;
+      }
+
+      .tool-card {
+        border-radius: 20px;
+      }
+
+      .progress-wrap {
+        padding: 18px 16px !important;
+      }
+
+      .progress-wrap::before {
+        margin-bottom: 16px;
+      }
+
+      .progress-wrap::after {
+        display: none;
+      }
+
+      .step {
+        min-height: 62px;
+        padding: 46px 4px 0 !important;
+        font-size: 10px;
+        letter-spacing: .035em;
+      }
+
+      .step::before {
+        width: 38px;
+        height: 38px;
+      }
+
+      .step::after {
+        left: calc(50% + 19px) !important;
+        top: 18px !important;
+        width: calc(100% - 38px) !important;
+      }
+
+      .tool-body {
+        padding: 22px 18px !important;
+      }
+
+      .tool-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .tool-mini-badge {
+        height: 32px;
+        padding: 0 10px;
+        font-size: 10px;
+        margin-top: 0;
+      }
+
+      .tool-title,
+      #screen-input .tool-title,
+      #screen-otp .tool-title,
+      #screen-tool-result .tool-title {
+        font-size: 22px !important;
+      }
+
+      .form-grid,
+      .inp-row {
+        grid-template-columns: 1fr !important;
+      }
+
+      .form-row.full {
+        grid-column: auto;
+      }
+
+      .toggle-wrap {
+        height: auto;
+        min-height: 46px;
+      }
+
+      .toggle-btn {
+        min-height: 38px !important;
+        line-height: 1.25;
+      }
+
+      .preview-card {
+        padding: 12px 13px;
+      }
+
+      .preview-name {
+        font-size: 12px;
+      }
+
+      .blur-lock-inner {
+        max-width: calc(100% - 24px);
+        white-space: normal;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.35;
+      }
+
+      .otp-grid {
+        width: min(100%, 300px);
+        margin-left: auto;
+        margin-right: auto;
+        gap: clamp(7px, 2.5vw, 12px);
+      }
+
+      .otp-box {
+        flex: 1 1 0;
+        min-width: 0;
+        width: auto !important;
+        max-width: 58px;
+        height: 56px;
+      }
+
+      .results-main {
+        padding: 22px 12px calc(104px + env(safe-area-inset-bottom));
+      }
+
+      .result-summary {
+        padding: 22px 18px;
+        border-radius: 20px;
+      }
+
+      .rs-top {
+        align-items: stretch;
+      }
+
+      .rs-score {
+        font-size: clamp(36px, 11vw, 48px);
+      }
+
+      .rs-meta {
+        line-height: 1.5;
+      }
+
+      .rs-pills {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .rs-pill {
+        padding: 10px 5px;
+        border-radius: 14px;
+      }
+
+      .rs-pill-num {
+        font-size: 21px;
+      }
+
+      .tabs {
+        position: sticky;
+        top: 66px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+        overflow: visible;
+        padding: 6px;
+        border-radius: 15px;
+      }
+
+      .tab {
+        min-width: 0 !important;
+        min-height: 42px;
+        padding: 8px 4px;
+        font-size: 11px;
+        line-height: 1.25;
+      }
+
+      .result-controls {
+        padding: 13px;
+        border-radius: 16px;
+      }
+
+      .view-toggle,
+      .export-btns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        border: 0;
+        background: transparent;
+      }
+
+      .view-btn,
+      .export-btns .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .report-wrap {
+        border-radius: 16px;
+      }
+
+      .report-table {
+        min-width: 760px;
+      }
+
+      .card,
+      .college-card,
+      .cta-section,
+      .abroad-hook,
+      .result-ready-card {
+        border-radius: 18px;
+      }
+
+      .card {
+        padding: 20px 16px;
+      }
+
+      .college-card {
+        padding: 15px;
+      }
+
+      .cc-top {
+        gap: 10px;
+      }
+
+      .cc-name {
+        font-size: 14px;
+      }
+
+      .cc-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .result-profile-grid {
+        grid-template-columns: 1fr !important;
+      }
+
+      .result-ready-actions,
+      .cta-btns {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .result-ready-actions .btn,
+      .cta-btns .btn,
+      .cta-btns a {
+        width: 100%;
+        min-width: 0 !important;
+      }
+
+      .legend {
+        gap: 9px 12px;
+      }
+
+      .section {
+        padding: 52px 16px !important;
+      }
+
+      .section-lead {
+        margin-bottom: 28px;
+      }
+
+      .feat-grid,
+      .hiw-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feat,
+      .hiw-card {
+        padding: 20px 16px;
+      }
+
+      .finalcta {
+        padding: 58px 16px;
+      }
+
+      .footer {
+        padding: 34px 16px calc(100px + env(safe-area-inset-bottom));
+      }
+
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .sticky-bar {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 9px 12px calc(9px + env(safe-area-inset-bottom));
+      }
+
+      .sticky-bar .btn {
+        min-height: 44px;
+        padding: 0 8px;
+      }
+
+      .analysis-stats-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media screen and (max-width: 560px) {
+      .header-logo img {
+        height: 34px;
+        max-width: 128px;
+      }
+
+      .call-btn span,
+      .whatsapp-btn span {
+        display: none;
+      }
+
+      .header-btn {
+        width: 40px;
+        padding: 0;
+      }
+
+      .hero-inner {
+        padding-top: 34px !important;
+      }
+
+      .hero-badge {
+        font-size: 10px;
+        padding: 8px 11px;
+      }
+
+      .hero h1 {
+        font-size: clamp(28px, 9vw, 36px) !important;
+      }
+
+      .tool-body {
+        padding: 20px 14px !important;
+      }
+
+      .tool-head {
+        display: block;
+      }
+
+      .tool-mini-badge {
+        width: fit-content;
+        margin-top: 10px;
+      }
+
+      .form-safe-note {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .phone-prefix {
+        min-width: 66px;
+        padding: 0 9px;
+      }
+
+      .toggle-wrap {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 5px;
+      }
+
+      .toggle-btn {
+        min-height: 40px !important;
+      }
+
+      .preview-wrap {
+        margin-top: 14px;
+      }
+
+      .preview-pct {
+        font-size: 13px;
+      }
+
+      .rs-pills {
+        width: 100%;
+      }
+
+      .tabs {
+        top: 62px;
+      }
+
+      .tab {
+        font-size: 10px;
+      }
+
+      .export-btns,
+      .view-toggle {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .abroad-countries {
+        gap: 7px;
+      }
+
+      .country-pill {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+
+      .cta-section,
+      .abroad-hook {
+        padding: 22px 15px;
+      }
+
+      .section-h2 {
+        font-size: 28px;
+      }
+
+      .faq-q {
+        padding: 16px;
+        font-size: 14px;
+      }
+
+      .faq-a {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+
+    @media screen and (max-width: 420px) {
+      .header-wrap {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .header-logo img {
+        max-width: 116px;
+      }
+
+      .header-actions {
+        gap: 5px;
+      }
+
+      .header-btn {
+        width: 37px;
+        height: 37px;
+      }
+
+      .hero {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+
+      .tool-shell {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+      }
+
+      .tool-card {
+        border-radius: 17px;
+      }
+
+      .progress-wrap {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+      }
+
+      .step {
+        font-size: 9px;
+      }
+
+      .otp-grid {
+        gap: 6px;
+      }
+
+      .otp-box {
+        height: 52px;
+        font-size: 21px;
+      }
+
+      .result-summary {
+        padding: 18px 14px;
+      }
+
+      .rs-pill-lbl {
+        font-size: 9px;
+      }
+
+      .tabs {
+        gap: 3px;
+        padding: 5px;
+      }
+
+      .tab {
+        font-size: 9.5px;
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+
+      .cc-top {
+        display: grid;
+        grid-template-columns: 1fr auto;
+      }
+
+      .cc-stats {
+        gap: 10px 8px;
+      }
+
+      .cc-stat {
+        font-size: 11px;
+      }
+
+      .cc-stat strong {
+        font-size: 12px;
+      }
+
+      .alert {
+        padding: 11px;
+        gap: 8px;
+      }
+    }
+
+  </style>
+  <meta name="data-source" content="https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <header class="site-header">
+    <div class="header-wrap">
+
+      <a class="header-logo" href="#top" aria-label="Jharkhand NEET College Predictor">
+        <img src="https://rmgoe.org/frontend-assets/images/rm_new_logo.png" alt="RM Group of Education" width="180" height="46" decoding="async">
+      </a>
+
+      <div class="header-actions">
+        <a href="tel:+919999703444" class="header-btn call-btn">
+          <i class="fa-solid fa-phone"></i>
+          <span>Call Now</span>
+        </a>
+
+        <a href="https://wa.me/8448207814?text=Hello%2C%20I%20want%20free%20MBBS%20counselling%20guidance."
+          target="_blank" rel="noopener" class="header-btn whatsapp-btn">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img
+      class="hero-bg"
+      src="banner.webp"
+      alt=""
+      width="1600"
+      height="900"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      aria-hidden="true"
+    >
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Built on published NEET 2025 Jharkhand cutoff data
+        </div>
+
+        <h1>
+          Which Jharkhand medical college<br>
+          fits your <b>NEET 2026 rank?</b>
+        </h1>
+
+        <p class="hero-sub">
+          Get an instant, personalised prediction across RIMS Ranchi, MGM Jamshedpur, SNMMCH Dhanbad,
+          Sheikh Bhikhari, Phulo Jhano, Medinirai and Jharkhand private-college options —
+          with separate AIQ rows wherever the supplied page explicitly provides them.
+        </p>
+
+        <a href="#tool" class="hero-btn">
+          Predict My Colleges
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOL -->
+  <div class="tool-shell" id="tool">
+    <div class="tool-card">
+
+      <!-- LEFT TIMELINE -->
+      <div class="progress-wrap">
+        <div class="steps">
+          <div class="step active" id="step1">Details</div>
+          <div class="step" id="step2">Verify</div>
+          <div class="step" id="step3">Results</div>
+        </div>
+      </div>
+
+      <!-- RIGHT BODY -->
+      <div class="tool-body">
+
+        <!-- SCREEN 1: FORM -->
+        <div class="screen active" id="screen-input">
+
+          <div class="tool-head">
+            <div>
+              <div class="tool-title">Enter your NEET 2026 details</div>
+              <div class="tool-desc">Fill the details below to check your personalised Jharkhand college prediction.
+              </div>
+            </div>
+
+            <div class="tool-mini-badge">
+              <i class="fa-solid fa-shield-halved"></i>
+              Secure
+            </div>
+          </div>
+
+          <div class="form-grid">
+
+            <div class="form-row">
+              <label for="inp-name">
+                <i class="fa-solid fa-user" aria-hidden="true"></i>
+                Full Name<span class="req" aria-hidden="true">*</span>
+              </label>
+              <input class="inp" type="text" id="inp-name" name="name" placeholder="e.g. Rahul Sharma" autocomplete="name" aria-describedby="err-name">
+              <div class="field-err" id="err-name">Please enter your full name</div>
+            </div>
+
+            <div class="form-row">
+              <label for="inp-email">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                Email Address<span class="req" aria-hidden="true">*</span>
+              </label>
+              <input class="inp" type="email" id="inp-email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email" aria-describedby="err-email">
+              <div class="field-err" id="err-email">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-row">
+              <label for="inp-phone">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                Mobile Number<span class="req" aria-hidden="true">*</span>
+              </label>
+              <div class="phone-wrap" id="phone-wrap">
+                <div class="phone-prefix">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                  +91
+                </div>
+                <input type="tel" id="inp-phone" name="phone" placeholder="10-digit mobile number" maxlength="10" autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" aria-describedby="err-phone">
+              </div>
+              <div class="field-err" id="err-phone">Enter a valid 10-digit number starting with 6, 7, 8 or 9</div>
+            </div>
+
+            <div class="form-row">
+              <label for="inp-rank">
+                <i class="fa-solid fa-ranking-star" aria-hidden="true"></i>
+                NEET All India Rank<span class="req" aria-hidden="true">*</span>
+              </label>
+              <input class="inp" type="number" id="inp-rank" name="neet_air" placeholder="e.g. 45000" min="1" inputmode="numeric" aria-describedby="err-rank">
+              <div class="field-err" id="err-rank">Enter your NEET AIR</div>
+            </div>
+
+            <div class="form-row full">
+              <label for="inp-cat">
+                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                Jharkhand Category<span class="req" aria-hidden="true">*</span>
+              </label>
+              <select class="inp" id="inp-cat" name="category" aria-describedby="err-cat">
+                <option value="">Select your category</option>
+                <option value="UR">General / UR</option>
+                <option value="EWS">EWS</option>
+                <option value="BC1">BC-I</option>
+                <option value="BC2">BC-II</option>
+                <option value="SC">SC</option>
+                <option value="ST">ST</option>
+              </select>
+              <div class="field-err" id="err-cat">Please select your category</div>
+            </div>
+
+            <div class="form-row full">
+              <div class="form-row-label" id="domicile-label">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                Jharkhand Domicile?<span class="req" aria-hidden="true">*</span>
+              </div>
+              <div class="toggle-wrap" id="domicile-toggle" role="group" aria-labelledby="domicile-label">
+                <button type="button" class="toggle-btn active" data-val="yes" aria-pressed="true" onclick="setDomicile('yes')">Yes — Jharkhand</button>
+                <button type="button" class="toggle-btn" data-val="no" aria-pressed="false" onclick="setDomicile('no')">No — Other State</button>
+              </div>
+            </div>
+
+            <div class="form-row full">
+              <button type="button" class="btn btn-primary" id="btn-check" onclick="goToOTP()">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                Check My Colleges
+              </button>
+            </div>
+
+            <div class="form-safe-note">
+              <i class="fa-solid fa-lock"></i>
+              Your details are used only to generate and send your report.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SCREEN 2: OTP -->
+        <div class="screen" id="screen-otp">
+
+          <div class="tool-head">
+            <div>
+              <div class="tool-title">Your results are ready</div>
+              <div class="tool-desc">Verify your mobile number to unlock your full college list.</div>
+            </div>
+
+            <div class="tool-mini-badge">
+              <i class="fa-solid fa-key"></i>
+              OTP
+            </div>
+          </div>
+
+          <div class="preview-wrap">
+            <div class="preview-cards preview-blur" id="preview-cards"></div>
+            <div class="blur-lock">
+              <div class="blur-lock-inner">
+                <i class="fa-solid fa-lock"></i>
+                Verify to unlock your results
+              </div>
+            </div>
+          </div>
+
+          <div id="send-otp-section">
+            <div class="alert alert-info" style="margin-top:0">
+              <div class="alert-icon">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+              </div>
+              <div>
+                We'll send a 4-digit OTP to
+                <strong>+91 <span id="confirm-phone"></span></strong>
+                to confirm it's you.
+              </div>
+            </div>
+
+            <button class="btn btn-primary" id="btn-send-otp" onclick="sendOTP()">
+              <i class="fa-solid fa-paper-plane"></i>
+              Send OTP
+            </button>
+          </div>
+
+          <div id="otp-section" class="hidden">
+            <div class="otp-label" id="otp-label">Enter the 4-digit OTP</div>
+            <p class="otp-sub">
+              Sent to +91 <span id="otp-phone-display"></span>
+            </p>
+
+            <div class="otp-grid">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp0" aria-label="OTP digit 1" autocomplete="one-time-code" oninput="moveOTP(0)">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp1" aria-label="OTP digit 2" oninput="moveOTP(1)">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp2" aria-label="OTP digit 3" oninput="moveOTP(2)">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp3" aria-label="OTP digit 4" oninput="moveOTP(3)">
+            </div>
+
+            <div class="otp-timer" id="otp-timer"></div>
+            <div class="field-err" id="otp-error" style="text-align:center"></div>
+
+            <button class="btn btn-primary" style="margin-top:14px" id="btn-verify" onclick="verifyOTP()">
+              <i class="fa-solid fa-unlock-keyhole"></i>
+              Unlock My Colleges
+            </button>
+
+            <button class="btn btn-secondary" style="margin-top:10px" onclick="backToPhone()">
+              <i class="fa-solid fa-arrow-left"></i>
+              Change Number
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: RESULTS -->
+  <div class="screen" id="screen-results">
+    <div class="results-main">
+
+      <div id="print-only-head">
+        <h1 style="font-size:18px;color:var(--navy);margin-bottom:4px">Jharkhand NEET 2026 — College Prediction
+          Report</h1>
+        <p style="font-size:12px;color:var(--muted)">RM Group of Education · rmgoe.org · +91 99997-03444</p>
+      </div>
+
+      <div class="result-summary" id="result-summary"></div>
+
+      <div class="tabs" role="tablist" aria-label="Prediction report sections">
+        <button type="button" class="tab active" id="tab-btn-colleges" role="tab" aria-selected="true" aria-controls="tab-colleges" onclick="switchTab('tab-colleges',this)">🎓 Your Colleges</button>
+        <button type="button" class="tab" id="tab-btn-analysis" role="tab" aria-selected="false" aria-controls="tab-analysis" onclick="switchTab('tab-analysis',this)">📊 Rank Analysis</button>
+        <button type="button" class="tab" id="tab-btn-next" role="tab" aria-selected="false" aria-controls="tab-next" onclick="switchTab('tab-next',this)">📋 What Next</button>
+      </div>
+
+      <!-- TAB 1 -->
+      <div id="tab-colleges" role="tabpanel" aria-labelledby="tab-btn-colleges">
+        <div id="non-domicile-alert" class="hidden">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠️</div>
+            <div>You selected <strong>non-Jharkhand domicile</strong>. Government and state-category private records are excluded. Only the two private-college AIQ rows explicitly shown on the supplied page are evaluated. Final eligibility must be checked in the official prospectus.</div>
+          </div>
+        </div>
+
+        <div id="ineligible-section" class="hidden">
+          <div class="alert alert-danger">
+            <div class="alert-icon">📊</div>
+            <div id="ineligible-message"></div>
+          </div>
+          <div class="abroad-hook">
+            <h3>MBBS is not over 🌍</h3>
+            <p>Thousands of students with similar ranks study MBBS abroad in WDOMS-listed universities — saving ₹30–40
+              lakh compared with some high-cost private All India/Management and NRI options.</p>
+            <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
+                Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
+                Kazakhstan</span></div>
+            <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="max-width:340px;margin:0 auto">See My MBBS Abroad Options →</a>
+          </div>
+        </div>
+
+        <div id="colleges-section">
+          <div class="result-controls">
+            <div class="view-toggle">
+              <button type="button" class="view-btn active" id="btn-table-view" onclick="setView('table')">Table</button>
+              <button type="button" class="view-btn" id="btn-card-view" onclick="setView('card')">Cards</button>
+            </div>
+            <div class="export-btns">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="downloadPDF()">Download PDF</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="printReport()">Print</button>
+            </div>
+          </div>
+
+          <div class="legend">
+            <span><span class="sw" style="background:var(--green)"></span>75–99% Strong</span>
+            <span><span class="sw" style="background:var(--amber)"></span>45–74% Fair</span>
+            <span><span class="sw" style="background:var(--blue)"></span>Below 45% Low</span>
+          </div>
+          <div class="alert alert-info" style="margin-top:0">
+            <div class="alert-icon">ℹ️</div>
+            <div>Government records use 2025 Round 1 ranks. Private records use the page’s 2025 overall-low cutoff. Deaf, Blind, PH and other special rows are excluded from this simplified predictor.</div>
+          </div>
+
+          <!-- TABLE VIEW -->
+          <div id="view-table">
+            <div class="report-wrap">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>College</th>
+                    <th>District</th>
+                    <th>Seat Type</th>
+                    <th class="center">Cutoff Basis</th>
+                    <th class="center">2025 Close Rank</th>
+                    <th class="center">Cutoff Score</th>
+                    <th class="center">Possibility</th>
+                  </tr>
+                </thead>
+                <tbody id="report-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- CARD VIEW -->
+          <div id="view-cards" class="hidden"></div>
+
+          <div class="abroad-hook" id="abroad-hook-eligible">
+            <h3>Want more options? 🌍</h3>
+            <p>Students who miss Jharkhand State Quota seats should compare later counselling rounds, private options and MBBS-abroad routes carefully before paying a high non-refundable amount.</p>
+            <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
+                Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
+                Kazakhstan</span></div>
+            <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="max-width:340px;margin:0 auto">Check Abroad Options →</a>
+          </div>
+        </div>
+
+        <div class="cta-section">
+          <h3>Want expert help with Jharkhand choice filling?</h3>
+          <p>Our counsellors have guided 500+ students. We'll call you within 15 minutes.</p>
+          <div class="cta-btns">
+            <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" id="wa-cta-link" class="btn btn-wa" style="flex:1;min-width:180px">💬 WhatsApp Us</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2 -->
+      <div id="tab-analysis" class="hidden" role="tabpanel" aria-labelledby="tab-btn-analysis">
+        <div class="card" id="analysis-content"></div>
+      </div>
+
+      <!-- TAB 3 -->
+      <div id="tab-next" class="hidden" role="tabpanel" aria-labelledby="tab-btn-next">
+        <div class="card">
+          <div class="card-title">Jharkhand NEET 2026 Counselling — what to do now</div>
+          <div class="card-sub">Indicative counselling preparation flow; confirm every date and rule on the official Jharkhand portal</div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">NEET 2026 Result Declared</div>
+              <div class="schedule-date">Expected June–July 2026 · nta.ac.in</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Jharkhand MBBS/BDS Registration &amp; Document Upload</div>
+              <div class="schedule-date">Check the official Jharkhand counselling portal for the 2026 schedule</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Provisional Merit List &amp; Grievance Window</div>
+              <div class="schedule-date">Check your candidature type, category and seat-type claims carefully</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Round 1 — Choice Filling and Locking</div>
+              <div class="schedule-date">Fill every acceptable option in true preference order</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Round 1 Seat Allotment and Reporting</div>
+              <div class="schedule-date">Check allotment, reporting instructions, upgrade rules and resignation conditions carefully
+              </div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Round 2, Mop-Up and Stray Vacancy</div>
+              <div class="schedule-date">Vacancies and closing ranks can move substantially — follow every official notice</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Final Stray Vacancy / Special Round, if notified</div>
+              <div class="schedule-date">Final opportunities depend on the live vacancy matrix and eligibility rules</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px">
+          <div class="card-title">Documents checklist (Jharkhand counselling)</div>
+          <div class="card-sub">Keep originals + self-attested copies ready for verification</div>
+          <ul class="checklist">
+            <li>NEET 2026 Admit Card &amp; Scorecard</li>
+            <li>Class 10 Marksheet &amp; Certificate (DOB proof)</li>
+            <li>Class 12 Marksheet &amp; Certificate (PCB marks)</li>
+            <li>Jharkhand Residence / Domicile Certificate, where required</li>
+            <li>Valid EWS, BC-I, BC-II, SC or ST certificate issued by the competent authority, if applicable</li>
+            <li>EWS Certificate in the prescribed format, if claiming EWS reservation</li>
+            <li>Jharkhand counselling registration slip and choice-filling printout</li>
+            <li>Allotment letter and fee-payment receipt, when issued</li>
+            <li>School Leaving Certificate + Gap Certificate if applicable</li>
+            <li>Aadhaar Card &amp; 10+ passport photos (white background)</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:20px">
+          <div class="card-title">💡 Option-form strategy</div>
+          <ul class="checklist">
+            <li>Fill every acceptable option in true preference order — more valid choices improve safety</li>
+            <li>Order: top government → remaining government → private State Quota → private All India/Management → AIQ option</li>
+            <li>Compare private-college eligibility, counselling round and payment terms carefully before locking choices</li>
+            <li>Claim any special or PwD category only when it is listed in the official prospectus and supported by valid documents</li>
+            <li>Read upgrade, reporting, resignation and security-deposit rules before accepting any seat</li>
+            <li>Keep domicile, category, EWS and identity documents ready before registration begins</li>
+          </ul>
+        </div>
+        <div class="cta-section">
+          <h3>Need help with your option form?</h3>
+          <p>We'll build your personalised option list based on rank, category and preferences.</p>
+          <div class="cta-btns">
+            <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" class="btn btn-wa" style="flex:1;min-width:180px">💬 WhatsApp Counsellor</a>
+            <a href="tel:+919999703444" class="btn btn-blue" style="flex:1;min-width:180px">📞 Call Now</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works">
+    <div class="section-eyebrow">Simple &amp; fast</div>
+    <h2 class="section-h2">How the predictor works</h2>
+    <p class="section-lead">Three steps to compare your NEET rank with the 2025 Jharkhand government and private medical-college cutoffs on the provided page.</p>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+        <div class="hiw-num">1</div>
+        <h3>Enter your details</h3>
+        <p>Enter your NEET 2026 All India Rank, Jharkhand category and domicile status.</p>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-num">2</div>
+        <h3>Smart analysis</h3>
+        <p>Our prediction engine analyzes previous years' cutoff data to estimate your admission chances.</p>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-num">3</div>
+        <h3>Get your college list</h3>
+        <p>See every college with a real admission possibility score — download it as a PDF.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" style="padding-top:0">
+    <div class="section-eyebrow">Why students trust it</div>
+    <h2 class="section-h2">Built on real counselling data</h2>
+    <p class="section-lead">The prediction compares your AIR with the category-wise 2025 ranks published on the provided Jharkhand cutoff page.</p>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-ic">📈</div>
+        <div>
+          <h4>Real Jharkhand cutoffs</h4>
+          <p>Category-wise 2025 Round 1 government cutoffs and 2025 overall-low private cutoffs from the provided Medipedia page.</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="feat-ic">🎯</div>
+        <div>
+          <h4>Possibility score</h4>
+          <p>Each college shows a clear percentage chance — not just a vague "maybe".</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="feat-ic">🏥</div>
+        <div>
+          <h4>Government + Private</h4>
+          <p>9 unique Jharkhand colleges covered — 6 government and 3 private. Two private colleges also have explicit AIQ cutoff rows, creating 11 comparable cutoff routes.</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="feat-ic">📄</div>
+        <div>
+          <h4>Downloadable report</h4>
+          <p>Get a clean PDF you can share with your family and keep for counselling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="padding-top:0">
+    <div class="section-eyebrow">Student questions</div>
+    <h2 class="section-h2">Jharkhand MBBS Counselling FAQs</h2>
+    <div class="faq-wrap" id="faq-wrap"></div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="finalcta">
+    <div class="finalcta-inner">
+      <h2>Don't leave your MBBS seat to chance</h2>
+      <p>Run the predictor, then let our counsellors build your winning option form.</p>
+      <a href="#tool" class="btn btn-primary">Predict My Colleges →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="brand">
+            <div class="brand-mark">RM</div>
+            <div style="color:#fff">RM Group of Education</div>
+          </div>
+          <p>Premier MBBS admission consultants helping Indian students secure medical seats in India and abroad.
+            Turning ambitions into achievements.</p>
+        </div>
+        <div class="footer-contact">
+          <strong style="color:#fff;display:block;margin-bottom:8px">Contact</strong>
+          📍 H-51, H Block, Sector 63, Noida, UP 201301<br>
+          📞 <a href="tel:+919999703444">+91 99997-03444</a><br>
+          ✉️ <a href="mailto:info@rmgoe.org">info@rmgoe.org</a><br>
+          💬 <a
+  href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  WhatsApp Us
+</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Data source: <a href="https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Medipedia Overseas — NEET 2025 Jharkhand Cut-off</a>.
+        Predictions use 2025 government Round 1 and private overall-low cutoff ranks from that page. The source does not provide fees or seat intake. Actual 2026 cutoffs and eligibility may vary. Verify official Jharkhand notices. RMGOE does not guarantee admission.<br><br>
+        © 2026 RM Group of Education. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- STICKY MOBILE BAR -->
+  <div class="sticky-bar">
+    <a href="tel:+919999703444" class="btn btn-blue" style="flex:1">📞 Call</a>
+    <a
+      href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-wa"
+      style="flex:1"
+    >💬 WhatsApp</a>
+  </div>
+
+  <script>
+    // ============================================================
+    // CONFIG — set these before going live
+    // ============================================================
+    const CONFIG = {
+      N8N_WEBHOOK_URL: 'https://n8n.dreamofsoul.com/webhook/jharkhand-college-predictor'
+    };
+
+
+    // ============================================================
+    // DATA — Jharkhand NEET UG 2025 cutoff data
+    // Government colleges: 2025 Round 1 rank/score from the supplied page.
+    // Private colleges: "Overall Low Cut Off 2025" rank/score from the page.
+    // Two private colleges include explicit AIQ rows, preserved separately.
+    // Seat intake and tuition are not available on the supplied page.
+    // ============================================================
+    const COLLEGES = [
+      { id: 1, name: "Rajendra Institute of Medical Sciences", district: "Ranchi", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 10383, EWS: 17626, BC1: 13410, BC2: 14545, SC: 118805, ST: 252463 }, score: { UR: 555, EWS: 540, BC1: 547, BC2: 545, SC: 452, ST: 379 } },
+      { id: 2, name: "M.G.M. Medical College", district: "Jamshedpur", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 15589, EWS: 22321, BC1: 16793, BC2: 17555, SC: 147850, ST: 309744 }, score: { UR: 543, EWS: 532, BC1: 541, BC2: 540, SC: 434, ST: 353 } },
+      { id: 3, name: "Shaheed Nirmal Mahato Medical College", district: "Dhanbad", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 19619, EWS: 30624, BC1: 20383, BC2: 21726, SC: 165960, ST: 336717 }, score: { UR: 536, EWS: 521, BC1: 535, BC2: 533, SC: 424, ST: 341 } },
+      { id: 4, name: "Sheikh Bhikhari Medical College", district: "Hazaribagh", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 23558, EWS: 34176, BC1: 24526, BC2: 25304, SC: 174743, ST: 365430 }, score: { UR: 531, EWS: 517, BC1: 529, BC2: 528, SC: 419, ST: 329 } },
+      { id: 5, name: "Phulo Jhano Medical College", district: "Dumka", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 27092, EWS: 36034, BC1: 28338, BC2: 27653, SC: 197536, ST: 389347 }, score: { UR: 526, EWS: 515, BC1: 524, BC2: 525, SC: 407, ST: 320 } },
+      { id: 6, name: "Medinirai Medical College", district: "Palamu", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 29682, EWS: 38150, BC1: 30272, BC2: 30366, SC: 200284, ST: 424526 }, score: { UR: 523, EWS: 513, BC1: 522, BC2: 522, SC: 405, ST: 307 } }
+    ];
+
+    const PRIVATE_COLLEGES = [
+      { id: 101, name: "Manipal TATA Medical College (MTMC)", district: "Jamshedpur", type: "private", quota: "Private / State Counselling", cutoffBasis: "2025 Overall Low", eligibleOtherState: false, cutoff: { UR: 39718, EWS: 48587, BC1: 37627, BC2: 84414, SC: 233432, ST: 497811 }, score: { UR: 511, EWS: 503, BC1: 514, BC2: 475, SC: 388, ST: 281 } },
+      { id: 102, name: "Laxmi Chandravanshi Medical College & Hospital", district: "Palamu", type: "private", quota: "Private / State Counselling", cutoffBasis: "2025 Overall Low", eligibleOtherState: false, cutoff: { UR: 359140, EWS: 489561, BC1: 396080, BC2: 180963, SC: 676445, ST: 678046 }, score: { UR: 332, EWS: 284, BC1: 317, BC2: 416, SC: 230, ST: 229 } },
+      { id: 103, name: "Laxmi Chandravanshi Medical College & Hospital", district: "Palamu", type: "private", quota: "Private / AIQ", cutoffBasis: "2025 Overall Low — AIQ", eligibleOtherState: true, categoryBasis: "AIQ", cutoff: { UR: 373876, EWS: 373876, BC1: 373876, BC2: 373876, SC: 373876, ST: 373876 }, score: { UR: 326, EWS: 326, BC1: 326, BC2: 326, SC: 326, ST: 326 } },
+      { id: 104, name: "Netaji Subhash Medical College and Hospital", district: "Adityapur, Seraikela-Kharsawan", type: "private", quota: "Private / State Counselling", cutoffBasis: "2025 Overall Low", eligibleOtherState: false, cutoff: { UR: 888022, EWS: 917644, BC1: 1230559, BC2: 1050303, SC: 1275202, ST: 1252046 }, score: { UR: 181, EWS: 176, BC1: 124, BC2: 152, SC: 118, ST: 121 } },
+      { id: 105, name: "Netaji Subhash Medical College and Hospital", district: "Adityapur, Seraikela-Kharsawan", type: "private", quota: "Private / AIQ", cutoffBasis: "2025 Overall Low — AIQ", eligibleOtherState: true, categoryBasis: "AIQ", cutoff: { UR: 723819, EWS: 723819, BC1: 723819, BC2: 723819, SC: 723819, ST: 723819 }, score: { UR: 218, EWS: 218, BC1: 218, BC2: 218, SC: 218, ST: 218 } }
+    ];
+
+    const DEEMED_COLLEGES = [];
+    const NEW_COLLEGES_WITHOUT_CUTOFF = [];
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let state = {
+      name: '', email: '', phone: '', rank: 0, category: '', domicile: 'yes',
+      timerInterval: null, results: {}
+    };
+    let currentView = 'table';
+    let domicileVal = 'yes';
+
+    const CAT_LABEL = {
+      UR: 'General / UR',
+      EWS: 'EWS',
+      BC1: 'BC-I',
+      BC2: 'BC-II',
+      SC: 'SC',
+      ST: 'ST'
+    };
+
+    // ============================================================
+    // POSSIBILITY % ENGINE
+    // ============================================================
+    function calcPossibility(studentRank, closingRank) {
+      if (!closingRank) return null;
+      const ratio = closingRank / studentRank; // >1 = safely inside
+      let pct;
+      if (ratio >= 1.7) pct = 97;
+      else if (ratio >= 1.0) pct = 74 + (ratio - 1.0) / (1.7 - 1.0) * 23;
+      else if (ratio >= 0.85) pct = 48 + (ratio - 0.85) / (1.0 - 0.85) * 26;
+      else if (ratio >= 0.70) pct = 15 + (ratio - 0.70) / (0.85 - 0.70) * 33;
+      else return null;
+      return Math.max(5, Math.min(99, Math.round(pct)));
+    }
+    function pctClass(p) { return p >= 75 ? 'hi' : p >= 45 ? 'mid' : 'lo' }
+    function pctLabel(p) { return p >= 75 ? 'Strong' : p >= 45 ? 'Fair' : 'Low' }
+
+    // ============================================================
+    // VALIDATION
+    // ============================================================
+    function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) }
+    function validPhone(p) {
+      if (p.length !== 10) return false;
+      if (!/^[6-9]/.test(p)) return false;
+      if (/^(\d)\1{9}$/.test(p)) return false;
+      return true;
+    }
+    function showErr(field, show) {
+      const e = document.getElementById('err-' + field);
+      const inp = document.getElementById('inp-' + field);
+      if (e) e.classList.toggle('show', show);
+      if (inp) inp.classList.toggle('err', show);
+      if (field === 'phone') document.getElementById('phone-wrap').classList.toggle('err', show);
+    }
+
+    document.getElementById('inp-phone').addEventListener('input', function () {
+      this.value = this.value.replace(/\D/g, '');
+    });
+
+    function setDomicile(v) {
+      domicileVal = v;
+      document.querySelectorAll('#domicile-toggle .toggle-btn').forEach(button => {
+        const isActive = button.dataset.val === v;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+    }
+const prefersReducedMotion = window.matchMedia(
+  '(prefers-reduced-motion: reduce)'
+);
+
+function runAfterLayout(callback) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(callback);
+  });
+}
+
+function safeScrollIntoView(target, block = 'start') {
+  const element =
+    typeof target === 'string'
+      ? document.getElementById(target)
+      : target;
+
+  if (!element) return;
+
+  runAfterLayout(() => {
+    element.scrollIntoView({
+      behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+      block
+    });
+  });
+}
+
+function safeFocus(target) {
+  const element =
+    typeof target === 'string'
+      ? document.getElementById(target)
+      : target;
+
+  if (!element) return;
+
+  runAfterLayout(() => {
+    try {
+      element.focus({ preventScroll: true });
+    } catch {
+      element.focus();
+    }
+  });
+}
+    // ============================================================
+    // NAV
+    // ============================================================
+    function ensureToolResultPanel() {
+      let panel = document.getElementById('screen-tool-result');
+      if (!panel) {
+        panel = document.createElement('div');
+        panel.className = 'screen tool-result-panel';
+        panel.id = 'screen-tool-result';
+        document.querySelector('.tool-body').appendChild(panel);
+      }
+
+      const top = (state.results && state.results.all && state.results.all[0]) ? state.results.all[0] : null;
+      const strong = (state.results && state.results.all ? state.results.all : []).filter(c => c.possibility >= 75).length;
+      const fair = (state.results && state.results.all ? state.results.all : []).filter(c => c.possibility >= 45 && c.possibility < 75).length;
+      const topName = top ? `${top.name} — ${top.quota || typeLabel(top)}` : 'your matched colleges';
+
+      panel.innerHTML = `
+        <div class="result-ready-card">
+          <div class="result-ready-badge">✓</div>
+          <h3>Your Jharkhand NEET college report is ready</h3>
+          <p>We have generated your personalised college prediction report. Your submitted details stay visible here and the full-width report is available below.</p>
+
+          <div class="result-profile-grid">
+            <div class="result-profile-item"><small>Name</small><b>${escapeHTML(state.name || '-')}</b></div>
+            <div class="result-profile-item"><small>AIR</small><b>${state.rank ? state.rank.toLocaleString('en-IN') : '-'}</b></div>
+            <div class="result-profile-item"><small>Category</small><b>${CAT_LABEL[state.category] || '-'}</b></div>
+            <div class="result-profile-item"><small>Domicile</small><b>${state.domicile === 'yes' ? 'Jharkhand' : 'Other State'}</b></div>
+          </div>
+
+          <div class="alert alert-success" style="margin:0 0 14px">
+            <div class="alert-icon">🎯</div>
+            <div><strong>Top match:</strong> ${escapeHTML(topName)}<br>Strong options: ${strong} · Fair options: ${fair}</div>
+          </div>
+
+          <div class="result-ready-actions">
+            <button
+  class="btn btn-primary"
+  type="button"
+  onclick="safeScrollIntoView('screen-results', 'start')"
+>
+  View Full Report ↓
+</button>
+          </div>
+        </div>`;
+
+      return panel;
+    }
+
+    function showScreen(id) {
+  const resultsScreen = document.getElementById('screen-results');
+  const toolScreens = document.querySelectorAll('.tool-body > .screen');
+
+  if (id === 'screen-results') {
+    toolScreens.forEach(screen => {
+      screen.classList.remove('active');
+    });
+
+    const resultPanel = ensureToolResultPanel();
+    resultPanel.classList.add('active');
+
+    if (resultsScreen) {
+      resultsScreen.classList.add('active');
+    }
+
+    document.body.classList.add('results-generated');
+
+    safeScrollIntoView(
+      document.querySelector('.tool-shell'),
+      'start'
+    );
+
+    return;
+  }
+
+  document.body.classList.remove('results-generated');
+
+  if (resultsScreen) {
+    resultsScreen.classList.remove('active');
+  }
+
+  toolScreens.forEach(screen => {
+    screen.classList.remove('active');
+  });
+
+  const nextScreen = document.getElementById(id);
+
+  if (nextScreen) {
+    nextScreen.classList.add('active');
+  }
+}
+    function setStep(n) {
+      for (let i = 1; i <= 3; i++) {
+        const s = document.getElementById('step' + i);
+        s.classList.remove('active', 'done');
+        if (i < n) s.classList.add('done'); else if (i === n) s.classList.add('active');
+      }
+    }
+
+    // ============================================================
+    // STEP 1 → REAL OTP
+    // ============================================================
+    function goToOTP() {
+      let ok = true;
+
+      const name = document.getElementById('inp-name').value.trim();
+      const email = document.getElementById('inp-email').value.trim();
+      const phone = document.getElementById('inp-phone').value.trim();
+      const rank = parseInt(document.getElementById('inp-rank').value, 10);
+      const cat = document.getElementById('inp-cat').value;
+
+      showErr('name', false);
+      showErr('email', false);
+      showErr('phone', false);
+      showErr('rank', false);
+      showErr('cat', false);
+
+      if (name.length < 2) {
+        showErr('name', true);
+        ok = false;
+      }
+
+      if (!validEmail(email)) {
+        showErr('email', true);
+        ok = false;
+      }
+
+      if (!validPhone(phone)) {
+        showErr('phone', true);
+        ok = false;
+      }
+
+      if (isNaN(rank) || rank < 1) {
+        showErr('rank', true);
+        ok = false;
+      }
+
+      if (!cat) {
+        showErr('cat', true);
+        ok = false;
+      }
+
+      if (!ok) {
+        safeScrollIntoView(
+  document.querySelector('.field-err.show'),
+  'center'
+);
+        return;
+      }
+
+      state = {
+        ...state,
+        name,
+        email,
+        phone,
+        rank,
+        category: cat,
+        domicile: domicileVal
+      };
+
+      // Run prediction before OTP screen
+      state.results = predict(state.rank, state.category, state.domicile);
+
+      // Blurred preview
+      const top = state.results.all.slice(0, 3);
+
+      document.getElementById('preview-cards').innerHTML = top.map(c => `
+    <div class="preview-card">
+      <div>
+        <div class="preview-name">${escapeHTML(c.name)}</div>
+        <div class="preview-dist">${escapeHTML(c.district)} · ${escapeHTML(c.quota || typeLabel(c))}</div>
+      </div>
+      <div class="preview-pct">${c.possibility}%</div>
+    </div>
+  `).join('') || `
+    <div class="preview-card">
+      <div class="preview-name">Your matched colleges</div>
+    </div>
+  `;
+
+      document.getElementById('confirm-phone').textContent = phone;
+
+      resetOTPBoxes();
+
+      document.getElementById('send-otp-section').classList.remove('hidden');
+      document.getElementById('otp-section').classList.add('hidden');
+
+      clearInterval(state.timerInterval);
+
+      setStep(2);
+      showScreen('screen-otp');
+safeScrollIntoView('screen-otp', 'start');
+
+sendOTP();
+    }
+
+
+    // ============================================================
+    // OTP — OTP THROUGH PHP FILES
+    // ============================================================
+
+    async function otpRequest(url, payload) {
+      const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (error) {
+        throw new Error('Invalid response from OTP server.');
+      }
+
+      const success =
+        result.success === true ||
+        result.status === 'success' ||
+        result.status === true;
+
+      if (!response.ok || !success) {
+        throw new Error(result.message || 'OTP request failed. Please try again.');
+      }
+
+      return result;
+    }
+
+
+    function resetOTPBoxes() {
+      ['otp0', 'otp1', 'otp2', 'otp3'].forEach(id => {
+        const box = document.getElementById(id);
+
+        if (box) {
+          box.value = '';
+          box.disabled = false;
+        }
+      });
+
+      const err = document.getElementById('otp-error');
+
+      if (err) {
+        err.textContent = '';
+        err.classList.remove('show');
+      }
+
+      const timer = document.getElementById('otp-timer');
+
+      if (timer) {
+        timer.textContent = '';
+      }
+    }
+
+
+    async function sendOTP() {
+      const sendBtn = document.getElementById('btn-send-otp');
+      const originalBtnText = sendBtn ? sendBtn.innerHTML : '';
+
+      if (!state.phone || !/^[6-9]\d{9}$/.test(state.phone)) {
+        alert('Please enter a valid 10-digit mobile number.');
+        showScreen('screen-input');
+        setStep(1);
+        return;
+      }
+
+      try {
+        if (sendBtn) {
+          sendBtn.disabled = true;
+          sendBtn.innerHTML = '<span class="spinner"></span> Sending OTP...';
+        }
+
+        await otpRequest('send-otp.php', {
+          mobile: state.phone
+        });
+
+        document.getElementById('send-otp-section').classList.add('hidden');
+        document.getElementById('otp-section').classList.remove('hidden');
+
+        document.getElementById('otp-phone-display').textContent =
+          state.phone.replace(/(\d{2})(\d{4})(\d{4})/, '$1****$3');
+
+        resetOTPBoxes();
+
+        safeFocus('otp0');
+
+        startTimer(30);
+
+      } catch (error) {
+        alert(error.message || 'Unable to send OTP. Please try again.');
+
+        document.getElementById('send-otp-section').classList.remove('hidden');
+        document.getElementById('otp-section').classList.add('hidden');
+
+      } finally {
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = originalBtnText;
+        }
+      }
+    }
+
+
+    function moveOTP(i) {
+      const el = document.getElementById('otp' + i);
+
+      if (!el) return;
+
+      el.value = el.value.replace(/\D/g, '');
+
+      if (el.value && i < 3) {
+  const nextBox = document.getElementById('otp' + (i + 1));
+
+  if (nextBox) {
+    try {
+      nextBox.focus({ preventScroll: true });
+    } catch {
+      nextBox.focus();
+    }
+  }
+}
+
+      const fullOTP = ['otp0', 'otp1', 'otp2', 'otp3']
+        .map(id => document.getElementById(id).value)
+        .join('');
+
+      if (fullOTP.length === 4) {
+        setTimeout(verifyOTP, 150);
+      }
+    }
+
+
+    let isVerifyingOTP = false;
+
+
+    async function verifyOTP() {
+      if (isVerifyingOTP) return;
+      isVerifyingOTP = true;
+      const enteredOTP = ['otp0', 'otp1', 'otp2', 'otp3']
+        .map(id => document.getElementById(id).value)
+        .join('');
+
+      const err = document.getElementById('otp-error');
+      const verifyBtn = document.getElementById('btn-verify');
+      const originalBtnText = verifyBtn ? verifyBtn.innerHTML : '';
+
+      if (!/^\d{4}$/.test(enteredOTP)) {
+        err.textContent = 'Please enter the 4-digit OTP.';
+        err.classList.add('show');
+        isVerifyingOTP = false;
+        return;
+      }
+
+      try {
+        if (verifyBtn) {
+          verifyBtn.disabled = true;
+          verifyBtn.innerHTML = '<span class="spinner"></span> Verifying...';
+        }
+
+        await otpRequest('verify-otp.php', {
+          mobile: state.phone,
+          otp: enteredOTP
+        });
+
+        clearInterval(state.timerInterval);
+
+        fireWebhook('lead_verified');
+
+        buildResults();
+        setStep(3);
+        showScreen('screen-results');
+
+      } catch (error) {
+        err.textContent = error.message || 'Incorrect OTP. Please check and try again.';
+        err.classList.add('show');
+
+        ['otp0', 'otp1', 'otp2', 'otp3'].forEach(id => {
+          const box = document.getElementById(id);
+
+          if (box) {
+            box.value = '';
+            box.disabled = false;
+          }
+        });
+
+        safeFocus('otp0');
+
+      } finally {
+        isVerifyingOTP = false;
+
+        if (verifyBtn) {
+          verifyBtn.disabled = false;
+          verifyBtn.innerHTML = originalBtnText;
+        }
+      }
+    }
+
+
+    function startTimer(secs) {
+      clearInterval(state.timerInterval);
+
+      let t = secs;
+      const el = document.getElementById('otp-timer');
+
+      el.textContent = `Resend OTP in ${t}s`;
+
+      state.timerInterval = setInterval(() => {
+        t--;
+
+        if (t > 0) {
+          el.textContent = `Resend OTP in ${t}s`;
+        } else {
+          clearInterval(state.timerInterval);
+
+          el.innerHTML =
+            '<a href="#" onclick="resendOTP();return false;" style="color:var(--blue);font-weight:700">Resend OTP</a>';
+        }
+      }, 1000);
+    }
+
+
+    async function resendOTP() {
+      resetOTPBoxes();
+      await sendOTP();
+    }
+
+
+    function backToPhone() {
+      clearInterval(state.timerInterval);
+
+      document.getElementById('otp-section').classList.add('hidden');
+      document.getElementById('send-otp-section').classList.remove('hidden');
+
+      resetOTPBoxes();
+
+      showScreen('screen-input');
+      setStep(1);
+    }
+
+    // ============================================================
+    // PREDICTION
+    // ============================================================
+    function predict(rank, category, domicile) {
+      const govt = [], privateM = [], deemedM = [];
+
+      if (domicile === 'yes') {
+        COLLEGES.forEach(col => {
+          const closing = col.cutoff[category];
+          if (!closing) return;
+          const p = calcPossibility(rank, closing);
+          if (p !== null) govt.push({
+            ...col,
+            closingRank: closing,
+            cutoffScore: col.score[category],
+            possibility: p,
+            usedOpenFallback: false
+          });
+        });
+      }
+
+      PRIVATE_COLLEGES.forEach(col => {
+        if (domicile !== 'yes' && !col.eligibleOtherState) return;
+        const closing = col.cutoff[category];
+        if (!closing) return;
+        const p = calcPossibility(rank, closing);
+        if (p !== null) privateM.push({
+          ...col,
+          closingRank: closing,
+          cutoffScore: col.score[category],
+          possibility: p,
+          usedOpenFallback: false
+        });
+      });
+
+      govt.sort((a, b) => b.possibility - a.possibility);
+      privateM.sort((a, b) => b.possibility - a.possibility);
+      const all = [...govt, ...privateM].sort((a, b) => b.possibility - a.possibility);
+      return { govt, privateM, deemedM, all };
+    }
+
+
+    function fireWebhook(event) {
+      const high = (state.results.all || []).filter(c => c.possibility >= 75);
+      const payload = {
+        event,
+        name: state.name,
+        email: state.email,
+        phone: state.phone,
+        neet_air: state.rank,
+        category: state.category,
+        jharkhand_domicile: state.domicile === 'yes',
+        otp_verified: true,
+        top_colleges: high.slice(0, 5).map(c => `${c.name} — ${c.quota || typeLabel(c)}`),
+        tool: 'Jharkhand-College-Predictor',
+        source: 'rmgoe',
+        timestamp: new Date().toISOString()
+      };
+
+      if (CONFIG.N8N_WEBHOOK_URL && CONFIG.N8N_WEBHOOK_URL !== 'YOUR_N8N_WEBHOOK_URL') {
+        fetch(CONFIG.N8N_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(error => console.error('Lead webhook failed:', error));
+      }
+
+      const firstMatch = state.results.all[0] || {};
+      const top = firstMatch.name ? `${firstMatch.name} — ${firstMatch.quota || typeLabel(firstMatch)}` : 'my options';
+      const waText = `Hi, I used the Jharkhand College Predictor.%0AName: ${encodeURIComponent(state.name)}%0AAIR: ${state.rank}%0ACategory: ${state.category}%0ATop match: ${encodeURIComponent(top)}%0AI'd like to discuss my options.`;
+      const waCtaLink = document.getElementById('wa-cta-link');
+      if (waCtaLink) {
+        waCtaLink.href = `https://wa.me/8448207814?text=${waText}`;
+      }
+    }
+
+    // ============================================================
+    // BUILD RESULTS
+    // ============================================================
+    function typeLabel(c) { return c.quota || ({ govt: 'Government', private: 'Private', deemed: 'Deemed' }[c.type] || c.type); }
+
+    function fmtFee(n) {
+      if (!n) return '—';
+      if (n >= 100000) { const l = (n / 100000); return '₹' + (l % 1 === 0 ? l.toFixed(0) : l.toFixed(1)) + 'L/yr' }
+      return '₹' + Math.round(n / 1000) + 'K/yr';
+    }
+    // Total ~4.5yr course tuition (MBBS academic duration)
+    function totalFee(n) {
+      if (!n) return '—';
+      const t = n * 4.5;
+      if (t >= 100000) return '₹' + (t / 100000).toFixed(1) + 'L';
+      return '₹' + Math.round(t / 1000) + 'K';
+    }
+
+    function buildResults() {
+      const { govt, privateM, deemedM, all } = state.results;
+      const cat = state.category, rank = state.rank;
+
+      const strong = all.filter(c => c.possibility >= 75).length;
+      const fair = all.filter(c => c.possibility >= 45 && c.possibility < 75).length;
+      const low = all.filter(c => c.possibility < 45).length;
+
+      document.getElementById('result-summary').innerHTML = `
+    <div class="rs-top">
+      <div>
+        <div class="rs-score-lbl">NEET 2026 All India Rank</div>
+        <div class="rs-score">${rank.toLocaleString('en-IN')}</div>
+        <div class="rs-meta">${escapeHTML(state.name)} · ${CAT_LABEL[cat]} · ${state.domicile === 'yes' ? 'Jharkhand Domicile' : 'Other State'}</div>
+      </div>
+      <div class="rs-pills">
+        <div class="rs-pill"><div class="rs-pill-num">${strong}</div><div class="rs-pill-lbl">STRONG</div></div>
+        <div class="rs-pill"><div class="rs-pill-num">${fair}</div><div class="rs-pill-lbl">FAIR</div></div>
+        <div class="rs-pill"><div class="rs-pill-num">${low}</div><div class="rs-pill-lbl">LOW</div></div>
+      </div>
+    </div>`;
+
+      document.getElementById('non-domicile-alert').classList.toggle('hidden', state.domicile !== 'no');
+
+      if (!all.length) {
+        document.getElementById('colleges-section').classList.add('hidden');
+        document.getElementById('ineligible-section').classList.remove('hidden');
+        document.getElementById('ineligible-message').innerHTML =
+          `At AIR <strong>${rank.toLocaleString('en-IN')}</strong> in <strong>${CAT_LABEL[cat]}</strong>, no Jharkhand option on the supplied 2025 page is close to your rank. NRI, special-category, later vacancy rounds and MBBS-abroad routes should be checked separately.`;
+        return;
+      }
+      document.getElementById('colleges-section').classList.remove('hidden');
+      document.getElementById('ineligible-section').classList.add('hidden');
+
+      renderTable(all);
+      renderCards(govt, privateM, deemedM);
+      setView(window.matchMedia('(max-width: 760px)').matches ? 'card' : 'table');
+      buildAnalysis(rank, cat, govt, privateM, deemedM);
+    }
+
+    // ── TABLE ──
+    function renderTable(list) {
+      const tbody = document.getElementById('report-body');
+      if (!list.length) { tbody.innerHTML = `<tr><td colspan="8" class="center" style="padding:24px;color:var(--muted)">No colleges matched — talk to our counsellor for options.</td></tr>`; return }
+      let rows = '', n = 1;
+      list.forEach(c => {
+        const pc = pctClass(c.possibility);
+        const cr = c.closingRank ? c.closingRank.toLocaleString('en-IN') : '—';
+        const scoreColor = c.type === 'govt' ? 'color:var(--green);font-weight:700' : 'color:var(--amber);font-weight:700';
+        rows += `<tr>
+      <td class="col-sno">${n++}</td>
+      <td class="col-name">${c.name}</td>
+      <td>${c.district}</td>
+      <td><span class="type-badge type-${c.type}">${typeLabel(c)}</span></td>
+      <td class="center" style="font-size:11px;font-weight:800">${escapeHTML(c.cutoffBasis || '—')}</td>
+      <td class="col-rank center">${cr}</td>
+      <td class="center" style="${scoreColor};white-space:nowrap">${c.cutoffScore ?? '—'}</td>
+      <td class="center pct-cell">
+        <div class="pct-num pct-${pc}">${c.possibility}%</div>
+        <div class="pct-bar"><div class="pct-fill pct-fill-${pc}" style="width:${c.possibility}%"></div></div>
+      </td>
+    </tr>`;
+      });
+      tbody.innerHTML = rows;
+    }
+
+    // ── CARDS ──
+    function renderCards(govt, privateM, deemedM) {
+      const wrap = document.getElementById('view-cards');
+      let html = '';
+      function card(c) {
+        const pc = pctClass(c.possibility);
+        const scoreCol = c.type === 'govt' ? 'color:var(--green)' : 'color:var(--amber)';
+        const scoreLbl = c.categoryBasis === 'AIQ' ? 'AIQ Cutoff Score' : 'Category Cutoff Score';
+        return `<div class="college-card">
+      <div class="cc-top">
+        <div>
+          <div class="cc-name">${escapeHTML(c.name)}</div>
+          <div class="cc-meta">${c.district} · <span class="type-badge type-${c.type}">${typeLabel(c)}</span></div>
+        </div>
+        <div class="cc-pct"><div class="pct-num pct-${pc}">${c.possibility}%</div><div class="cc-pct-lbl">${pctLabel(c.possibility)}</div></div>
+      </div>
+      <div class="cc-stats">
+        <div class="cc-stat"><strong>${escapeHTML(c.cutoffBasis || '—')}</strong>Cutoff Basis</div>
+        <div class="cc-stat"><strong>${c.closingRank ? c.closingRank.toLocaleString('en-IN') : '—'}</strong>2025 Close Rank</div>
+        <div class="cc-stat"><strong style="${scoreCol}">${c.cutoffScore ?? '—'}</strong>${scoreLbl}</div>
+        <div class="cc-stat"><strong>Provided page</strong>Data Source</div>
+      </div>
+    </div>`;
+      }
+      if (govt.length) {
+        html += `<div class="section-hdr"><h3>Government Colleges</h3><span class="count-badge">${govt.length}</span></div>`;
+        html += govt.map(card).join('');
+      }
+      if (privateM.length) {
+        html += `<div class="section-hdr"><h3>Private College Cutoff Options — Jharkhand</h3><span class="count-badge">${privateM.length}</span></div>`;
+        html += '<div class="alert alert-info"><div class="alert-icon">💡</div><div>Private-college values use the page’s <strong>Overall Low Cut Off 2025</strong>. Laxmi Chandravanshi and Netaji Subhash also have separate AIQ rows on the source page, so those options are shown separately.</div></div>';
+        html += privateM.slice(0, 18).map(card).join('');
+      }
+      wrap.innerHTML = html || '<div class="alert alert-info">No colleges matched.</div>';
+    }
+
+    function setView(v) {
+      currentView = v;
+      document.getElementById('view-table').classList.toggle('hidden', v !== 'table');
+      document.getElementById('view-cards').classList.toggle('hidden', v !== 'card');
+      document.getElementById('btn-table-view').classList.toggle('active', v === 'table');
+      document.getElementById('btn-card-view').classList.toggle('active', v === 'card');
+    }
+
+    // ── ANALYSIS ──
+    function buildAnalysis(rank, cat, govt, privateM, deemedM) {
+      const strong = govt.filter(c => c.possibility >= 75).length;
+      const chance = strong >= 4 ? 'Strong' : strong >= 1 ? 'Moderate' : 'Low';
+
+      const govtRanks = COLLEGES
+        .map(c => c.cutoff[cat] || c.cutoff.UR)
+        .filter(Boolean)
+        .sort((a, b) => a - b);
+
+      const topTier = govtRanks[0];
+      const midTier = govtRanks[Math.floor(govtRanks.length / 2)];
+      const lastTier = govtRanks[govtRanks.length - 1];
+
+      document.getElementById('analysis-content').innerHTML = `
+    <div class="card-title">Your rank analysis</div>
+    <div class="card-sub">How your NEET All India Rank compares with Jharkhand government-college 2025 Round 1 closing ranks for ${CAT_LABEL[cat]} using the supplied 2025 data</div>
+    ${rankBar('Best Government Closing Rank', topTier, rank, 'var(--green)')}
+    ${rankBar('Median Government Closing Rank', midTier, rank, 'var(--amber)')}
+    ${rankBar('Last Government Closing Rank', lastTier, rank, 'var(--blue)')}
+    <div class="analysis-stats-grid" style="display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:12px;margin-top:20px">
+      <div style="background:var(--green-lt);padding:16px;border-radius:var(--r-lg);text-align:center"><div style="font-size:26px;font-weight:800;color:var(--green)">${govt.length}</div><div style="font-size:12px;color:var(--green);font-weight:700;margin-top:4px">Government Colleges Matched</div></div>
+      <div style="background:var(--amber-lt);padding:16px;border-radius:var(--r-lg);text-align:center"><div style="font-size:26px;font-weight:800;color:var(--amber)">${privateM.length}</div><div style="font-size:12px;color:var(--amber);font-weight:700;margin-top:4px">Private Seat Options Matched</div></div>
+    </div>
+    <div class="alert alert-${chance === 'Strong' ? 'success' : chance === 'Moderate' ? 'warn' : 'info'}" style="margin-top:18px">
+      <div class="alert-icon">${chance === 'Strong' ? '🎯' : chance === 'Moderate' ? '⚡' : '💡'}</div>
+      <div><strong>Jharkhand government-seat chance: ${state.domicile === 'yes' ? chance : 'Not evaluated'}</strong><br>${
+        state.domicile !== 'yes'
+          ? `Jharkhand government and state-category private options are excluded because Other State was selected. Only the two explicit AIQ rows on the supplied page are evaluated.`
+          : chance === 'Strong'
+            ? `You have ${strong} government colleges with 75%+ possibility. Fill every acceptable choice in true preference order.`
+            : chance === 'Moderate'
+              ? `You have ${strong} strong government option(s). Stay active through all counselling rounds.`
+              : `Government chances are limited in this cutoff model. Compare private State Quota, All India/Management, NRI and other eligible routes carefully.`
+      }</div>
+    </div>
+    <div style="margin-top:16px;padding:16px;background:var(--paper);border-radius:var(--r-lg)">
+      <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px">Category: ${CAT_LABEL[cat]}</div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.7">
+        Best supplied govt closing rank: <strong>${topTier ? topTier.toLocaleString('en-IN') : '—'}</strong><br>
+        Last supplied govt closing rank: <strong>${lastTier ? lastTier.toLocaleString('en-IN') : '—'}</strong><br>
+        Your AIR: <strong>${rank.toLocaleString('en-IN')}</strong>
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px">
+        The supplied page includes UR, EWS, BC-I, BC-II, SC and ST, plus a few special rows such as Deaf, Blind and PH. This simplified predictor uses the six plain categories only.
+      </div>
+    </div>`;
+    }
+    function rankBar(label, closing, rank, color) {
+      if (!closing) return '';
+      const w = Math.min(100, Math.round(closing / rank * 100));
+      return `<div class="score-bar-wrap"><div class="score-lbl"><span>${label}</span><span>AIR ≤ ${closing.toLocaleString('en-IN')}</span></div><div class="score-bg"><div class="score-fill" style="width:${w}%;background:${color}"></div></div></div>`;
+    }
+
+    // ── TABS ──
+    function switchTab(id, el) {
+      ['tab-colleges', 'tab-analysis', 'tab-next'].forEach(panelId => {
+        document.getElementById(panelId)?.classList.add('hidden');
+      });
+
+      document.getElementById(id)?.classList.remove('hidden');
+
+      document.querySelectorAll('.tab').forEach(tab => {
+        const isActive = tab === el;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', String(isActive));
+      });
+    }
+
+    // ============================================================
+    // PROFESSIONAL REPORT HELPERS — print/PDF only
+    // ============================================================
+    function reportList() {
+      return (state && state.results && Array.isArray(state.results.all)) ? state.results.all : [];
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function safeFileName(value) {
+      return String(value || 'Student').trim().replace(/[^a-z0-9]+/gi, '_').replace(/^_+|_+$/g, '') || 'Student';
+    }
+
+    function reportDate() {
+      return new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function possibilityBand(p) {
+      if (p >= 75) return 'Strong';
+      if (p >= 45) return 'Fair';
+      return 'Low';
+    }
+
+    function buildProfessionalReportHTML() {
+      const list = reportList();
+      const strong = list.filter(c => c.possibility >= 75).length;
+      const fair = list.filter(c => c.possibility >= 45 && c.possibility < 75).length;
+      const low = list.filter(c => c.possibility < 45).length;
+      const top = list[0] || null;
+      const date = reportDate();
+      const domicile = state.domicile === 'yes' ? 'Jharkhand Domicile' : 'Other State';
+
+      const rows = list.map((c, i) => {
+        const pc = pctClass(c.possibility);
+        const badgeType = c.type === 'govt' ? 'pro-badge-govt' : (c.type === 'deemed' ? 'pro-badge-deemed' : 'pro-badge-private');
+        const closingRank = c.closingRank ? c.closingRank.toLocaleString('en-IN') : '—';
+        return `
+          <tr>
+            <td style="width:4%;text-align:center;font-weight:800;color:#64748b">${i + 1}</td>
+            <td style="width:30%"><div class="pro-college-name">${escapeHTML(c.name)}</div></td>
+            <td style="width:12%">${escapeHTML(c.district)}</td>
+            <td style="width:9%"><span class="pro-badge ${badgeType}">${escapeHTML(typeLabel(c))}</span></td>
+            <td style="width:12%;text-align:center">${escapeHTML(c.cutoffBasis || '—')}</td>
+            <td style="width:13%;text-align:center;font-weight:800">${closingRank}</td>
+            <td style="width:9%;text-align:center;font-weight:800;${c.type === 'govt' ? 'color:#087344' : 'color:#a45a00'}">${c.cutoffScore ?? '—'}</td>
+            <td style="width:14%;text-align:center"><span class="pro-prob pro-prob-${pc}">${c.possibility}% · ${possibilityBand(c.possibility)}</span></td>
+          </tr>`;
+      }).join('');
+
+      return `
+        <div class="pro-report-doc">
+          <div class="pro-report-header">
+            <div>
+              <div class="pro-report-brand">RM Group of Education</div>
+              <h1>Jharkhand NEET 2026 College Prediction Report</h1>
+              <p>Personalised report based on NEET AIR, Jharkhand category, domicile and the 2025 cutoff ranks/scores published on the supplied page.</p>
+            </div>
+            <div class="pro-report-date">
+              Generated<br><b>${date}</b>
+            </div>
+          </div>
+
+          <div class="pro-report-grid">
+            <div class="pro-report-card"><small>Student Name</small><b>${escapeHTML(state.name || '-')}</b></div>
+            <div class="pro-report-card"><small>All India Rank</small><b>${state.rank ? state.rank.toLocaleString('en-IN') : '-'}</b></div>
+            <div class="pro-report-card"><small>Jharkhand Category</small><b>${escapeHTML(CAT_LABEL[state.category] || '-')}</b></div>
+            <div class="pro-report-card"><small>Domicile</small><b>${escapeHTML(domicile)}</b></div>
+            <div class="pro-report-card"><small>Total Matches</small><b>${list.length} Colleges</b></div>
+            <div class="pro-report-card"><small>Strong Options</small><b>${strong}</b></div>
+            <div class="pro-report-card"><small>Fair Options</small><b>${fair}</b></div>
+            <div class="pro-report-card"><small>Top Match</small><b>${top ? escapeHTML(top.name) : '-'}</b></div>
+          </div>
+
+          <div class="pro-report-section-title">
+            <h2>College Prediction Data</h2>
+            <p>Strong: ${strong} · Fair: ${fair} · Low: ${low}</p>
+          </div>
+
+          <table class="pro-report-table">
+            <thead>
+              <tr>
+                <th style="width:4%;text-align:center">#</th>
+                <th style="width:30%">College</th>
+                <th style="width:12%">District</th>
+                <th style="width:9%">Type</th>
+                <th style="width:12%;text-align:center">Cutoff Basis</th>
+                <th style="width:12%;text-align:center">Close Rank 2025</th>
+                <th style="width:9%;text-align:center">Score</th>
+                <th style="width:14%;text-align:center">Possibility</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows || `<tr><td colspan="8" style="text-align:center;padding:22px;color:#64748b">No college data generated.</td></tr>`}
+            </tbody>
+          </table>
+
+          <div class="pro-report-note">
+            <b>Important:</b> Government predictions use 2025 Round 1 ranks and private predictions use 2025 overall-low ranks from the supplied page. The source does not provide seat intake or tuition fees, so this report does not display or estimate them. Actual 2026 allotment depends on eligibility, seat matrix, category movement, choices and counselling round. This report does not guarantee admission.
+          </div>
+
+          <div class="pro-report-footer">
+            RM Group of Education · H-51, Sector 63, Noida · +91 99997-03444 · rmgoe.org<br>
+            Data reference: Medipedia Overseas, “NEET 2025 Jharkhand Cut-off” page supplied by the user. Verify all final information on official counselling portals.
+          </div>
+        </div>`;
+    }
+
+    // ============================================================
+    // PRINT
+    // ============================================================
+    function printReport() {
+      const list = reportList();
+      if (!list.length) {
+        alert('Please generate the report first.');
+        return;
+      }
+
+      const old = document.getElementById('professionalPrintReport');
+      if (old) old.remove();
+
+      const printNode = document.createElement('div');
+      printNode.id = 'professionalPrintReport';
+      printNode.innerHTML = buildProfessionalReportHTML();
+      document.body.appendChild(printNode);
+
+      const cleanup = () => {
+        document.body.classList.remove('is-professional-printing');
+        const active = document.getElementById('professionalPrintReport');
+        if (active) active.remove();
+        window.removeEventListener('afterprint', cleanup);
+      };
+
+      window.addEventListener('afterprint', cleanup);
+      document.body.classList.add('is-professional-printing');
+
+      setTimeout(() => {
+        window.focus();
+        window.print();
+        setTimeout(() => {
+          if (document.body.classList.contains('is-professional-printing')) cleanup();
+        }, 1500);
+      }, 80);
+    }
+
+    // ============================================================
+    // PDF
+    // ============================================================
+    let jsPDFLoadPromise = null;
+
+function loadJsPDF() {
+  if (window.jspdf?.jsPDF) {
+    return Promise.resolve();
+  }
+
+  if (jsPDFLoadPromise) {
+    return jsPDFLoadPromise;
+  }
+
+  jsPDFLoadPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+
+    script.src =
+      'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+
+    script.async = true;
+
+    script.onload = () => {
+      if (window.jspdf?.jsPDF) {
+        resolve();
+      } else {
+        reject(new Error('jsPDF loaded but was not initialised.'));
+      }
+    };
+
+    script.onerror = () => {
+      jsPDFLoadPromise = null;
+      reject(new Error('Unable to load jsPDF.'));
+    };
+
+    document.head.appendChild(script);
+  });
+
+  return jsPDFLoadPromise;
+}
+    async function downloadPDF() {
+      const list = reportList();
+      if (!list.length) {
+        alert('Please generate the report first.');
+        return;
+      }
+
+      try {
+  await loadJsPDF();
+} catch (error) {
+  console.error(error);
+
+  alert(
+    'The PDF generator could not be loaded. Please check your internet connection or use the Print option.'
+  );
+
+  return;
+}
+
+const { jsPDF } = window.jspdf;
+
+const doc = new jsPDF({
+  orientation: 'landscape',
+  unit: 'mm',
+  format: 'a4'
+});
+      const W = 297;
+      const H = 210;
+      const M = 12;
+      const navy = [8, 36, 71];
+      const blue = [13, 109, 204];
+      const orange = [242, 90, 42];
+      const green = [8, 115, 68];
+      const amber = [164, 90, 0];
+      const red = [180, 35, 24];
+      const border = [220, 232, 245];
+      const light = [248, 251, 255];
+      const text = [30, 43, 62];
+      const muted = [100, 116, 139];
+
+      const strong = list.filter(c => c.possibility >= 75).length;
+      const fair = list.filter(c => c.possibility >= 45 && c.possibility < 75).length;
+      const low = list.filter(c => c.possibility < 45).length;
+      const top = list[0] || null;
+      const date = reportDate();
+      const domicile = state.domicile === 'yes' ? 'Jharkhand Domicile' : 'Other State';
+
+      function setColor(arr) { doc.setTextColor(arr[0], arr[1], arr[2]); }
+      function setFill(arr) { doc.setFillColor(arr[0], arr[1], arr[2]); }
+      function setDraw(arr) { doc.setDrawColor(arr[0], arr[1], arr[2]); }
+      function cleanText(value) { return String(value ?? '').replace(/[₹]/g, 'Rs ').replace(/[·]/g, '-').replace(/[–—]/g, '-').replace(/[✓]/g, 'Yes'); }
+      function pdfTruncate(value, maxW) {
+        let text = cleanText(value);
+        if (doc.getTextWidth(text) <= maxW) return text;
+        while (text.length > 3 && doc.getTextWidth(text + '..') > maxW) text = text.slice(0, -1);
+        return text + '..';
+      }
+      function possibilityColor(p) {
+        if (p >= 75) return green;
+        if (p >= 45) return amber;
+        return blue;
+      }
+      function pageHeader() {
+        setFill(navy);
+        doc.rect(0, 0, W, 16, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11);
+        doc.setTextColor(255, 255, 255);
+        doc.text('Jharkhand NEET 2026 College Prediction Report', M, 9.5);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.text('RM Group of Education  |  rmgoe.org  |  +91 99997-03444', W - M, 9.5, { align: 'right' });
+      }
+      function pageFooter(pageNo, totalPages) {
+        setDraw(border);
+        doc.line(M, H - 9, W - M, H - 9);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(6.6);
+        setColor(muted);
+        doc.text('Prediction uses 2025 government Round 1 and private overall-low ranks from the supplied Jharkhand cutoff page. Final 2026 cutoffs may vary; admission is not guaranteed.', M, H - 5);
+        doc.text('Page ' + pageNo + ' / ' + totalPages, W - M, H - 5, { align: 'right' });
+      }
+      function summaryCard(x, y, w, h, label, value, color) {
+        setFill([255, 255, 255]);
+        setDraw(border);
+        doc.roundedRect(x, y, w, h, 2.5, 2.5, 'FD');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(6.8);
+        setColor(muted);
+        doc.text(label.toUpperCase(), x + 3, y + 5.2);
+        doc.setFontSize(10.2);
+        setColor(color || navy);
+        doc.text(pdfTruncate(value, w - 6), x + 3, y + 11.8);
+      }
+      function tableHeader(y) {
+        setFill(navy);
+        setDraw(navy);
+        doc.roundedRect(M, y, W - 2 * M, 8, 1.4, 1.4, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7.2);
+        doc.setTextColor(255, 255, 255);
+        let x = M;
+        const headers = ['#', 'College', 'District', 'Type', 'Cutoff Basis', 'Close Rank 25', 'Score', 'Possibility'];
+        COLS.forEach((c, idx) => {
+          const tx = c.a === 'center' ? x + c.w / 2 : x + 2;
+          doc.text(headers[idx], tx, y + 5.3, { align: c.a });
+          x += c.w;
+        });
+        return y + 8;
+      }
+      function drawTableRow(c, i, y) {
+        const rowH = 7.8;
+        if (i % 2 === 1) {
+          setFill(light);
+          doc.rect(M, y, W - 2 * M, rowH, 'F');
+        }
+        setDraw(border);
+        doc.setLineWidth(0.12);
+        doc.line(M, y + rowH, W - M, y + rowH);
+
+        let x = M;
+        const values = [
+          String(i + 1),
+          c.name,
+          c.district,
+          typeLabel(c),
+          c.cutoffBasis || '-',
+          c.closingRank ? c.closingRank.toLocaleString('en-IN') : '-',
+          String(c.cutoffScore ?? '-'),
+          c.possibility + '% ' + possibilityBand(c.possibility)
+        ];
+
+        COLS.forEach((col, idx) => {
+          const align = col.a;
+          const tx = align === 'center' ? x + col.w / 2 : x + 2;
+          doc.setFont('helvetica', idx === 1 || idx === 7 ? 'bold' : 'normal');
+          doc.setFontSize(idx === 1 ? 7.2 : 7);
+          if (idx === 1) setColor(navy);
+          else if (idx === 6) setColor(c.type === 'govt' ? green : amber);
+          else if (idx === 7) setColor(possibilityColor(c.possibility));
+          else setColor(text);
+          doc.text(pdfTruncate(values[idx], col.w - 4), tx, y + 5.1, { align });
+          x += col.w;
+        });
+      }
+
+      const COLS = [
+        { w: 9, a: 'center' },
+        { w: 78, a: 'left' },
+        { w: 32, a: 'left' },
+        { w: 22, a: 'left' },
+        { w: 16, a: 'center' },
+        { w: 31, a: 'center' },
+        { w: 28, a: 'center' },
+        { w: 37, a: 'center' }
+      ];
+
+      pageHeader();
+
+      setFill([237, 246, 255]);
+      doc.roundedRect(M, 23, W - 2 * M, 23, 3, 3, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      setColor(navy);
+      doc.text('Personalised Jharkhand NEET College Prediction', M + 5, 32);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      setColor(muted);
+      doc.text('Generated on ' + date + ' using the submitted profile and supplied Jharkhand 2025 cutoff ranks/scores.', M + 5, 39);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      setColor(orange);
+      doc.text('Top Match: ' + cleanText(top ? top.name : '-'), W - M - 5, 33, { align: 'right' });
+      setColor(muted);
+      doc.text('Total Matched Colleges: ' + list.length, W - M - 5, 40, { align: 'right' });
+
+      const cardY = 52;
+      const cardW = (W - 2 * M - 21) / 4;
+      summaryCard(M, cardY, cardW, 16, 'Student', state.name || '-', navy);
+      summaryCard(M + cardW + 7, cardY, cardW, 16, 'All India Rank', state.rank ? state.rank.toLocaleString('en-IN') : '-', orange);
+      summaryCard(M + (cardW + 7) * 2, cardY, cardW, 16, 'Jharkhand Category', CAT_LABEL[state.category] || '-', navy);
+      summaryCard(M + (cardW + 7) * 3, cardY, cardW, 16, 'Domicile', domicile, navy);
+
+      summaryCard(M, cardY + 21, cardW, 16, 'Total Matches', String(list.length), navy);
+      summaryCard(M + cardW + 7, cardY + 21, cardW, 16, 'Strong Options', String(strong), green);
+      summaryCard(M + (cardW + 7) * 2, cardY + 21, cardW, 16, 'Fair Options', String(fair), amber);
+      summaryCard(M + (cardW + 7) * 3, cardY + 21, cardW, 16, 'Low Options', String(low), blue);
+
+      let y = 96;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      setColor(navy);
+      doc.text('College Prediction Data', M, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      setColor(muted);
+      doc.text('Possibility bands: Strong 75-99%, Fair 45-74%, Low below 45%', W - M, y, { align: 'right' });
+      y += 5;
+      y = tableHeader(y);
+
+      list.forEach((c, i) => {
+        if (y > 190) {
+          doc.addPage();
+          pageHeader();
+          y = 23;
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(10);
+          setColor(navy);
+          doc.text('College Prediction Data continued', M, y);
+          y += 5;
+          y = tableHeader(y);
+        }
+        drawTableRow(c, i, y);
+        y += 7.8;
+      });
+
+      if (y > 183) {
+        doc.addPage();
+        pageHeader();
+        y = 24;
+      }
+
+      setFill([255, 248, 236]);
+      setDraw([245, 210, 168]);
+      doc.roundedRect(M, y + 4, W - 2 * M, 13, 2.5, 2.5, 'FD');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      setColor([124, 58, 8]);
+      doc.text('Important:', M + 4, y + 10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Indicative prediction using supplied Jharkhand 2025 cutoff data. Actual allotment depends on 2026 eligibility, seat matrix, choices and counselling rounds.', M + 22, y + 10);
+
+      const pages = doc.internal.getNumberOfPages();
+      for (let p = 1; p <= pages; p++) {
+        doc.setPage(p);
+        pageFooter(p, pages);
+      }
+
+      doc.save('Jharkhand_NEET_College_Report_' + safeFileName(state.name) + '.pdf');
+    }
+
+    function truncate(doc, text, maxW) {
+      const value = String(text || '');
+      if (doc.getTextWidth(value) <= maxW) return value;
+      let t = value;
+      while (doc.getTextWidth(t + '..') > maxW && t.length > 3) t = t.slice(0, -1);
+      return t + '..';
+    }
+
+
+    // ============================================================
+    // FAQ
+    // ============================================================
+    const FAQS = [
+      ['Which rank should I enter?', 'Enter your NEET All India Rank (AIR) exactly as shown on the NEET result. Do not enter score, state merit rank or category rank.'],
+      ['Which Jharkhand categories are supported?', 'The tool supports UR, EWS, BC-I, BC-II, SC and ST because these plain categories are available for the listed colleges on the supplied 2025 cutoff page.'],
+      ['Can an Other State student use this tool?', 'Yes. The tool excludes government and state-category private records, then evaluates only the explicit AIQ cutoff rows shown for Laxmi Chandravanshi and Netaji Subhash.'],
+      ['Why do two private colleges appear twice?', 'The source page gives both an AIQ row and category-wise rows for Laxmi Chandravanshi and Netaji Subhash. The tool preserves these as separate cutoff routes.'],
+      ['Which cutoff is used for government colleges?', 'The prediction uses the 2025 Round 1 rank and score shown on the supplied page for each supported category.'],
+      ['Which cutoff is used for private colleges?', 'The page labels its private values as Overall Low Cut Off 2025. Those rank and score values are used as the private reference.'],
+      ['Are special categories included?', 'No. Deaf, Blind, PH and other special rows are excluded because they require separate eligibility and documentation rules.'],
+      ['Why are fees and seats not displayed?', 'The supplied page does not provide tuition fees or seat intake. The predictor shows cutoff basis and cutoff score instead of inventing unsupported figures.'],
+      ['Does a high possibility guarantee admission?', 'No. The percentage only compares your AIR with the supplied 2025 reference rank. Actual 2026 admission depends on eligibility, seat matrix, category movement, choices and counselling round.'],
+      ['Which documents should I prepare?', 'Keep the NEET admit card and scorecard, Class 10 and 12 certificates and marksheets, ID proof, photographs, domicile documents where required, and valid EWS, BC-I, BC-II, SC, ST or PwD certificates when claimed.']
+    ];
+    function buildFAQ() {
+      const wrap = document.getElementById('faq-wrap');
+      if (!wrap || wrap.dataset.ready === 'true') return;
+
+      wrap.innerHTML = FAQS.map(([q, a], i) => `
+        <div class="faq" id="faq${i}">
+          <button
+            type="button"
+            class="faq-q"
+            aria-expanded="false"
+            aria-controls="faq-answer-${i}"
+            onclick="toggleFaq(${i}, this)"
+          >
+            <span>${q}</span><span class="chev" aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-a" id="faq-answer-${i}"><p>${a}</p></div>
+        </div>`).join('');
+
+      wrap.dataset.ready = 'true';
+    }
+
+    function toggleFaq(i, button) {
+      const item = document.getElementById('faq' + i);
+      if (!item) return;
+      const open = item.classList.toggle('open');
+      button?.setAttribute('aria-expanded', String(open));
+    }
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(buildFAQ, { timeout: 1200 });
+    } else {
+      setTimeout(buildFAQ, 250);
+    }
+
+  </script>
+
+</body>
+
+</html>
