@@ -14,44 +14,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jharkhand NEET 2026 College Predictor | Government &amp; Private MBBS Tool</title>
-  <meta name="description" content="Predict Jharkhand MBBS college chances using NEET 2025 category-wise cutoff ranks and scores for 6 government and 3 private medical colleges.">
+  <meta name="description"
+    content="Predict Jharkhand MBBS college chances using NEET 2025 category-wise cutoff ranks and scores for 6 government and 3 private medical colleges.">
   <!-- Discover and prioritise the LCP image before fonts and other styles. -->
-  <link
-    rel="preload"
-    as="image"
-    href="banner.webp"
-    type="image/webp"
-    fetchpriority="high"
-  >
+  <link rel="preload" as="image" href="banner-mobile.webp" type="image/webp" media="(max-width: 768px)"
+    fetchpriority="high">
+
+  <link rel="preload" as="image" href="banner.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Google Fonts: non-render-blocking. The URL already uses display=swap. -->
-  <link
-    rel="stylesheet"
+  <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@600&display=swap"
-    media="print"
-    onload="this.media='all'"
-  >
+    media="print" onload="this.media='all'">
   <noscript>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@600&display=swap"
-    >
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@600&display=swap">
   </noscript>
 
   <!-- Local Font Awesome subset with font-display:swap in all.min.css. -->
-  <link
-    rel="stylesheet"
-    href="fontawesome/css/all.min.css"
-    media="print"
-    onload="this.media='all'"
-  >
+  <link rel="stylesheet" href="fontawesome/css/all.min.css" media="print" onload="this.media='all'">
   <noscript>
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
   </noscript>
-  
+
   <style>
     /* ─────────── BASE ─────────── */
     :root {
@@ -324,6 +312,29 @@
       object-fit: cover;
       object-position: center right;
       pointer-events: none;
+    }
+
+    .hero-picture {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-picture .hero-bg {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      object-fit: cover;
+      object-position: center right;
+    }
+
+    @media (max-width: 768px) {
+      .hero-picture .hero-bg {
+        object-position: 70% center;
+      }
     }
 
     .hero::before {
@@ -2314,6 +2325,7 @@
     }
 
     @media (max-width: 768px) {
+
       /* Backdrop blur is expensive on low-end mobile GPUs. */
       .site-header,
       .hero-badge,
@@ -3140,6 +3152,7 @@
     }
 
     @media screen and (max-width: 1180px) {
+
       .header-wrap,
       .hero-inner,
       .results-main,
@@ -3798,7 +3811,6 @@
         gap: 8px;
       }
     }
-
   </style>
   <meta name="data-source" content="https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php">
 </head>
@@ -3810,7 +3822,8 @@
     <div class="header-wrap">
 
       <a class="header-logo" href="#top" aria-label="Jharkhand NEET College Predictor">
-        <img src="https://rmgoe.org/frontend-assets/images/rm_new_logo.png" alt="RM Group of Education" width="180" height="46" decoding="async">
+        <img src="https://rmgoe.org/frontend-assets/images/rm_new_logo.png" alt="RM Group of Education" width="180"
+          height="46">
       </a>
 
       <div class="header-actions">
@@ -3828,527 +3841,556 @@
 
     </div>
   </header>
+  <main id="main-content">
+    <!-- HERO -->
+    <section class="hero">
+      <picture class="hero-picture" aria-hidden="true">
+        <source media="(max-width: 768px)" srcset="banner-mobile.webp" type="image/webp">
 
-  <!-- HERO -->
-  <section class="hero">
-    <img
-      class="hero-bg"
-      src="banner.webp"
-      alt=""
-      width="1600"
-      height="900"
-      loading="eager"
-      decoding="async"
-      fetchpriority="high"
-      aria-hidden="true"
-    >
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="dot"></span>
-          Built on published NEET 2025 Jharkhand cutoff data
-        </div>
+        <img class="hero-bg" src="banner.webp" alt="" width="1959" height="500" loading="eager" fetchpriority="high">
+      </picture>
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="dot"></span>
+            Built on published NEET 2025 Jharkhand cutoff data
+          </div>
 
-        <h1>
-          Which Jharkhand medical college<br>
-          fits your <b>NEET 2026 rank?</b>
-        </h1>
+          <h1>
+            Which Jharkhand medical college<br>
+            fits your <b>NEET 2026 rank?</b>
+          </h1>
 
-        <p class="hero-sub">
-          Get an instant, personalised prediction across RIMS Ranchi, MGM Jamshedpur, SNMMCH Dhanbad,
-          Sheikh Bhikhari, Phulo Jhano, Medinirai and Jharkhand private-college options —
-          with separate AIQ rows wherever the supplied page explicitly provides them.
-        </p>
+          <p class="hero-sub">
+            Get an instant, personalised prediction across RIMS Ranchi, MGM Jamshedpur, SNMMCH Dhanbad,
+            Sheikh Bhikhari, Phulo Jhano, Medinirai and Jharkhand private-college options —
+            with separate AIQ rows wherever the supplied page explicitly provides them.
+          </p>
 
-        <a href="#tool" class="hero-btn">
-          Predict My Colleges
-          <span>→</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOOL -->
-  <div class="tool-shell" id="tool">
-    <div class="tool-card">
-
-      <!-- LEFT TIMELINE -->
-      <div class="progress-wrap">
-        <div class="steps">
-          <div class="step active" id="step1">Details</div>
-          <div class="step" id="step2">Verify</div>
-          <div class="step" id="step3">Results</div>
+          <a href="#tool" class="hero-btn">
+            Predict My Colleges
+            <span>→</span>
+          </a>
         </div>
       </div>
+    </section>
 
-      <!-- RIGHT BODY -->
-      <div class="tool-body">
+    <!-- TOOL -->
+    <div class="tool-shell" id="tool">
+      <div class="tool-card">
 
-        <!-- SCREEN 1: FORM -->
-        <div class="screen active" id="screen-input">
+        <!-- LEFT TIMELINE -->
+        <div class="progress-wrap">
+          <div class="steps">
+            <div class="step active" id="step1">Details</div>
+            <div class="step" id="step2">Verify</div>
+            <div class="step" id="step3">Results</div>
+          </div>
+        </div>
 
-          <div class="tool-head">
-            <div>
-              <div class="tool-title">Enter your NEET 2026 details</div>
-              <div class="tool-desc">Fill the details below to check your personalised Jharkhand college prediction.
+        <!-- RIGHT BODY -->
+        <div class="tool-body">
+
+          <!-- SCREEN 1: FORM -->
+          <div class="screen active" id="screen-input">
+
+            <div class="tool-head">
+              <div>
+                <div class="tool-title">Enter your NEET 2026 details</div>
+                <div class="tool-desc">Fill the details below to check your personalised Jharkhand college prediction.
+                </div>
+              </div>
+
+              <div class="tool-mini-badge">
+                <i class="fa-solid fa-shield-halved"></i>
+                Secure
               </div>
             </div>
 
-            <div class="tool-mini-badge">
-              <i class="fa-solid fa-shield-halved"></i>
-              Secure
+            <div class="form-grid">
+
+              <div class="form-row">
+                <label for="inp-name">
+                  <i class="fa-solid fa-user" aria-hidden="true"></i>
+                  Full Name<span class="req" aria-hidden="true">*</span>
+                </label>
+                <input class="inp" type="text" id="inp-name" name="name" placeholder="e.g. Rahul Sharma"
+                  autocomplete="name" aria-describedby="err-name">
+                <div class="field-err" id="err-name">Please enter your full name</div>
+              </div>
+
+              <div class="form-row">
+                <label for="inp-email">
+                  <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                  Email Address<span class="req" aria-hidden="true">*</span>
+                </label>
+                <input class="inp" type="email" id="inp-email" name="email" placeholder="you@email.com"
+                  autocomplete="email" inputmode="email" aria-describedby="err-email">
+                <div class="field-err" id="err-email">Please enter a valid email address</div>
+              </div>
+
+              <div class="form-row">
+                <label for="inp-phone">
+                  <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                  Mobile Number<span class="req" aria-hidden="true">*</span>
+                </label>
+                <div class="phone-wrap" id="phone-wrap">
+                  <div class="phone-prefix">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    +91
+                  </div>
+                  <input type="tel" id="inp-phone" name="phone" placeholder="10-digit mobile number" maxlength="10"
+                    autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" aria-describedby="err-phone">
+                </div>
+                <div class="field-err" id="err-phone">Enter a valid 10-digit number starting with 6, 7, 8 or 9</div>
+              </div>
+
+              <div class="form-row">
+                <label for="inp-rank">
+                  <i class="fa-solid fa-ranking-star" aria-hidden="true"></i>
+                  NEET All India Rank<span class="req" aria-hidden="true">*</span>
+                </label>
+                <input class="inp" type="number" id="inp-rank" name="neet_air" placeholder="e.g. 45000" min="1"
+                  inputmode="numeric" aria-describedby="err-rank">
+                <div class="field-err" id="err-rank">Enter your NEET AIR</div>
+              </div>
+
+              <div class="form-row full">
+                <label for="inp-cat">
+                  <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                  Jharkhand Category<span class="req" aria-hidden="true">*</span>
+                </label>
+                <select class="inp" id="inp-cat" name="category" aria-describedby="err-cat">
+                  <option value="">Select your category</option>
+                  <option value="UR">General / UR</option>
+                  <option value="EWS">EWS</option>
+                  <option value="BC1">BC-I</option>
+                  <option value="BC2">BC-II</option>
+                  <option value="SC">SC</option>
+                  <option value="ST">ST</option>
+                </select>
+                <div class="field-err" id="err-cat">Please select your category</div>
+              </div>
+
+              <div class="form-row full">
+                <div class="form-row-label" id="domicile-label">
+                  <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                  Jharkhand Domicile?<span class="req" aria-hidden="true">*</span>
+                </div>
+                <div class="toggle-wrap" id="domicile-toggle" role="group" aria-labelledby="domicile-label">
+                  <button type="button" class="toggle-btn active" data-val="yes" aria-pressed="true"
+                    onclick="setDomicile('yes')">Yes — Jharkhand</button>
+                  <button type="button" class="toggle-btn" data-val="no" aria-pressed="false"
+                    onclick="setDomicile('no')">No — Other State</button>
+                </div>
+              </div>
+
+              <div class="form-row full">
+                <button type="button" class="btn btn-primary" id="btn-check" onclick="goToOTP()">
+                  <i class="fa-solid fa-magnifying-glass-chart"></i>
+                  Check My Colleges
+                </button>
+              </div>
+
+              <div class="form-safe-note">
+                <i class="fa-solid fa-lock"></i>
+                Your details are used only to generate and send your report.
+              </div>
+
             </div>
           </div>
 
-          <div class="form-grid">
+          <!-- SCREEN 2: OTP -->
+          <div class="screen" id="screen-otp">
 
-            <div class="form-row">
-              <label for="inp-name">
-                <i class="fa-solid fa-user" aria-hidden="true"></i>
-                Full Name<span class="req" aria-hidden="true">*</span>
-              </label>
-              <input class="inp" type="text" id="inp-name" name="name" placeholder="e.g. Rahul Sharma" autocomplete="name" aria-describedby="err-name">
-              <div class="field-err" id="err-name">Please enter your full name</div>
+            <div class="tool-head">
+              <div>
+                <div class="tool-title">Your results are ready</div>
+                <div class="tool-desc">Verify your mobile number to unlock your full college list.</div>
+              </div>
+
+              <div class="tool-mini-badge">
+                <i class="fa-solid fa-key"></i>
+                OTP
+              </div>
             </div>
 
-            <div class="form-row">
-              <label for="inp-email">
-                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                Email Address<span class="req" aria-hidden="true">*</span>
-              </label>
-              <input class="inp" type="email" id="inp-email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email" aria-describedby="err-email">
-              <div class="field-err" id="err-email">Please enter a valid email address</div>
-            </div>
-
-            <div class="form-row">
-              <label for="inp-phone">
-                <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                Mobile Number<span class="req" aria-hidden="true">*</span>
-              </label>
-              <div class="phone-wrap" id="phone-wrap">
-                <div class="phone-prefix">
-                  <i class="fa-solid fa-mobile-screen-button"></i>
-                  +91
+            <div class="preview-wrap">
+              <div class="preview-cards preview-blur" id="preview-cards"></div>
+              <div class="blur-lock">
+                <div class="blur-lock-inner">
+                  <i class="fa-solid fa-lock"></i>
+                  Verify to unlock your results
                 </div>
-                <input type="tel" id="inp-phone" name="phone" placeholder="10-digit mobile number" maxlength="10" autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" aria-describedby="err-phone">
-              </div>
-              <div class="field-err" id="err-phone">Enter a valid 10-digit number starting with 6, 7, 8 or 9</div>
-            </div>
-
-            <div class="form-row">
-              <label for="inp-rank">
-                <i class="fa-solid fa-ranking-star" aria-hidden="true"></i>
-                NEET All India Rank<span class="req" aria-hidden="true">*</span>
-              </label>
-              <input class="inp" type="number" id="inp-rank" name="neet_air" placeholder="e.g. 45000" min="1" inputmode="numeric" aria-describedby="err-rank">
-              <div class="field-err" id="err-rank">Enter your NEET AIR</div>
-            </div>
-
-            <div class="form-row full">
-              <label for="inp-cat">
-                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
-                Jharkhand Category<span class="req" aria-hidden="true">*</span>
-              </label>
-              <select class="inp" id="inp-cat" name="category" aria-describedby="err-cat">
-                <option value="">Select your category</option>
-                <option value="UR">General / UR</option>
-                <option value="EWS">EWS</option>
-                <option value="BC1">BC-I</option>
-                <option value="BC2">BC-II</option>
-                <option value="SC">SC</option>
-                <option value="ST">ST</option>
-              </select>
-              <div class="field-err" id="err-cat">Please select your category</div>
-            </div>
-
-            <div class="form-row full">
-              <div class="form-row-label" id="domicile-label">
-                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                Jharkhand Domicile?<span class="req" aria-hidden="true">*</span>
-              </div>
-              <div class="toggle-wrap" id="domicile-toggle" role="group" aria-labelledby="domicile-label">
-                <button type="button" class="toggle-btn active" data-val="yes" aria-pressed="true" onclick="setDomicile('yes')">Yes — Jharkhand</button>
-                <button type="button" class="toggle-btn" data-val="no" aria-pressed="false" onclick="setDomicile('no')">No — Other State</button>
               </div>
             </div>
 
-            <div class="form-row full">
-              <button type="button" class="btn btn-primary" id="btn-check" onclick="goToOTP()">
-                <i class="fa-solid fa-magnifying-glass-chart"></i>
-                Check My Colleges
+            <div id="send-otp-section">
+              <div class="alert alert-info" style="margin-top:0">
+                <div class="alert-icon">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+                <div>
+                  We'll send a 4-digit OTP to
+                  <strong>+91 <span id="confirm-phone"></span></strong>
+                  to confirm it's you.
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="btn-send-otp" onclick="sendOTP()">
+                <i class="fa-solid fa-paper-plane"></i>
+                Send OTP
               </button>
             </div>
 
-            <div class="form-safe-note">
-              <i class="fa-solid fa-lock"></i>
-              Your details are used only to generate and send your report.
+            <div id="otp-section" class="hidden">
+              <div class="otp-label" id="otp-label">Enter the 4-digit OTP</div>
+              <p class="otp-sub">
+                Sent to +91 <span id="otp-phone-display"></span>
+              </p>
+
+              <div class="otp-grid">
+                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp0" aria-label="OTP digit 1"
+                  autocomplete="one-time-code" oninput="moveOTP(0)">
+                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp1" aria-label="OTP digit 2"
+                  oninput="moveOTP(1)">
+                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp2" aria-label="OTP digit 3"
+                  oninput="moveOTP(2)">
+                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp3" aria-label="OTP digit 4"
+                  oninput="moveOTP(3)">
+              </div>
+
+              <div class="otp-timer" id="otp-timer"></div>
+              <div class="field-err" id="otp-error" style="text-align:center"></div>
+
+              <button class="btn btn-primary" style="margin-top:14px" id="btn-verify" onclick="verifyOTP()">
+                <i class="fa-solid fa-unlock-keyhole"></i>
+                Unlock My Colleges
+              </button>
+
+              <button class="btn btn-secondary" style="margin-top:10px" onclick="backToPhone()">
+                <i class="fa-solid fa-arrow-left"></i>
+                Change Number
+              </button>
             </div>
 
           </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: RESULTS -->
+    <div class="screen" id="screen-results">
+      <div class="results-main">
+
+        <div id="print-only-head">
+          <h1 style="font-size:18px;color:var(--navy);margin-bottom:4px">Jharkhand NEET 2026 — College Prediction
+            Report</h1>
+          <p style="font-size:12px;color:var(--muted)">RM Group of Education · rmgoe.org · +91 99997-03444</p>
         </div>
 
-        <!-- SCREEN 2: OTP -->
-        <div class="screen" id="screen-otp">
+        <div class="result-summary" id="result-summary"></div>
 
-          <div class="tool-head">
-            <div>
-              <div class="tool-title">Your results are ready</div>
-              <div class="tool-desc">Verify your mobile number to unlock your full college list.</div>
-            </div>
+        <div class="tabs" role="tablist" aria-label="Prediction report sections">
+          <button type="button" class="tab active" id="tab-btn-colleges" role="tab" aria-selected="true"
+            aria-controls="tab-colleges" onclick="switchTab('tab-colleges',this)">🎓 Your Colleges</button>
+          <button type="button" class="tab" id="tab-btn-analysis" role="tab" aria-selected="false"
+            aria-controls="tab-analysis" onclick="switchTab('tab-analysis',this)">📊 Rank Analysis</button>
+          <button type="button" class="tab" id="tab-btn-next" role="tab" aria-selected="false" aria-controls="tab-next"
+            onclick="switchTab('tab-next',this)">📋 What Next</button>
+        </div>
 
-            <div class="tool-mini-badge">
-              <i class="fa-solid fa-key"></i>
-              OTP
+        <!-- TAB 1 -->
+        <div id="tab-colleges" role="tabpanel" aria-labelledby="tab-btn-colleges">
+          <div id="non-domicile-alert" class="hidden">
+            <div class="alert alert-warn">
+              <div class="alert-icon">⚠️</div>
+              <div>You selected <strong>non-Jharkhand domicile</strong>. Government and state-category private records
+                are excluded. Only the two private-college AIQ rows explicitly shown on the supplied page are evaluated.
+                Final eligibility must be checked in the official prospectus.</div>
             </div>
           </div>
 
-          <div class="preview-wrap">
-            <div class="preview-cards preview-blur" id="preview-cards"></div>
-            <div class="blur-lock">
-              <div class="blur-lock-inner">
-                <i class="fa-solid fa-lock"></i>
-                Verify to unlock your results
+          <div id="ineligible-section" class="hidden">
+            <div class="alert alert-danger">
+              <div class="alert-icon">📊</div>
+              <div id="ineligible-message"></div>
+            </div>
+            <div class="abroad-hook">
+              <h3>MBBS is not over 🌍</h3>
+              <p>Thousands of students with similar ranks study MBBS abroad in WDOMS-listed universities — saving ₹30–40
+                lakh compared with some high-cost private All India/Management and NRI options.</p>
+              <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span
+                  class="country-pill">🇳🇵
+                  Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
+                  Kazakhstan</span></div>
+              <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer"
+                class="btn btn-primary" style="max-width:340px;margin:0 auto">See My MBBS Abroad Options →</a>
+            </div>
+          </div>
+
+          <div id="colleges-section">
+            <div class="result-controls">
+              <div class="view-toggle">
+                <button type="button" class="view-btn active" id="btn-table-view"
+                  onclick="setView('table')">Table</button>
+                <button type="button" class="view-btn" id="btn-card-view" onclick="setView('card')">Cards</button>
+              </div>
+              <div class="export-btns">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="downloadPDF()">Download PDF</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="printReport()">Print</button>
               </div>
             </div>
-          </div>
 
-          <div id="send-otp-section">
+            <div class="legend">
+              <span><span class="sw" style="background:var(--green)"></span>75–99% Strong</span>
+              <span><span class="sw" style="background:var(--amber)"></span>45–74% Fair</span>
+              <span><span class="sw" style="background:var(--blue)"></span>Below 45% Low</span>
+            </div>
             <div class="alert alert-info" style="margin-top:0">
-              <div class="alert-icon">
-                <i class="fa-solid fa-mobile-screen-button"></i>
+              <div class="alert-icon">ℹ️</div>
+              <div>Government records use 2025 Round 1 ranks. Private records use the page’s 2025 overall-low cutoff.
+                Deaf, Blind, PH and other special rows are excluded from this simplified predictor.</div>
+            </div>
+
+            <!-- TABLE VIEW -->
+            <div id="view-table">
+              <div class="report-wrap">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>College</th>
+                      <th>District</th>
+                      <th>Seat Type</th>
+                      <th class="center">Cutoff Basis</th>
+                      <th class="center">2025 Close Rank</th>
+                      <th class="center">Cutoff Score</th>
+                      <th class="center">Possibility</th>
+                    </tr>
+                  </thead>
+                  <tbody id="report-body"></tbody>
+                </table>
               </div>
+            </div>
+
+            <!-- CARD VIEW -->
+            <div id="view-cards" class="hidden"></div>
+
+            <div class="abroad-hook" id="abroad-hook-eligible">
+              <h3>Want more options? 🌍</h3>
+              <p>Students who miss Jharkhand State Quota seats should compare later counselling rounds, private options
+                and MBBS-abroad routes carefully before paying a high non-refundable amount.</p>
+              <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span
+                  class="country-pill">🇳🇵
+                  Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
+                  Kazakhstan</span></div>
+              <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer"
+                class="btn btn-primary" style="max-width:340px;margin:0 auto">Check Abroad Options →</a>
+            </div>
+          </div>
+
+          <div class="cta-section">
+            <h3>Want expert help with Jharkhand choice filling?</h3>
+            <p>Our counsellors have guided 500+ students. We'll call you within 15 minutes.</p>
+            <div class="cta-btns">
+              <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" id="wa-cta-link"
+                class="btn btn-wa" style="flex:1;min-width:180px">💬 WhatsApp Us</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2 -->
+        <div id="tab-analysis" class="hidden" role="tabpanel" aria-labelledby="tab-btn-analysis">
+          <div class="card" id="analysis-content"></div>
+        </div>
+
+        <!-- TAB 3 -->
+        <div id="tab-next" class="hidden" role="tabpanel" aria-labelledby="tab-btn-next">
+          <div class="card">
+            <div class="card-title">Jharkhand NEET 2026 Counselling — what to do now</div>
+            <div class="card-sub">Indicative counselling preparation flow; confirm every date and rule on the official
+              Jharkhand portal</div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
               <div>
-                We'll send a 4-digit OTP to
-                <strong>+91 <span id="confirm-phone"></span></strong>
-                to confirm it's you.
+                <div class="schedule-title">NEET 2026 Result Declared</div>
+                <div class="schedule-date">Expected June–July 2026 · nta.ac.in</div>
               </div>
             </div>
-
-            <button class="btn btn-primary" id="btn-send-otp" onclick="sendOTP()">
-              <i class="fa-solid fa-paper-plane"></i>
-              Send OTP
-            </button>
-          </div>
-
-          <div id="otp-section" class="hidden">
-            <div class="otp-label" id="otp-label">Enter the 4-digit OTP</div>
-            <p class="otp-sub">
-              Sent to +91 <span id="otp-phone-display"></span>
-            </p>
-
-            <div class="otp-grid">
-              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp0" aria-label="OTP digit 1" autocomplete="one-time-code" oninput="moveOTP(0)">
-              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp1" aria-label="OTP digit 2" oninput="moveOTP(1)">
-              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp2" aria-label="OTP digit 3" oninput="moveOTP(2)">
-              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp3" aria-label="OTP digit 4" oninput="moveOTP(3)">
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <div>
+                <div class="schedule-title">Jharkhand MBBS/BDS Registration &amp; Document Upload</div>
+                <div class="schedule-date">Check the official Jharkhand counselling portal for the 2026 schedule</div>
+              </div>
             </div>
-
-            <div class="otp-timer" id="otp-timer"></div>
-            <div class="field-err" id="otp-error" style="text-align:center"></div>
-
-            <button class="btn btn-primary" style="margin-top:14px" id="btn-verify" onclick="verifyOTP()">
-              <i class="fa-solid fa-unlock-keyhole"></i>
-              Unlock My Colleges
-            </button>
-
-            <button class="btn btn-secondary" style="margin-top:10px" onclick="backToPhone()">
-              <i class="fa-solid fa-arrow-left"></i>
-              Change Number
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- SCREEN 3: RESULTS -->
-  <div class="screen" id="screen-results">
-    <div class="results-main">
-
-      <div id="print-only-head">
-        <h1 style="font-size:18px;color:var(--navy);margin-bottom:4px">Jharkhand NEET 2026 — College Prediction
-          Report</h1>
-        <p style="font-size:12px;color:var(--muted)">RM Group of Education · rmgoe.org · +91 99997-03444</p>
-      </div>
-
-      <div class="result-summary" id="result-summary"></div>
-
-      <div class="tabs" role="tablist" aria-label="Prediction report sections">
-        <button type="button" class="tab active" id="tab-btn-colleges" role="tab" aria-selected="true" aria-controls="tab-colleges" onclick="switchTab('tab-colleges',this)">🎓 Your Colleges</button>
-        <button type="button" class="tab" id="tab-btn-analysis" role="tab" aria-selected="false" aria-controls="tab-analysis" onclick="switchTab('tab-analysis',this)">📊 Rank Analysis</button>
-        <button type="button" class="tab" id="tab-btn-next" role="tab" aria-selected="false" aria-controls="tab-next" onclick="switchTab('tab-next',this)">📋 What Next</button>
-      </div>
-
-      <!-- TAB 1 -->
-      <div id="tab-colleges" role="tabpanel" aria-labelledby="tab-btn-colleges">
-        <div id="non-domicile-alert" class="hidden">
-          <div class="alert alert-warn">
-            <div class="alert-icon">⚠️</div>
-            <div>You selected <strong>non-Jharkhand domicile</strong>. Government and state-category private records are excluded. Only the two private-college AIQ rows explicitly shown on the supplied page are evaluated. Final eligibility must be checked in the official prospectus.</div>
-          </div>
-        </div>
-
-        <div id="ineligible-section" class="hidden">
-          <div class="alert alert-danger">
-            <div class="alert-icon">📊</div>
-            <div id="ineligible-message"></div>
-          </div>
-          <div class="abroad-hook">
-            <h3>MBBS is not over 🌍</h3>
-            <p>Thousands of students with similar ranks study MBBS abroad in WDOMS-listed universities — saving ₹30–40
-              lakh compared with some high-cost private All India/Management and NRI options.</p>
-            <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
-                Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
-                Kazakhstan</span></div>
-            <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="max-width:340px;margin:0 auto">See My MBBS Abroad Options →</a>
-          </div>
-        </div>
-
-        <div id="colleges-section">
-          <div class="result-controls">
-            <div class="view-toggle">
-              <button type="button" class="view-btn active" id="btn-table-view" onclick="setView('table')">Table</button>
-              <button type="button" class="view-btn" id="btn-card-view" onclick="setView('card')">Cards</button>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <div>
+                <div class="schedule-title">Provisional Merit List &amp; Grievance Window</div>
+                <div class="schedule-date">Check your candidature type, category and seat-type claims carefully</div>
+              </div>
             </div>
-            <div class="export-btns">
-              <button type="button" class="btn btn-secondary btn-sm" onclick="downloadPDF()">Download PDF</button>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="printReport()">Print</button>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <div>
+                <div class="schedule-title">Round 1 — Choice Filling and Locking</div>
+                <div class="schedule-date">Fill every acceptable option in true preference order</div>
+              </div>
             </div>
-          </div>
-
-          <div class="legend">
-            <span><span class="sw" style="background:var(--green)"></span>75–99% Strong</span>
-            <span><span class="sw" style="background:var(--amber)"></span>45–74% Fair</span>
-            <span><span class="sw" style="background:var(--blue)"></span>Below 45% Low</span>
-          </div>
-          <div class="alert alert-info" style="margin-top:0">
-            <div class="alert-icon">ℹ️</div>
-            <div>Government records use 2025 Round 1 ranks. Private records use the page’s 2025 overall-low cutoff. Deaf, Blind, PH and other special rows are excluded from this simplified predictor.</div>
-          </div>
-
-          <!-- TABLE VIEW -->
-          <div id="view-table">
-            <div class="report-wrap">
-              <table class="report-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>College</th>
-                    <th>District</th>
-                    <th>Seat Type</th>
-                    <th class="center">Cutoff Basis</th>
-                    <th class="center">2025 Close Rank</th>
-                    <th class="center">Cutoff Score</th>
-                    <th class="center">Possibility</th>
-                  </tr>
-                </thead>
-                <tbody id="report-body"></tbody>
-              </table>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <div>
+                <div class="schedule-title">Round 1 Seat Allotment and Reporting</div>
+                <div class="schedule-date">Check allotment, reporting instructions, upgrade rules and resignation
+                  conditions carefully
+                </div>
+              </div>
             </div>
-          </div>
-
-          <!-- CARD VIEW -->
-          <div id="view-cards" class="hidden"></div>
-
-          <div class="abroad-hook" id="abroad-hook-eligible">
-            <h3>Want more options? 🌍</h3>
-            <p>Students who miss Jharkhand State Quota seats should compare later counselling rounds, private options and MBBS-abroad routes carefully before paying a high non-refundable amount.</p>
-            <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
-                Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
-                Kazakhstan</span></div>
-            <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="max-width:340px;margin:0 auto">Check Abroad Options →</a>
-          </div>
-        </div>
-
-        <div class="cta-section">
-          <h3>Want expert help with Jharkhand choice filling?</h3>
-          <p>Our counsellors have guided 500+ students. We'll call you within 15 minutes.</p>
-          <div class="cta-btns">
-            <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" id="wa-cta-link" class="btn btn-wa" style="flex:1;min-width:180px">💬 WhatsApp Us</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 2 -->
-      <div id="tab-analysis" class="hidden" role="tabpanel" aria-labelledby="tab-btn-analysis">
-        <div class="card" id="analysis-content"></div>
-      </div>
-
-      <!-- TAB 3 -->
-      <div id="tab-next" class="hidden" role="tabpanel" aria-labelledby="tab-btn-next">
-        <div class="card">
-          <div class="card-title">Jharkhand NEET 2026 Counselling — what to do now</div>
-          <div class="card-sub">Indicative counselling preparation flow; confirm every date and rule on the official Jharkhand portal</div>
-          <div class="schedule-item">
-            <div class="schedule-dot"></div>
-            <div>
-              <div class="schedule-title">NEET 2026 Result Declared</div>
-              <div class="schedule-date">Expected June–July 2026 · nta.ac.in</div>
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <div>
+                <div class="schedule-title">Round 2, Mop-Up and Stray Vacancy</div>
+                <div class="schedule-date">Vacancies and closing ranks can move substantially — follow every official
+                  notice</div>
+              </div>
             </div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-dot"></div>
-            <div>
-              <div class="schedule-title">Jharkhand MBBS/BDS Registration &amp; Document Upload</div>
-              <div class="schedule-date">Check the official Jharkhand counselling portal for the 2026 schedule</div>
-            </div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-dot"></div>
-            <div>
-              <div class="schedule-title">Provisional Merit List &amp; Grievance Window</div>
-              <div class="schedule-date">Check your candidature type, category and seat-type claims carefully</div>
-            </div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-dot"></div>
-            <div>
-              <div class="schedule-title">Round 1 — Choice Filling and Locking</div>
-              <div class="schedule-date">Fill every acceptable option in true preference order</div>
-            </div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-dot"></div>
-            <div>
-              <div class="schedule-title">Round 1 Seat Allotment and Reporting</div>
-              <div class="schedule-date">Check allotment, reporting instructions, upgrade rules and resignation conditions carefully
+            <div class="schedule-item">
+              <div class="schedule-dot"></div>
+              <div>
+                <div class="schedule-title">Final Stray Vacancy / Special Round, if notified</div>
+                <div class="schedule-date">Final opportunities depend on the live vacancy matrix and eligibility rules
+                </div>
               </div>
             </div>
           </div>
-          <div class="schedule-item">
-            <div class="schedule-dot"></div>
-            <div>
-              <div class="schedule-title">Round 2, Mop-Up and Stray Vacancy</div>
-              <div class="schedule-date">Vacancies and closing ranks can move substantially — follow every official notice</div>
+          <div class="card" style="margin-top:20px">
+            <div class="card-title">Documents checklist (Jharkhand counselling)</div>
+            <div class="card-sub">Keep originals + self-attested copies ready for verification</div>
+            <ul class="checklist">
+              <li>NEET 2026 Admit Card &amp; Scorecard</li>
+              <li>Class 10 Marksheet &amp; Certificate (DOB proof)</li>
+              <li>Class 12 Marksheet &amp; Certificate (PCB marks)</li>
+              <li>Jharkhand Residence / Domicile Certificate, where required</li>
+              <li>Valid EWS, BC-I, BC-II, SC or ST certificate issued by the competent authority, if applicable</li>
+              <li>EWS Certificate in the prescribed format, if claiming EWS reservation</li>
+              <li>Jharkhand counselling registration slip and choice-filling printout</li>
+              <li>Allotment letter and fee-payment receipt, when issued</li>
+              <li>School Leaving Certificate + Gap Certificate if applicable</li>
+              <li>Aadhaar Card &amp; 10+ passport photos (white background)</li>
+            </ul>
+          </div>
+          <div class="card" style="margin-top:20px">
+            <div class="card-title">💡 Option-form strategy</div>
+            <ul class="checklist">
+              <li>Fill every acceptable option in true preference order — more valid choices improve safety</li>
+              <li>Order: top government → remaining government → private State Quota → private All India/Management →
+                AIQ option</li>
+              <li>Compare private-college eligibility, counselling round and payment terms carefully before locking
+                choices</li>
+              <li>Claim any special or PwD category only when it is listed in the official prospectus and supported by
+                valid documents</li>
+              <li>Read upgrade, reporting, resignation and security-deposit rules before accepting any seat</li>
+              <li>Keep domicile, category, EWS and identity documents ready before registration begins</li>
+            </ul>
+          </div>
+          <div class="cta-section">
+            <h3>Need help with your option form?</h3>
+            <p>We'll build your personalised option list based on rank, category and preferences.</p>
+            <div class="cta-btns">
+              <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" class="btn btn-wa"
+                style="flex:1;min-width:180px">💬 WhatsApp Counsellor</a>
+              <a href="tel:+919999703444" class="btn btn-blue" style="flex:1;min-width:180px">📞 Call Now</a>
             </div>
           </div>
-          <div class="schedule-item">
-            <div class="schedule-dot"></div>
-            <div>
-              <div class="schedule-title">Final Stray Vacancy / Special Round, if notified</div>
-              <div class="schedule-date">Final opportunities depend on the live vacancy matrix and eligibility rules</div>
-            </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how-it-works">
+      <div class="section-eyebrow">Simple &amp; fast</div>
+      <h2 class="section-h2">How the predictor works</h2>
+      <p class="section-lead">Three steps to compare your NEET rank with the 2025 Jharkhand government and private
+        medical-college cutoffs on the provided page.</p>
+      <div class="hiw-grid">
+        <div class="hiw-card">
+          <div class="hiw-num">1</div>
+          <h3>Enter your details</h3>
+          <p>Enter your NEET 2026 All India Rank, Jharkhand category and domicile status.</p>
+        </div>
+        <div class="hiw-card">
+          <div class="hiw-num">2</div>
+          <h3>Smart analysis</h3>
+          <p>Our prediction engine analyzes previous years' cutoff data to estimate your admission chances.</p>
+        </div>
+        <div class="hiw-card">
+          <div class="hiw-num">3</div>
+          <h3>Get your college list</h3>
+          <p>See every college with a real admission possibility score — download it as a PDF.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" style="padding-top:0">
+      <div class="section-eyebrow">Why students trust it</div>
+      <h2 class="section-h2">Built on real counselling data</h2>
+      <p class="section-lead">The prediction compares your AIR with the category-wise 2025 ranks published on the
+        provided Jharkhand cutoff page.</p>
+      <div class="feat-grid">
+        <div class="feat">
+          <div class="feat-ic">📈</div>
+          <div>
+            <h4>Real Jharkhand cutoffs</h4>
+            <p>Category-wise 2025 Round 1 government cutoffs and 2025 overall-low private cutoffs from the provided
+              Medipedia page.</p>
           </div>
         </div>
-        <div class="card" style="margin-top:20px">
-          <div class="card-title">Documents checklist (Jharkhand counselling)</div>
-          <div class="card-sub">Keep originals + self-attested copies ready for verification</div>
-          <ul class="checklist">
-            <li>NEET 2026 Admit Card &amp; Scorecard</li>
-            <li>Class 10 Marksheet &amp; Certificate (DOB proof)</li>
-            <li>Class 12 Marksheet &amp; Certificate (PCB marks)</li>
-            <li>Jharkhand Residence / Domicile Certificate, where required</li>
-            <li>Valid EWS, BC-I, BC-II, SC or ST certificate issued by the competent authority, if applicable</li>
-            <li>EWS Certificate in the prescribed format, if claiming EWS reservation</li>
-            <li>Jharkhand counselling registration slip and choice-filling printout</li>
-            <li>Allotment letter and fee-payment receipt, when issued</li>
-            <li>School Leaving Certificate + Gap Certificate if applicable</li>
-            <li>Aadhaar Card &amp; 10+ passport photos (white background)</li>
-          </ul>
+        <div class="feat">
+          <div class="feat-ic">🎯</div>
+          <div>
+            <h4>Possibility score</h4>
+            <p>Each college shows a clear percentage chance — not just a vague "maybe".</p>
+          </div>
         </div>
-        <div class="card" style="margin-top:20px">
-          <div class="card-title">💡 Option-form strategy</div>
-          <ul class="checklist">
-            <li>Fill every acceptable option in true preference order — more valid choices improve safety</li>
-            <li>Order: top government → remaining government → private State Quota → private All India/Management → AIQ option</li>
-            <li>Compare private-college eligibility, counselling round and payment terms carefully before locking choices</li>
-            <li>Claim any special or PwD category only when it is listed in the official prospectus and supported by valid documents</li>
-            <li>Read upgrade, reporting, resignation and security-deposit rules before accepting any seat</li>
-            <li>Keep domicile, category, EWS and identity documents ready before registration begins</li>
-          </ul>
+        <div class="feat">
+          <div class="feat-ic">🏥</div>
+          <div>
+            <h4>Government + Private</h4>
+            <p>9 unique Jharkhand colleges covered — 6 government and 3 private. Two private colleges also have explicit
+              AIQ cutoff rows, creating 11 comparable cutoff routes.</p>
+          </div>
         </div>
-        <div class="cta-section">
-          <h3>Need help with your option form?</h3>
-          <p>We'll build your personalised option list based on rank, category and preferences.</p>
-          <div class="cta-btns">
-            <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" class="btn btn-wa" style="flex:1;min-width:180px">💬 WhatsApp Counsellor</a>
-            <a href="tel:+919999703444" class="btn btn-blue" style="flex:1;min-width:180px">📞 Call Now</a>
+        <div class="feat">
+          <div class="feat-ic">📄</div>
+          <div>
+            <h4>Downloadable report</h4>
+            <p>Get a clean PDF you can share with your family and keep for counselling.</p>
           </div>
         </div>
       </div>
+    </section>
 
-    </div>
-  </div>
+    <!-- FAQ -->
+    <section class="section" style="padding-top:0">
+      <div class="section-eyebrow">Student questions</div>
+      <h2 class="section-h2">Jharkhand MBBS Counselling FAQs</h2>
+      <div class="faq-wrap" id="faq-wrap"></div>
+    </section>
 
-  <!-- HOW IT WORKS -->
-  <section class="section" id="how-it-works">
-    <div class="section-eyebrow">Simple &amp; fast</div>
-    <h2 class="section-h2">How the predictor works</h2>
-    <p class="section-lead">Three steps to compare your NEET rank with the 2025 Jharkhand government and private medical-college cutoffs on the provided page.</p>
-    <div class="hiw-grid">
-      <div class="hiw-card">
-        <div class="hiw-num">1</div>
-        <h3>Enter your details</h3>
-        <p>Enter your NEET 2026 All India Rank, Jharkhand category and domicile status.</p>
+    <!-- FINAL CTA -->
+    <section class="finalcta">
+      <div class="finalcta-inner">
+        <h2>Don't leave your MBBS seat to chance</h2>
+        <p>Run the predictor, then let our counsellors build your winning option form.</p>
+        <a href="#tool" class="btn btn-primary">Predict My Colleges →</a>
       </div>
-      <div class="hiw-card">
-        <div class="hiw-num">2</div>
-        <h3>Smart analysis</h3>
-        <p>Our prediction engine analyzes previous years' cutoff data to estimate your admission chances.</p>
-      </div>
-      <div class="hiw-card">
-        <div class="hiw-num">3</div>
-        <h3>Get your college list</h3>
-        <p>See every college with a real admission possibility score — download it as a PDF.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="section" style="padding-top:0">
-    <div class="section-eyebrow">Why students trust it</div>
-    <h2 class="section-h2">Built on real counselling data</h2>
-    <p class="section-lead">The prediction compares your AIR with the category-wise 2025 ranks published on the provided Jharkhand cutoff page.</p>
-    <div class="feat-grid">
-      <div class="feat">
-        <div class="feat-ic">📈</div>
-        <div>
-          <h4>Real Jharkhand cutoffs</h4>
-          <p>Category-wise 2025 Round 1 government cutoffs and 2025 overall-low private cutoffs from the provided Medipedia page.</p>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-ic">🎯</div>
-        <div>
-          <h4>Possibility score</h4>
-          <p>Each college shows a clear percentage chance — not just a vague "maybe".</p>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-ic">🏥</div>
-        <div>
-          <h4>Government + Private</h4>
-          <p>9 unique Jharkhand colleges covered — 6 government and 3 private. Two private colleges also have explicit AIQ cutoff rows, creating 11 comparable cutoff routes.</p>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-ic">📄</div>
-        <div>
-          <h4>Downloadable report</h4>
-          <p>Get a clean PDF you can share with your family and keep for counselling.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section" style="padding-top:0">
-    <div class="section-eyebrow">Student questions</div>
-    <h2 class="section-h2">Jharkhand MBBS Counselling FAQs</h2>
-    <div class="faq-wrap" id="faq-wrap"></div>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section class="finalcta">
-    <div class="finalcta-inner">
-      <h2>Don't leave your MBBS seat to chance</h2>
-      <p>Run the predictor, then let our counsellors build your winning option form.</p>
-      <a href="#tool" class="btn btn-primary">Predict My Colleges →</a>
-    </div>
-  </section>
-
+    </section>
+  </main>
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
@@ -4366,18 +4408,19 @@
           📍 H-51, H Block, Sector 63, Noida, UP 201301<br>
           📞 <a href="tel:+919999703444">+91 99997-03444</a><br>
           ✉️ <a href="mailto:info@rmgoe.org">info@rmgoe.org</a><br>
-          💬 <a
-  href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
-  target="_blank"
-  rel="noopener noreferrer"
->
-  WhatsApp Us
-</a>
+          💬 <a href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
+            target="_blank" rel="noopener noreferrer">
+            WhatsApp Us
+          </a>
         </div>
       </div>
       <div class="footer-bottom">
-        Data source: <a href="https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Medipedia Overseas — NEET 2025 Jharkhand Cut-off</a>.
-        Predictions use 2025 government Round 1 and private overall-low cutoff ranks from that page. The source does not provide fees or seat intake. Actual 2026 cutoffs and eligibility may vary. Verify official Jharkhand notices. RMGOE does not guarantee admission.<br><br>
+        Data source: <a href="https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php" target="_blank"
+          rel="noopener" style="color:inherit;text-decoration:underline">Medipedia Overseas — NEET 2025 Jharkhand
+          Cut-off</a>.
+        Predictions use 2025 government Round 1 and private overall-low cutoff ranks from that page. The source does not
+        provide fees or seat intake. Actual 2026 cutoffs and eligibility may vary. Verify official Jharkhand notices.
+        RMGOE does not guarantee admission.<br><br>
         © 2026 RM Group of Education. All rights reserved.
       </div>
     </div>
@@ -4386,13 +4429,8 @@
   <!-- STICKY MOBILE BAR -->
   <div class="sticky-bar">
     <a href="tel:+919999703444" class="btn btn-blue" style="flex:1">📞 Call</a>
-    <a
-      href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
-      target="_blank"
-      rel="noopener noreferrer"
-      class="btn btn-wa"
-      style="flex:1"
-    >💬 WhatsApp</a>
+    <a href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
+      target="_blank" rel="noopener noreferrer" class="btn btn-wa" style="flex:1">💬 WhatsApp</a>
   </div>
 
   <script>
@@ -4497,48 +4535,48 @@
         button.setAttribute('aria-pressed', String(isActive));
       });
     }
-const prefersReducedMotion = window.matchMedia(
-  '(prefers-reduced-motion: reduce)'
-);
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    );
 
-function runAfterLayout(callback) {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(callback);
-  });
-}
-
-function safeScrollIntoView(target, block = 'start') {
-  const element =
-    typeof target === 'string'
-      ? document.getElementById(target)
-      : target;
-
-  if (!element) return;
-
-  runAfterLayout(() => {
-    element.scrollIntoView({
-      behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
-      block
-    });
-  });
-}
-
-function safeFocus(target) {
-  const element =
-    typeof target === 'string'
-      ? document.getElementById(target)
-      : target;
-
-  if (!element) return;
-
-  runAfterLayout(() => {
-    try {
-      element.focus({ preventScroll: true });
-    } catch {
-      element.focus();
+    function runAfterLayout(callback) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(callback);
+      });
     }
-  });
-}
+
+    function safeScrollIntoView(target, block = 'start') {
+      const element =
+        typeof target === 'string'
+          ? document.getElementById(target)
+          : target;
+
+      if (!element) return;
+
+      runAfterLayout(() => {
+        element.scrollIntoView({
+          behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+          block
+        });
+      });
+    }
+
+    function safeFocus(target) {
+      const element =
+        typeof target === 'string'
+          ? document.getElementById(target)
+          : target;
+
+      if (!element) return;
+
+      runAfterLayout(() => {
+        try {
+          element.focus({ preventScroll: true });
+        } catch {
+          element.focus();
+        }
+      });
+    }
     // ============================================================
     // NAV
     // ============================================================
@@ -4589,47 +4627,47 @@ function safeFocus(target) {
     }
 
     function showScreen(id) {
-  const resultsScreen = document.getElementById('screen-results');
-  const toolScreens = document.querySelectorAll('.tool-body > .screen');
+      const resultsScreen = document.getElementById('screen-results');
+      const toolScreens = document.querySelectorAll('.tool-body > .screen');
 
-  if (id === 'screen-results') {
-    toolScreens.forEach(screen => {
-      screen.classList.remove('active');
-    });
+      if (id === 'screen-results') {
+        toolScreens.forEach(screen => {
+          screen.classList.remove('active');
+        });
 
-    const resultPanel = ensureToolResultPanel();
-    resultPanel.classList.add('active');
+        const resultPanel = ensureToolResultPanel();
+        resultPanel.classList.add('active');
 
-    if (resultsScreen) {
-      resultsScreen.classList.add('active');
+        if (resultsScreen) {
+          resultsScreen.classList.add('active');
+        }
+
+        document.body.classList.add('results-generated');
+
+        safeScrollIntoView(
+          document.querySelector('.tool-shell'),
+          'start'
+        );
+
+        return;
+      }
+
+      document.body.classList.remove('results-generated');
+
+      if (resultsScreen) {
+        resultsScreen.classList.remove('active');
+      }
+
+      toolScreens.forEach(screen => {
+        screen.classList.remove('active');
+      });
+
+      const nextScreen = document.getElementById(id);
+
+      if (nextScreen) {
+        nextScreen.classList.add('active');
+      }
     }
-
-    document.body.classList.add('results-generated');
-
-    safeScrollIntoView(
-      document.querySelector('.tool-shell'),
-      'start'
-    );
-
-    return;
-  }
-
-  document.body.classList.remove('results-generated');
-
-  if (resultsScreen) {
-    resultsScreen.classList.remove('active');
-  }
-
-  toolScreens.forEach(screen => {
-    screen.classList.remove('active');
-  });
-
-  const nextScreen = document.getElementById(id);
-
-  if (nextScreen) {
-    nextScreen.classList.add('active');
-  }
-}
     function setStep(n) {
       for (let i = 1; i <= 3; i++) {
         const s = document.getElementById('step' + i);
@@ -4683,9 +4721,9 @@ function safeFocus(target) {
 
       if (!ok) {
         safeScrollIntoView(
-  document.querySelector('.field-err.show'),
-  'center'
-);
+          document.querySelector('.field-err.show'),
+          'center'
+        );
         return;
       }
 
@@ -4730,9 +4768,9 @@ function safeFocus(target) {
 
       setStep(2);
       showScreen('screen-otp');
-safeScrollIntoView('screen-otp', 'start');
+      safeScrollIntoView('screen-otp', 'start');
 
-sendOTP();
+      sendOTP();
     }
 
 
@@ -4854,16 +4892,16 @@ sendOTP();
       el.value = el.value.replace(/\D/g, '');
 
       if (el.value && i < 3) {
-  const nextBox = document.getElementById('otp' + (i + 1));
+        const nextBox = document.getElementById('otp' + (i + 1));
 
-  if (nextBox) {
-    try {
-      nextBox.focus({ preventScroll: true });
-    } catch {
-      nextBox.focus();
-    }
-  }
-}
+        if (nextBox) {
+          try {
+            nextBox.focus({ preventScroll: true });
+          } catch {
+            nextBox.focus();
+          }
+        }
+      }
 
       const fullOTP = ['otp0', 'otp1', 'otp2', 'otp3']
         .map(id => document.getElementById(id).value)
@@ -5212,15 +5250,14 @@ sendOTP();
     </div>
     <div class="alert alert-${chance === 'Strong' ? 'success' : chance === 'Moderate' ? 'warn' : 'info'}" style="margin-top:18px">
       <div class="alert-icon">${chance === 'Strong' ? '🎯' : chance === 'Moderate' ? '⚡' : '💡'}</div>
-      <div><strong>Jharkhand government-seat chance: ${state.domicile === 'yes' ? chance : 'Not evaluated'}</strong><br>${
-        state.domicile !== 'yes'
+      <div><strong>Jharkhand government-seat chance: ${state.domicile === 'yes' ? chance : 'Not evaluated'}</strong><br>${state.domicile !== 'yes'
           ? `Jharkhand government and state-category private options are excluded because Other State was selected. Only the two explicit AIQ rows on the supplied page are evaluated.`
           : chance === 'Strong'
             ? `You have ${strong} government colleges with 75%+ possibility. Fill every acceptable choice in true preference order.`
             : chance === 'Moderate'
               ? `You have ${strong} strong government option(s). Stay active through all counselling rounds.`
               : `Government chances are limited in this cutoff model. Compare private State Quota, All India/Management, NRI and other eligible routes carefully.`
-      }</div>
+        }</div>
     </div>
     <div style="margin-top:16px;padding:16px;background:var(--paper);border-radius:var(--r-lg)">
       <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px">Category: ${CAT_LABEL[cat]}</div>
@@ -5411,41 +5448,41 @@ sendOTP();
     // ============================================================
     let jsPDFLoadPromise = null;
 
-function loadJsPDF() {
-  if (window.jspdf?.jsPDF) {
-    return Promise.resolve();
-  }
-
-  if (jsPDFLoadPromise) {
-    return jsPDFLoadPromise;
-  }
-
-  jsPDFLoadPromise = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-
-    script.src =
-      'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-
-    script.async = true;
-
-    script.onload = () => {
+    function loadJsPDF() {
       if (window.jspdf?.jsPDF) {
-        resolve();
-      } else {
-        reject(new Error('jsPDF loaded but was not initialised.'));
+        return Promise.resolve();
       }
-    };
 
-    script.onerror = () => {
-      jsPDFLoadPromise = null;
-      reject(new Error('Unable to load jsPDF.'));
-    };
+      if (jsPDFLoadPromise) {
+        return jsPDFLoadPromise;
+      }
 
-    document.head.appendChild(script);
-  });
+      jsPDFLoadPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
 
-  return jsPDFLoadPromise;
-}
+        script.src =
+          'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+
+        script.async = true;
+
+        script.onload = () => {
+          if (window.jspdf?.jsPDF) {
+            resolve();
+          } else {
+            reject(new Error('jsPDF loaded but was not initialised.'));
+          }
+        };
+
+        script.onerror = () => {
+          jsPDFLoadPromise = null;
+          reject(new Error('Unable to load jsPDF.'));
+        };
+
+        document.head.appendChild(script);
+      });
+
+      return jsPDFLoadPromise;
+    }
     async function downloadPDF() {
       const list = reportList();
       if (!list.length) {
@@ -5454,24 +5491,24 @@ function loadJsPDF() {
       }
 
       try {
-  await loadJsPDF();
-} catch (error) {
-  console.error(error);
+        await loadJsPDF();
+      } catch (error) {
+        console.error(error);
 
-  alert(
-    'The PDF generator could not be loaded. Please check your internet connection or use the Print option.'
-  );
+        alert(
+          'The PDF generator could not be loaded. Please check your internet connection or use the Print option.'
+        );
 
-  return;
-}
+        return;
+      }
 
-const { jsPDF } = window.jspdf;
+      const { jsPDF } = window.jspdf;
 
-const doc = new jsPDF({
-  orientation: 'landscape',
-  unit: 'mm',
-  format: 'a4'
-});
+      const doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
+      });
       const W = 297;
       const H = 210;
       const M = 12;
