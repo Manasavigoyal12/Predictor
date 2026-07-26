@@ -17,7 +17,7 @@
   <meta name="description"
     content="Predict Jharkhand MBBS college chances using NEET 2025 category-wise cutoff ranks and scores for 6 government and 3 private medical colleges.">
   <!-- Discover and prioritise the LCP image before fonts and other styles. -->
-  <link rel="preload" as="image" href="banner-mobile.webp" type="image/webp" media="(max-width: 768px)"
+  <link rel="preload" as="image" href="banner.webp" type="image/webp" media="(max-width: 768px)"
     fetchpriority="high">
 
   <link rel="preload" as="image" href="banner.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
@@ -548,6 +548,9 @@
       display: grid;
       gap: 24px;
       counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
     .step {
@@ -747,6 +750,7 @@
     .toggle-btn {
       min-height: 40px !important;
       border: 0;
+      position: relative;
       background: transparent;
       font: inherit;
       flex: 1;
@@ -767,6 +771,30 @@
       background: #0d6dcc;
       color: #ffffff;
       box-shadow: 0 8px 18px rgba(13, 109, 204, 0.20);
+    }
+
+    .domicile-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      min-width: 0;
+    }
+
+    .domicile-fieldset legend {
+      width: 100%;
+    }
+
+    .toggle-btn input[type="radio"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .toggle-btn:focus-within {
+      outline: 3px solid rgba(13, 109, 204, 0.28);
+      outline-offset: 2px;
     }
 
     .phone-wrap {
@@ -3826,18 +3854,18 @@
           height="46">
       </a>
 
-      <div class="header-actions">
+      <nav class="header-actions" aria-label="Quick contact">
         <a href="tel:+919999703444" class="header-btn call-btn">
-          <i class="fa-solid fa-phone"></i>
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
           <span>Call Now</span>
         </a>
 
         <a href="https://wa.me/8448207814?text=Hello%2C%20I%20want%20free%20MBBS%20counselling%20guidance."
           target="_blank" rel="noopener" class="header-btn whatsapp-btn">
-          <i class="fa-brands fa-whatsapp"></i>
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
           <span>WhatsApp</span>
         </a>
-      </div>
+      </nav>
 
     </div>
   </header>
@@ -3845,7 +3873,7 @@
     <!-- HERO -->
     <section class="hero">
       <picture class="hero-picture" aria-hidden="true">
-        <source media="(max-width: 768px)" srcset="banner-mobile.webp" type="image/webp">
+        <source media="(max-width: 768px)" srcset="banner.webp" type="image/webp">
 
         <img class="hero-bg" src="banner.webp" alt="" width="1959" height="500" loading="eager" fetchpriority="high">
       </picture>
@@ -3881,22 +3909,22 @@
 
         <!-- LEFT TIMELINE -->
         <div class="progress-wrap">
-          <div class="steps">
-            <div class="step active" id="step1">Details</div>
-            <div class="step" id="step2">Verify</div>
-            <div class="step" id="step3">Results</div>
-          </div>
+          <ol class="steps" aria-label="College prediction progress">
+            <li class="step active" id="step1" aria-current="step">Details</li>
+            <li class="step" id="step2">Verify</li>
+            <li class="step" id="step3">Results</li>
+          </ol>
         </div>
 
         <!-- RIGHT BODY -->
         <div class="tool-body">
 
           <!-- SCREEN 1: FORM -->
-          <div class="screen active" id="screen-input">
+          <div class="screen active" id="screen-input" aria-labelledby="predictor-heading">
 
             <div class="tool-head">
               <div>
-                <div class="tool-title">Enter your NEET 2026 details</div>
+                <h2 class="tool-title" id="predictor-heading">Enter your NEET 2026 details</h2>
                 <div class="tool-desc">Fill the details below to check your personalised Jharkhand college prediction.
                 </div>
               </div>
@@ -3907,7 +3935,13 @@
               </div>
             </div>
 
-            <div class="form-grid">
+            <form
+              id="predictor-form"
+              class="form-grid"
+              toolname="predict_jharkhand_mbbs"
+              tooldescription="Collects student details and prepares an indicative Jharkhand MBBS college prediction using NEET All India Rank, category and domicile before OTP verification."
+              onsubmit="event.preventDefault(); goToOTP();"
+            >
 
               <div class="form-row">
                 <label for="inp-name">
@@ -3915,8 +3949,9 @@
                   Full Name<span class="req" aria-hidden="true">*</span>
                 </label>
                 <input class="inp" type="text" id="inp-name" name="name" placeholder="e.g. Rahul Sharma"
-                  autocomplete="name" aria-describedby="err-name">
-                <div class="field-err" id="err-name">Please enter your full name</div>
+                  autocomplete="name" aria-describedby="err-name" required
+                  toolparamdescription="The student's full name.">
+                <div class="field-err" id="err-name" role="alert" aria-live="polite">Please enter your full name</div>
               </div>
 
               <div class="form-row">
@@ -3925,8 +3960,9 @@
                   Email Address<span class="req" aria-hidden="true">*</span>
                 </label>
                 <input class="inp" type="email" id="inp-email" name="email" placeholder="you@email.com"
-                  autocomplete="email" inputmode="email" aria-describedby="err-email">
-                <div class="field-err" id="err-email">Please enter a valid email address</div>
+                  autocomplete="email" inputmode="email" aria-describedby="err-email" required
+                  toolparamdescription="The student's valid email address.">
+                <div class="field-err" id="err-email" role="alert" aria-live="polite">Please enter a valid email address</div>
               </div>
 
               <div class="form-row">
@@ -3935,14 +3971,15 @@
                   Mobile Number<span class="req" aria-hidden="true">*</span>
                 </label>
                 <div class="phone-wrap" id="phone-wrap">
-                  <div class="phone-prefix">
+                  <div class="phone-prefix" aria-hidden="true">
                     <i class="fa-solid fa-mobile-screen-button"></i>
                     +91
                   </div>
                   <input type="tel" id="inp-phone" name="phone" placeholder="10-digit mobile number" maxlength="10"
-                    autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" aria-describedby="err-phone">
+                    autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" aria-describedby="err-phone"
+                    required toolparamdescription="The student's 10-digit Indian mobile number used for OTP verification.">
                 </div>
-                <div class="field-err" id="err-phone">Enter a valid 10-digit number starting with 6, 7, 8 or 9</div>
+                <div class="field-err" id="err-phone" role="alert" aria-live="polite">Enter a valid 10-digit number starting with 6, 7, 8 or 9</div>
               </div>
 
               <div class="form-row">
@@ -3951,8 +3988,9 @@
                   NEET All India Rank<span class="req" aria-hidden="true">*</span>
                 </label>
                 <input class="inp" type="number" id="inp-rank" name="neet_air" placeholder="e.g. 45000" min="1"
-                  inputmode="numeric" aria-describedby="err-rank">
-                <div class="field-err" id="err-rank">Enter your NEET AIR</div>
+                  inputmode="numeric" aria-describedby="err-rank" required
+                  toolparamdescription="The student's NEET 2026 All India Rank, not score or state rank.">
+                <div class="field-err" id="err-rank" role="alert" aria-live="polite">Enter your NEET AIR</div>
               </div>
 
               <div class="form-row full">
@@ -3960,7 +3998,8 @@
                   <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
                   Jharkhand Category<span class="req" aria-hidden="true">*</span>
                 </label>
-                <select class="inp" id="inp-cat" name="category" aria-describedby="err-cat">
+                <select class="inp" id="inp-cat" name="category" aria-describedby="err-cat" required
+                  toolparamdescription="The student's Jharkhand counselling category.">
                   <option value="">Select your category</option>
                   <option value="UR">General / UR</option>
                   <option value="EWS">EWS</option>
@@ -3969,35 +4008,43 @@
                   <option value="SC">SC</option>
                   <option value="ST">ST</option>
                 </select>
-                <div class="field-err" id="err-cat">Please select your category</div>
+                <div class="field-err" id="err-cat" role="alert" aria-live="polite">Please select your category</div>
               </div>
 
-              <div class="form-row full">
-                <div class="form-row-label" id="domicile-label">
+              <fieldset class="form-row full domicile-fieldset">
+                <legend class="form-row-label" id="domicile-label">
                   <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
                   Jharkhand Domicile?<span class="req" aria-hidden="true">*</span>
+                </legend>
+                <div class="toggle-wrap" id="domicile-toggle">
+                  <label class="toggle-btn active">
+                    <input type="radio" name="domicile" value="yes" checked required
+                      onchange="setDomicile(this.value)"
+                      toolparamdescription="Whether the student holds valid Jharkhand domicile.">
+                    <span>Yes — Jharkhand</span>
+                  </label>
+                  <label class="toggle-btn">
+                    <input type="radio" name="domicile" value="no"
+                      onchange="setDomicile(this.value)"
+                      toolparamdescription="Whether the student is applying without Jharkhand domicile.">
+                    <span>No — Other State</span>
+                  </label>
                 </div>
-                <div class="toggle-wrap" id="domicile-toggle" role="group" aria-labelledby="domicile-label">
-                  <button type="button" class="toggle-btn active" data-val="yes" aria-pressed="true"
-                    onclick="setDomicile('yes')">Yes — Jharkhand</button>
-                  <button type="button" class="toggle-btn" data-val="no" aria-pressed="false"
-                    onclick="setDomicile('no')">No — Other State</button>
-                </div>
-              </div>
+              </fieldset>
 
               <div class="form-row full">
-                <button type="button" class="btn btn-primary" id="btn-check" onclick="goToOTP()">
-                  <i class="fa-solid fa-magnifying-glass-chart"></i>
+                <button type="submit" class="btn btn-primary" id="btn-check">
+                  <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
                   Check My Colleges
                 </button>
               </div>
 
               <div class="form-safe-note">
-                <i class="fa-solid fa-lock"></i>
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
                 Your details are used only to generate and send your report.
               </div>
 
-            </div>
+            </form>
           </div>
 
           <!-- SCREEN 2: OTP -->
@@ -4037,7 +4084,7 @@
                 </div>
               </div>
 
-              <button class="btn btn-primary" id="btn-send-otp" onclick="sendOTP()">
+              <button type="button" class="btn btn-primary" id="btn-send-otp" onclick="sendOTP()">
                 <i class="fa-solid fa-paper-plane"></i>
                 Send OTP
               </button>
@@ -4061,14 +4108,14 @@
               </div>
 
               <div class="otp-timer" id="otp-timer"></div>
-              <div class="field-err" id="otp-error" style="text-align:center"></div>
+              <div class="field-err" id="otp-error" role="alert" aria-live="polite" style="text-align:center"></div>
 
-              <button class="btn btn-primary" style="margin-top:14px" id="btn-verify" onclick="verifyOTP()">
+              <button type="button" class="btn btn-primary" style="margin-top:14px" id="btn-verify" onclick="verifyOTP()">
                 <i class="fa-solid fa-unlock-keyhole"></i>
                 Unlock My Colleges
               </button>
 
-              <button class="btn btn-secondary" style="margin-top:10px" onclick="backToPhone()">
+              <button type="button" class="btn btn-secondary" style="margin-top:10px" onclick="backToPhone()">
                 <i class="fa-solid fa-arrow-left"></i>
                 Change Number
               </button>
@@ -4090,7 +4137,7 @@
           <p style="font-size:12px;color:var(--muted)">RM Group of Education · rmgoe.org · +91 99997-03444</p>
         </div>
 
-        <div class="result-summary" id="result-summary"></div>
+        <div class="result-summary" id="result-summary" role="status" aria-live="polite" aria-atomic="true"></div>
 
         <div class="tabs" role="tablist" aria-label="Prediction report sections">
           <button type="button" class="tab active" id="tab-btn-colleges" role="tab" aria-selected="true"
@@ -4518,9 +4565,19 @@
     function showErr(field, show) {
       const e = document.getElementById('err-' + field);
       const inp = document.getElementById('inp-' + field);
-      if (e) e.classList.toggle('show', show);
-      if (inp) inp.classList.toggle('err', show);
-      if (field === 'phone') document.getElementById('phone-wrap').classList.toggle('err', show);
+
+      if (e) {
+        e.classList.toggle('show', show);
+      }
+
+      if (inp) {
+        inp.classList.toggle('err', show);
+        inp.setAttribute('aria-invalid', String(show));
+      }
+
+      if (field === 'phone') {
+        document.getElementById('phone-wrap')?.classList.toggle('err', show);
+      }
     }
 
     document.getElementById('inp-phone').addEventListener('input', function () {
@@ -4529,10 +4586,11 @@
 
     function setDomicile(v) {
       domicileVal = v;
-      document.querySelectorAll('#domicile-toggle .toggle-btn').forEach(button => {
-        const isActive = button.dataset.val === v;
-        button.classList.toggle('active', isActive);
-        button.setAttribute('aria-pressed', String(isActive));
+
+      document.querySelectorAll('#domicile-toggle input[name="domicile"]').forEach(radio => {
+        const isActive = radio.value === v;
+        radio.checked = isActive;
+        radio.closest('.toggle-btn')?.classList.toggle('active', isActive);
       });
     }
     const prefersReducedMotion = window.matchMedia(
@@ -4671,8 +4729,17 @@
     function setStep(n) {
       for (let i = 1; i <= 3; i++) {
         const s = document.getElementById('step' + i);
+        if (!s) continue;
+
         s.classList.remove('active', 'done');
-        if (i < n) s.classList.add('done'); else if (i === n) s.classList.add('active');
+        s.removeAttribute('aria-current');
+
+        if (i < n) {
+          s.classList.add('done');
+        } else if (i === n) {
+          s.classList.add('active');
+          s.setAttribute('aria-current', 'step');
+        }
       }
     }
 
@@ -5776,11 +5843,9 @@
       button?.setAttribute('aria-expanded', String(open));
     }
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(buildFAQ, { timeout: 1200 });
-    } else {
-      setTimeout(buildFAQ, 250);
-    }
+    // Build the FAQ immediately so agents and assistive technology
+    // can inspect it in the initial accessibility tree.
+    buildFAQ();
 
   </script>
 
