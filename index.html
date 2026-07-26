@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <!--
-  Jharkhand College Predictor deployment:
+  Assam College Predictor deployment:
   1. Keep this HTML file, banner.webp, send-otp.php and verify-otp.php in the same directory.
   2. Update CONFIG.N8N_WEBHOOK_URL before deployment if your webhook address is different.
-  3. College names and NEET 2025 cutoff rank/score values are taken from:
-     https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php
-  4. The source does not provide fee or seat-intake data; this build does not invent them.
-  5. Recheck all eligibility and cutoff details after official Jharkhand NEET UG 2026 notices are published.
+  3. College records, fees and the latest populated 2025 Round 1 category ranks are taken from the supplied Assam file. The supplied deemed list contains no Assam college.
+  4. Recheck eligibility, fees and cutoffs after the official Assam NEET UG 2026 prospectus/data is published.
 -->
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jharkhand NEET 2026 College Predictor | Government &amp; Private MBBS Tool</title>
+  <title>Assam NEET 2026 College Predictor | Government MBBS Tool</title>
   <meta name="description"
-    content="Predict Jharkhand MBBS college chances using NEET 2025 category-wise cutoff ranks and scores for 6 government and 3 private medical colleges.">
+    content="Predict Assam MBBS college chances using the supplied latest 2025 Round 1 state-counselling ranks for Assam government medical colleges.">
   <!-- Discover and prioritise the LCP image before fonts and other styles. -->
   <link rel="preload" as="image" href="banner.webp" type="image/webp" media="(max-width: 768px)"
     fetchpriority="high">
-
-  <link rel="preload" as="image" href="banner.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
+  <link rel="preload" as="image" href="banner.webp" type="image/webp" media="(min-width: 769px)"
+    fetchpriority="high">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,12 +32,12 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@600&display=swap">
   </noscript>
 
-  <!-- Local Font Awesome subset with font-display:swap in all.min.css. -->
+  <!-- Reuse the same local Font Awesome folder in every predictor tool. -->
   <link rel="stylesheet" href="fontawesome/css/all.min.css" media="print" onload="this.media='all'">
   <noscript>
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
   </noscript>
-
+  
   <style>
     /* ─────────── BASE ─────────── */
     :root {
@@ -300,20 +298,7 @@
       padding: 0 20px !important;
     }
 
-    /* Real image element instead of a CSS-only background:
-       this lets the browser apply fetchpriority=high directly to the LCP image. */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      width: 100%;
-      height: 100%;
-      max-width: none;
-      object-fit: cover;
-      object-position: center right;
-      pointer-events: none;
-    }
-
+    /* A real image element lets the browser prioritise the LCP resource. */
     .hero-picture {
       position: absolute;
       inset: 0;
@@ -329,6 +314,7 @@
       max-width: none;
       object-fit: cover;
       object-position: center right;
+      pointer-events: none;
     }
 
     @media (max-width: 768px) {
@@ -548,9 +534,6 @@
       display: grid;
       gap: 24px;
       counter-reset: step;
-      list-style: none;
-      padding: 0;
-      margin: 0;
     }
 
     .step {
@@ -750,7 +733,6 @@
     .toggle-btn {
       min-height: 40px !important;
       border: 0;
-      position: relative;
       background: transparent;
       font: inherit;
       flex: 1;
@@ -771,30 +753,6 @@
       background: #0d6dcc;
       color: #ffffff;
       box-shadow: 0 8px 18px rgba(13, 109, 204, 0.20);
-    }
-
-    .domicile-fieldset {
-      border: 0;
-      padding: 0;
-      margin: 0;
-      min-width: 0;
-    }
-
-    .domicile-fieldset legend {
-      width: 100%;
-    }
-
-    .toggle-btn input[type="radio"] {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .toggle-btn:focus-within {
-      outline: 3px solid rgba(13, 109, 204, 0.28);
-      outline-offset: 2px;
     }
 
     .phone-wrap {
@@ -2343,8 +2301,9 @@
       box-shadow: 0 -4px 16px rgba(10, 31, 61, .10);
     }
 
+
     /* ─────────── RENDERING PERFORMANCE ─────────── */
-    /* Skip layout/paint for sections that are well below the initial viewport. */
+    /* Skip layout and paint for content well below the initial viewport. */
     .section,
     .finalcta,
     .footer {
@@ -2353,8 +2312,7 @@
     }
 
     @media (max-width: 768px) {
-
-      /* Backdrop blur is expensive on low-end mobile GPUs. */
+      /* Backdrop blur is expensive on lower-powered mobile GPUs. */
       .site-header,
       .hero-badge,
       .hero-stats,
@@ -2364,10 +2322,6 @@
       .blur-lock {
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
-      }
-
-      .hero-bg {
-        object-position: 70% center;
       }
 
       .site-header {
@@ -3180,7 +3134,6 @@
     }
 
     @media screen and (max-width: 1180px) {
-
       .header-wrap,
       .hero-inner,
       .results-main,
@@ -3839,8 +3792,8 @@
         gap: 8px;
       }
     }
+
   </style>
-  <meta name="data-source" content="https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php">
 </head>
 
 <body>
@@ -3849,595 +3802,558 @@
   <header class="site-header">
     <div class="header-wrap">
 
-      <a class="header-logo" href="#top" aria-label="Jharkhand NEET College Predictor">
+      <a class="header-logo" href="#top" aria-label="Assam NEET College Predictor">
         <img src="https://rmgoe.org/frontend-assets/images/rm_new_logo.png" alt="RM Group of Education" width="180"
           height="46">
       </a>
 
-      <nav class="header-actions" aria-label="Quick contact">
+      <div class="header-actions">
         <a href="tel:+919999703444" class="header-btn call-btn">
-          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <i class="fa-solid fa-phone"></i>
           <span>Call Now</span>
         </a>
 
         <a href="https://wa.me/8448207814?text=Hello%2C%20I%20want%20free%20MBBS%20counselling%20guidance."
-          target="_blank" rel="noopener" class="header-btn whatsapp-btn">
-          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          target="_blank" rel="noopener noreferrer" class="header-btn whatsapp-btn">
+          <i class="fa-brands fa-whatsapp"></i>
           <span>WhatsApp</span>
         </a>
-      </nav>
+      </div>
 
     </div>
   </header>
+
   <main id="main-content">
-    <!-- HERO -->
-    <section class="hero">
-      <picture class="hero-picture" aria-hidden="true">
-        <source media="(max-width: 768px)" srcset="banner.webp" type="image/webp">
+  <!-- HERO -->
+  <section class="hero">
+    <picture class="hero-picture" aria-hidden="true">
+      <source media="(max-width: 768px)" srcset="banner.webp" type="image/webp">
+      <img class="hero-bg" src="banner.webp" alt="" width="1959" height="500" loading="eager"
+        fetchpriority="high">
+    </picture>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Built on supplied NEET 2025 Assam counselling data
+        </div>
 
-        <img class="hero-bg" src="banner.webp" alt="" width="1959" height="500" loading="eager" fetchpriority="high">
-      </picture>
-      <div class="hero-inner">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="dot"></span>
-            Built on published NEET 2025 Jharkhand cutoff data
-          </div>
+        <h1>
+          Which Assam medical college<br>
+          fits your <b>NEET 2026 rank?</b>
+        </h1>
 
-          <h1>
-            Which Jharkhand medical college<br>
-            fits your <b>NEET 2026 rank?</b>
-          </h1>
+        <p class="hero-sub">
+          Get an instant, personalised prediction across Gauhati Medical College, Assam Medical College, Jorhat, Silchar, Tezpur and the other Assam government medical colleges included in the supplied dataset —
+          using the supplied NEET 2025 Round 1 closing-rank data.
+        </p>
 
-          <p class="hero-sub">
-            Get an instant, personalised prediction across RIMS Ranchi, MGM Jamshedpur, SNMMCH Dhanbad,
-            Sheikh Bhikhari, Phulo Jhano, Medinirai and Jharkhand private-college options —
-            with separate AIQ rows wherever the supplied page explicitly provides them.
-          </p>
+        <a href="#tool" class="hero-btn">
+          Predict My Colleges
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-          <a href="#tool" class="hero-btn">
-            Predict My Colleges
-            <span>→</span>
-          </a>
+  <!-- TOOL -->
+  <div class="tool-shell" id="tool">
+    <div class="tool-card">
+
+      <!-- LEFT TIMELINE -->
+      <div class="progress-wrap">
+        <div class="steps">
+          <div class="step active" id="step1">Details</div>
+          <div class="step" id="step2">Verify</div>
+          <div class="step" id="step3">Results</div>
         </div>
       </div>
-    </section>
 
-    <!-- TOOL -->
-    <div class="tool-shell" id="tool">
-      <div class="tool-card">
+      <!-- RIGHT BODY -->
+      <div class="tool-body">
 
-        <!-- LEFT TIMELINE -->
-        <div class="progress-wrap">
-          <ol class="steps" aria-label="College prediction progress">
-            <li class="step active" id="step1" aria-current="step">Details</li>
-            <li class="step" id="step2">Verify</li>
-            <li class="step" id="step3">Results</li>
-          </ol>
-        </div>
+        <!-- SCREEN 1: FORM -->
+        <div class="screen active" id="screen-input">
 
-        <!-- RIGHT BODY -->
-        <div class="tool-body">
-
-          <!-- SCREEN 1: FORM -->
-          <div class="screen active" id="screen-input" aria-labelledby="predictor-heading">
-
-            <div class="tool-head">
-              <div>
-                <h2 class="tool-title" id="predictor-heading">Enter your NEET 2026 details</h2>
-                <div class="tool-desc">Fill the details below to check your personalised Jharkhand college prediction.
-                </div>
-              </div>
-
-              <div class="tool-mini-badge">
-                <i class="fa-solid fa-shield-halved"></i>
-                Secure
+          <div class="tool-head">
+            <div>
+              <div class="tool-title">Enter your NEET 2026 details</div>
+              <div class="tool-desc">Fill the details below to check your personalised Assam college prediction.
               </div>
             </div>
 
-            <form
-              id="predictor-form"
-              class="form-grid"
-              toolname="predict_jharkhand_mbbs"
-              tooldescription="Collects student details and prepares an indicative Jharkhand MBBS college prediction using NEET All India Rank, category and domicile before OTP verification."
-              onsubmit="event.preventDefault(); goToOTP();"
-            >
-
-              <div class="form-row">
-                <label for="inp-name">
-                  <i class="fa-solid fa-user" aria-hidden="true"></i>
-                  Full Name<span class="req" aria-hidden="true">*</span>
-                </label>
-                <input class="inp" type="text" id="inp-name" name="name" placeholder="e.g. Rahul Sharma"
-                  autocomplete="name" aria-describedby="err-name" required
-                  toolparamdescription="The student's full name.">
-                <div class="field-err" id="err-name" role="alert" aria-live="polite">Please enter your full name</div>
-              </div>
-
-              <div class="form-row">
-                <label for="inp-email">
-                  <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                  Email Address<span class="req" aria-hidden="true">*</span>
-                </label>
-                <input class="inp" type="email" id="inp-email" name="email" placeholder="you@email.com"
-                  autocomplete="email" inputmode="email" aria-describedby="err-email" required
-                  toolparamdescription="The student's valid email address.">
-                <div class="field-err" id="err-email" role="alert" aria-live="polite">Please enter a valid email address</div>
-              </div>
-
-              <div class="form-row">
-                <label for="inp-phone">
-                  <i class="fa-solid fa-phone" aria-hidden="true"></i>
-                  Mobile Number<span class="req" aria-hidden="true">*</span>
-                </label>
-                <div class="phone-wrap" id="phone-wrap">
-                  <div class="phone-prefix" aria-hidden="true">
-                    <i class="fa-solid fa-mobile-screen-button"></i>
-                    +91
-                  </div>
-                  <input type="tel" id="inp-phone" name="phone" placeholder="10-digit mobile number" maxlength="10"
-                    autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" aria-describedby="err-phone"
-                    required toolparamdescription="The student's 10-digit Indian mobile number used for OTP verification.">
-                </div>
-                <div class="field-err" id="err-phone" role="alert" aria-live="polite">Enter a valid 10-digit number starting with 6, 7, 8 or 9</div>
-              </div>
-
-              <div class="form-row">
-                <label for="inp-rank">
-                  <i class="fa-solid fa-ranking-star" aria-hidden="true"></i>
-                  NEET All India Rank<span class="req" aria-hidden="true">*</span>
-                </label>
-                <input class="inp" type="number" id="inp-rank" name="neet_air" placeholder="e.g. 45000" min="1"
-                  inputmode="numeric" aria-describedby="err-rank" required
-                  toolparamdescription="The student's NEET 2026 All India Rank, not score or state rank.">
-                <div class="field-err" id="err-rank" role="alert" aria-live="polite">Enter your NEET AIR</div>
-              </div>
-
-              <div class="form-row full">
-                <label for="inp-cat">
-                  <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
-                  Jharkhand Category<span class="req" aria-hidden="true">*</span>
-                </label>
-                <select class="inp" id="inp-cat" name="category" aria-describedby="err-cat" required
-                  toolparamdescription="The student's Jharkhand counselling category.">
-                  <option value="">Select your category</option>
-                  <option value="UR">General / UR</option>
-                  <option value="EWS">EWS</option>
-                  <option value="BC1">BC-I</option>
-                  <option value="BC2">BC-II</option>
-                  <option value="SC">SC</option>
-                  <option value="ST">ST</option>
-                </select>
-                <div class="field-err" id="err-cat" role="alert" aria-live="polite">Please select your category</div>
-              </div>
-
-              <fieldset class="form-row full domicile-fieldset">
-                <legend class="form-row-label" id="domicile-label">
-                  <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                  Jharkhand Domicile?<span class="req" aria-hidden="true">*</span>
-                </legend>
-                <div class="toggle-wrap" id="domicile-toggle">
-                  <label class="toggle-btn active">
-                    <input type="radio" name="domicile" value="yes" checked required
-                      onchange="setDomicile(this.value)"
-                      toolparamdescription="Whether the student holds valid Jharkhand domicile.">
-                    <span>Yes — Jharkhand</span>
-                  </label>
-                  <label class="toggle-btn">
-                    <input type="radio" name="domicile" value="no"
-                      onchange="setDomicile(this.value)"
-                      toolparamdescription="Whether the student is applying without Jharkhand domicile.">
-                    <span>No — Other State</span>
-                  </label>
-                </div>
-              </fieldset>
-
-              <div class="form-row full">
-                <button type="submit" class="btn btn-primary" id="btn-check">
-                  <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
-                  Check My Colleges
-                </button>
-              </div>
-
-              <div class="form-safe-note">
-                <i class="fa-solid fa-lock" aria-hidden="true"></i>
-                Your details are used only to generate and send your report.
-              </div>
-
-            </form>
+            <div class="tool-mini-badge">
+              <i class="fa-solid fa-shield-halved"></i>
+              Secure
+            </div>
           </div>
 
-          <!-- SCREEN 2: OTP -->
-          <div class="screen" id="screen-otp">
+          <div class="form-grid">
 
-            <div class="tool-head">
-              <div>
-                <div class="tool-title">Your results are ready</div>
-                <div class="tool-desc">Verify your mobile number to unlock your full college list.</div>
-              </div>
-
-              <div class="tool-mini-badge">
-                <i class="fa-solid fa-key"></i>
-                OTP
-              </div>
+            <div class="form-row">
+              <label for="inp-name">
+                <i class="fa-solid fa-user" aria-hidden="true"></i>
+                Full Name<span class="req" aria-hidden="true">*</span>
+              </label>
+              <input class="inp" type="text" id="inp-name" name="name" placeholder="e.g. Rahul Sharma"
+                autocomplete="name" aria-describedby="err-name">
+              <div class="field-err" id="err-name">Please enter your full name</div>
             </div>
 
-            <div class="preview-wrap">
-              <div class="preview-cards preview-blur" id="preview-cards"></div>
-              <div class="blur-lock">
-                <div class="blur-lock-inner">
-                  <i class="fa-solid fa-lock"></i>
-                  Verify to unlock your results
-                </div>
-              </div>
+            <div class="form-row">
+              <label for="inp-email">
+                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                Email Address<span class="req" aria-hidden="true">*</span>
+              </label>
+              <input class="inp" type="email" id="inp-email" name="email" placeholder="you@email.com"
+                autocomplete="email" inputmode="email" aria-describedby="err-email">
+              <div class="field-err" id="err-email">Please enter a valid email address</div>
             </div>
 
-            <div id="send-otp-section">
-              <div class="alert alert-info" style="margin-top:0">
-                <div class="alert-icon">
+            <div class="form-row">
+              <label for="inp-phone">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                Mobile Number<span class="req" aria-hidden="true">*</span>
+              </label>
+              <div class="phone-wrap" id="phone-wrap">
+                <div class="phone-prefix">
                   <i class="fa-solid fa-mobile-screen-button"></i>
+                  +91
                 </div>
-                <div>
-                  We'll send a 4-digit OTP to
-                  <strong>+91 <span id="confirm-phone"></span></strong>
-                  to confirm it's you.
-                </div>
+                <input type="tel" id="inp-phone" name="phone" placeholder="10-digit mobile number" maxlength="10"
+                  autocomplete="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" aria-describedby="err-phone">
               </div>
+              <div class="field-err" id="err-phone">Enter a valid 10-digit number starting with 6, 7, 8 or 9</div>
+            </div>
 
-              <button type="button" class="btn btn-primary" id="btn-send-otp" onclick="sendOTP()">
-                <i class="fa-solid fa-paper-plane"></i>
-                Send OTP
+            <div class="form-row">
+              <label for="inp-rank">
+                <i class="fa-solid fa-ranking-star" aria-hidden="true"></i>
+                NEET All India Rank<span class="req" aria-hidden="true">*</span>
+              </label>
+              <input class="inp" type="number" id="inp-rank" name="neet_air" placeholder="e.g. 45000" min="1"
+                inputmode="numeric" aria-describedby="err-rank">
+              <div class="field-err" id="err-rank">Enter your NEET AIR</div>
+            </div>
+
+            <div class="form-row full">
+              <label for="inp-cat">
+                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                Assam Category<span class="req" aria-hidden="true">*</span>
+              </label>
+              <select class="inp" id="inp-cat" name="category" aria-describedby="err-cat">
+                <option value="">Select your category</option>
+                <option value="OPEN">General / UR</option>
+                <option value="EWS">EWS</option>
+                <option value="OBC">OBC / MOBC (NCL)</option>
+                <option value="SC">SC</option>
+                <option value="STP">ST (Plains)</option>
+                <option value="STH">ST (Hills)</option>
+              </select>
+              <div class="field-err" id="err-cat">Please select your category</div>
+            </div>
+
+            <div class="form-row full">
+              <div class="form-row-label" id="domicile-label">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                Assam Domicile?<span class="req" aria-hidden="true">*</span>
+              </div>
+              <div class="toggle-wrap" id="domicile-toggle" role="group" aria-labelledby="domicile-label">
+                <button type="button" class="toggle-btn active" data-val="yes" aria-pressed="true"
+                  onclick="setDomicile('yes')">Yes — Assam</button>
+                <button type="button" class="toggle-btn" data-val="no" aria-pressed="false"
+                  onclick="setDomicile('no')">No — Other State</button>
+              </div>
+            </div>
+
+            <div class="form-row full">
+              <button type="button" class="btn btn-primary" id="btn-check" onclick="goToOTP()">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                Check My Colleges
               </button>
             </div>
 
-            <div id="otp-section" class="hidden">
-              <div class="otp-label" id="otp-label">Enter the 4-digit OTP</div>
-              <p class="otp-sub">
-                Sent to +91 <span id="otp-phone-display"></span>
-              </p>
-
-              <div class="otp-grid">
-                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp0" aria-label="OTP digit 1"
-                  autocomplete="one-time-code" oninput="moveOTP(0)">
-                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp1" aria-label="OTP digit 2"
-                  oninput="moveOTP(1)">
-                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp2" aria-label="OTP digit 3"
-                  oninput="moveOTP(2)">
-                <input class="otp-box" maxlength="1" inputmode="numeric" id="otp3" aria-label="OTP digit 4"
-                  oninput="moveOTP(3)">
-              </div>
-
-              <div class="otp-timer" id="otp-timer"></div>
-              <div class="field-err" id="otp-error" role="alert" aria-live="polite" style="text-align:center"></div>
-
-              <button type="button" class="btn btn-primary" style="margin-top:14px" id="btn-verify" onclick="verifyOTP()">
-                <i class="fa-solid fa-unlock-keyhole"></i>
-                Unlock My Colleges
-              </button>
-
-              <button type="button" class="btn btn-secondary" style="margin-top:10px" onclick="backToPhone()">
-                <i class="fa-solid fa-arrow-left"></i>
-                Change Number
-              </button>
+            <div class="form-safe-note">
+              <i class="fa-solid fa-lock"></i>
+              Your details are used only to generate and send your report.
             </div>
 
           </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- SCREEN 3: RESULTS -->
-    <div class="screen" id="screen-results">
-      <div class="results-main">
-
-        <div id="print-only-head">
-          <h1 style="font-size:18px;color:var(--navy);margin-bottom:4px">Jharkhand NEET 2026 — College Prediction
-            Report</h1>
-          <p style="font-size:12px;color:var(--muted)">RM Group of Education · rmgoe.org · +91 99997-03444</p>
         </div>
 
-        <div class="result-summary" id="result-summary" role="status" aria-live="polite" aria-atomic="true"></div>
+        <!-- SCREEN 2: OTP -->
+        <div class="screen" id="screen-otp">
 
-        <div class="tabs" role="tablist" aria-label="Prediction report sections">
-          <button type="button" class="tab active" id="tab-btn-colleges" role="tab" aria-selected="true"
-            aria-controls="tab-colleges" onclick="switchTab('tab-colleges',this)">🎓 Your Colleges</button>
-          <button type="button" class="tab" id="tab-btn-analysis" role="tab" aria-selected="false"
-            aria-controls="tab-analysis" onclick="switchTab('tab-analysis',this)">📊 Rank Analysis</button>
-          <button type="button" class="tab" id="tab-btn-next" role="tab" aria-selected="false" aria-controls="tab-next"
-            onclick="switchTab('tab-next',this)">📋 What Next</button>
-        </div>
+          <div class="tool-head">
+            <div>
+              <div class="tool-title">Your results are ready</div>
+              <div class="tool-desc">Verify your mobile number to unlock your full college list.</div>
+            </div>
 
-        <!-- TAB 1 -->
-        <div id="tab-colleges" role="tabpanel" aria-labelledby="tab-btn-colleges">
-          <div id="non-domicile-alert" class="hidden">
-            <div class="alert alert-warn">
-              <div class="alert-icon">⚠️</div>
-              <div>You selected <strong>non-Jharkhand domicile</strong>. Government and state-category private records
-                are excluded. Only the two private-college AIQ rows explicitly shown on the supplied page are evaluated.
-                Final eligibility must be checked in the official prospectus.</div>
+            <div class="tool-mini-badge">
+              <i class="fa-solid fa-key"></i>
+              OTP
             </div>
           </div>
 
-          <div id="ineligible-section" class="hidden">
-            <div class="alert alert-danger">
-              <div class="alert-icon">📊</div>
-              <div id="ineligible-message"></div>
-            </div>
-            <div class="abroad-hook">
-              <h3>MBBS is not over 🌍</h3>
-              <p>Thousands of students with similar ranks study MBBS abroad in WDOMS-listed universities — saving ₹30–40
-                lakh compared with some high-cost private All India/Management and NRI options.</p>
-              <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span
-                  class="country-pill">🇳🇵
-                  Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
-                  Kazakhstan</span></div>
-              <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer"
-                class="btn btn-primary" style="max-width:340px;margin:0 auto">See My MBBS Abroad Options →</a>
+          <div class="preview-wrap">
+            <div class="preview-cards preview-blur" id="preview-cards"></div>
+            <div class="blur-lock">
+              <div class="blur-lock-inner">
+                <i class="fa-solid fa-lock"></i>
+                Verify to unlock your results
+              </div>
             </div>
           </div>
 
-          <div id="colleges-section">
-            <div class="result-controls">
-              <div class="view-toggle">
-                <button type="button" class="view-btn active" id="btn-table-view"
-                  onclick="setView('table')">Table</button>
-                <button type="button" class="view-btn" id="btn-card-view" onclick="setView('card')">Cards</button>
-              </div>
-              <div class="export-btns">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="downloadPDF()">Download PDF</button>
-                <button type="button" class="btn btn-secondary btn-sm" onclick="printReport()">Print</button>
-              </div>
-            </div>
-
-            <div class="legend">
-              <span><span class="sw" style="background:var(--green)"></span>75–99% Strong</span>
-              <span><span class="sw" style="background:var(--amber)"></span>45–74% Fair</span>
-              <span><span class="sw" style="background:var(--blue)"></span>Below 45% Low</span>
-            </div>
+          <div id="send-otp-section">
             <div class="alert alert-info" style="margin-top:0">
-              <div class="alert-icon">ℹ️</div>
-              <div>Government records use 2025 Round 1 ranks. Private records use the page’s 2025 overall-low cutoff.
-                Deaf, Blind, PH and other special rows are excluded from this simplified predictor.</div>
-            </div>
-
-            <!-- TABLE VIEW -->
-            <div id="view-table">
-              <div class="report-wrap">
-                <table class="report-table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>College</th>
-                      <th>District</th>
-                      <th>Seat Type</th>
-                      <th class="center">Cutoff Basis</th>
-                      <th class="center">2025 Close Rank</th>
-                      <th class="center">Cutoff Score</th>
-                      <th class="center">Possibility</th>
-                    </tr>
-                  </thead>
-                  <tbody id="report-body"></tbody>
-                </table>
+              <div class="alert-icon">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+              </div>
+              <div>
+                We'll send a 4-digit OTP to
+                <strong>+91 <span id="confirm-phone"></span></strong>
+                to confirm it's you.
               </div>
             </div>
 
-            <!-- CARD VIEW -->
-            <div id="view-cards" class="hidden"></div>
-
-            <div class="abroad-hook" id="abroad-hook-eligible">
-              <h3>Want more options? 🌍</h3>
-              <p>Students who miss Jharkhand State Quota seats should compare later counselling rounds, private options
-                and MBBS-abroad routes carefully before paying a high non-refundable amount.</p>
-              <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span
-                  class="country-pill">🇳🇵
-                  Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
-                  Kazakhstan</span></div>
-              <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer"
-                class="btn btn-primary" style="max-width:340px;margin:0 auto">Check Abroad Options →</a>
-            </div>
+            <button type="button" class="btn btn-primary" id="btn-send-otp" onclick="sendOTP()">
+              <i class="fa-solid fa-paper-plane"></i>
+              Send OTP
+            </button>
           </div>
 
-          <div class="cta-section">
-            <h3>Want expert help with Jharkhand choice filling?</h3>
-            <p>Our counsellors have guided 500+ students. We'll call you within 15 minutes.</p>
-            <div class="cta-btns">
-              <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" id="wa-cta-link"
-                class="btn btn-wa" style="flex:1;min-width:180px">💬 WhatsApp Us</a>
-            </div>
-          </div>
-        </div>
+          <div id="otp-section" class="hidden">
+            <div class="otp-label" id="otp-label">Enter the 4-digit OTP</div>
+            <p class="otp-sub">
+              Sent to +91 <span id="otp-phone-display"></span>
+            </p>
 
-        <!-- TAB 2 -->
-        <div id="tab-analysis" class="hidden" role="tabpanel" aria-labelledby="tab-btn-analysis">
-          <div class="card" id="analysis-content"></div>
-        </div>
+            <div class="otp-grid">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp0" aria-label="OTP digit 1" autocomplete="one-time-code" oninput="moveOTP(0)">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp1" aria-label="OTP digit 2" oninput="moveOTP(1)">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp2" aria-label="OTP digit 3" oninput="moveOTP(2)">
+              <input class="otp-box" maxlength="1" inputmode="numeric" id="otp3" aria-label="OTP digit 4" oninput="moveOTP(3)">
+            </div>
 
-        <!-- TAB 3 -->
-        <div id="tab-next" class="hidden" role="tabpanel" aria-labelledby="tab-btn-next">
-          <div class="card">
-            <div class="card-title">Jharkhand NEET 2026 Counselling — what to do now</div>
-            <div class="card-sub">Indicative counselling preparation flow; confirm every date and rule on the official
-              Jharkhand portal</div>
-            <div class="schedule-item">
-              <div class="schedule-dot"></div>
-              <div>
-                <div class="schedule-title">NEET 2026 Result Declared</div>
-                <div class="schedule-date">Expected June–July 2026 · nta.ac.in</div>
-              </div>
-            </div>
-            <div class="schedule-item">
-              <div class="schedule-dot"></div>
-              <div>
-                <div class="schedule-title">Jharkhand MBBS/BDS Registration &amp; Document Upload</div>
-                <div class="schedule-date">Check the official Jharkhand counselling portal for the 2026 schedule</div>
-              </div>
-            </div>
-            <div class="schedule-item">
-              <div class="schedule-dot"></div>
-              <div>
-                <div class="schedule-title">Provisional Merit List &amp; Grievance Window</div>
-                <div class="schedule-date">Check your candidature type, category and seat-type claims carefully</div>
-              </div>
-            </div>
-            <div class="schedule-item">
-              <div class="schedule-dot"></div>
-              <div>
-                <div class="schedule-title">Round 1 — Choice Filling and Locking</div>
-                <div class="schedule-date">Fill every acceptable option in true preference order</div>
-              </div>
-            </div>
-            <div class="schedule-item">
-              <div class="schedule-dot"></div>
-              <div>
-                <div class="schedule-title">Round 1 Seat Allotment and Reporting</div>
-                <div class="schedule-date">Check allotment, reporting instructions, upgrade rules and resignation
-                  conditions carefully
-                </div>
-              </div>
-            </div>
-            <div class="schedule-item">
-              <div class="schedule-dot"></div>
-              <div>
-                <div class="schedule-title">Round 2, Mop-Up and Stray Vacancy</div>
-                <div class="schedule-date">Vacancies and closing ranks can move substantially — follow every official
-                  notice</div>
-              </div>
-            </div>
-            <div class="schedule-item">
-              <div class="schedule-dot"></div>
-              <div>
-                <div class="schedule-title">Final Stray Vacancy / Special Round, if notified</div>
-                <div class="schedule-date">Final opportunities depend on the live vacancy matrix and eligibility rules
-                </div>
-              </div>
-            </div>
+            <div class="otp-timer" id="otp-timer"></div>
+            <div class="field-err" id="otp-error" style="text-align:center"></div>
+
+            <button type="button" class="btn btn-primary" style="margin-top:14px" id="btn-verify" onclick="verifyOTP()">
+              <i class="fa-solid fa-unlock-keyhole"></i>
+              Unlock My Colleges
+            </button>
+
+            <button type="button" class="btn btn-secondary" style="margin-top:10px" onclick="backToPhone()">
+              <i class="fa-solid fa-arrow-left"></i>
+              Change Number
+            </button>
           </div>
-          <div class="card" style="margin-top:20px">
-            <div class="card-title">Documents checklist (Jharkhand counselling)</div>
-            <div class="card-sub">Keep originals + self-attested copies ready for verification</div>
-            <ul class="checklist">
-              <li>NEET 2026 Admit Card &amp; Scorecard</li>
-              <li>Class 10 Marksheet &amp; Certificate (DOB proof)</li>
-              <li>Class 12 Marksheet &amp; Certificate (PCB marks)</li>
-              <li>Jharkhand Residence / Domicile Certificate, where required</li>
-              <li>Valid EWS, BC-I, BC-II, SC or ST certificate issued by the competent authority, if applicable</li>
-              <li>EWS Certificate in the prescribed format, if claiming EWS reservation</li>
-              <li>Jharkhand counselling registration slip and choice-filling printout</li>
-              <li>Allotment letter and fee-payment receipt, when issued</li>
-              <li>School Leaving Certificate + Gap Certificate if applicable</li>
-              <li>Aadhaar Card &amp; 10+ passport photos (white background)</li>
-            </ul>
-          </div>
-          <div class="card" style="margin-top:20px">
-            <div class="card-title">💡 Option-form strategy</div>
-            <ul class="checklist">
-              <li>Fill every acceptable option in true preference order — more valid choices improve safety</li>
-              <li>Order: top government → remaining government → private State Quota → private All India/Management →
-                AIQ option</li>
-              <li>Compare private-college eligibility, counselling round and payment terms carefully before locking
-                choices</li>
-              <li>Claim any special or PwD category only when it is listed in the official prospectus and supported by
-                valid documents</li>
-              <li>Read upgrade, reporting, resignation and security-deposit rules before accepting any seat</li>
-              <li>Keep domicile, category, EWS and identity documents ready before registration begins</li>
-            </ul>
-          </div>
-          <div class="cta-section">
-            <h3>Need help with your option form?</h3>
-            <p>We'll build your personalised option list based on rank, category and preferences.</p>
-            <div class="cta-btns">
-              <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" class="btn btn-wa"
-                style="flex:1;min-width:180px">💬 WhatsApp Counsellor</a>
-              <a href="tel:+919999703444" class="btn btn-blue" style="flex:1;min-width:180px">📞 Call Now</a>
-            </div>
-          </div>
+
         </div>
 
       </div>
     </div>
+  </div>
 
-    <!-- HOW IT WORKS -->
-    <section class="section" id="how-it-works">
-      <div class="section-eyebrow">Simple &amp; fast</div>
-      <h2 class="section-h2">How the predictor works</h2>
-      <p class="section-lead">Three steps to compare your NEET rank with the 2025 Jharkhand government and private
-        medical-college cutoffs on the provided page.</p>
-      <div class="hiw-grid">
-        <div class="hiw-card">
-          <div class="hiw-num">1</div>
-          <h3>Enter your details</h3>
-          <p>Enter your NEET 2026 All India Rank, Jharkhand category and domicile status.</p>
+  <!-- SCREEN 3: RESULTS -->
+  <div class="screen" id="screen-results">
+    <div class="results-main">
+
+      <div id="print-only-head">
+        <h1 style="font-size:18px;color:var(--navy);margin-bottom:4px">Assam NEET 2026 — College Prediction
+          Report</h1>
+        <p style="font-size:12px;color:var(--muted)">RM Group of Education · rmgoe.org · +91 99997-03444</p>
+      </div>
+
+      <div class="result-summary" id="result-summary"></div>
+
+      <div class="tabs" role="tablist" aria-label="Prediction report sections">
+        <button type="button" class="tab active" id="tab-btn-colleges" role="tab" aria-selected="true"
+          aria-controls="tab-colleges" onclick="switchTab('tab-colleges',this)">🎓 Your Colleges</button>
+        <button type="button" class="tab" id="tab-btn-analysis" role="tab" aria-selected="false"
+          aria-controls="tab-analysis" onclick="switchTab('tab-analysis',this)">📊 Rank Analysis</button>
+        <button type="button" class="tab" id="tab-btn-next" role="tab" aria-selected="false"
+          aria-controls="tab-next" onclick="switchTab('tab-next',this)">📋 What Next</button>
+      </div>
+
+      <!-- TAB 1 -->
+      <div id="tab-colleges" role="tabpanel" aria-labelledby="tab-btn-colleges">
+        <div id="non-domicile-alert" class="hidden">
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠️</div>
+            <div>You selected <strong>non-Assam domicile</strong>. The supplied dataset contains Assam State Quota counselling ranks, so these colleges are not probability-scored for other-state candidates. Check MCC All India Quota and any institution-specific eligibility separately.</div>
+          </div>
         </div>
-        <div class="hiw-card">
-          <div class="hiw-num">2</div>
-          <h3>Smart analysis</h3>
-          <p>Our prediction engine analyzes previous years' cutoff data to estimate your admission chances.</p>
+
+        <div class="alert alert-info" style="margin-bottom:16px">
+          <div class="alert-icon">ℹ️</div>
+          <div><strong>Data coverage:</strong> 13 Assam government medical colleges have usable supplied latest 2025 Round 1 category ranks. Pragjyotishpur Medical College and ESIC Medical College, Beltola are retained as new source colleges but are not probability-scored because usable cutoffs were not supplied.</div>
         </div>
-        <div class="hiw-card">
-          <div class="hiw-num">3</div>
-          <h3>Get your college list</h3>
-          <p>See every college with a real admission possibility score — download it as a PDF.</p>
+
+        <div id="ineligible-section" class="hidden">
+          <div class="alert alert-danger">
+            <div class="alert-icon">📊</div>
+            <div id="ineligible-message"></div>
+          </div>
+          <div class="abroad-hook">
+            <h3>MBBS is not over 🌍</h3>
+            <p>Thousands of students with similar ranks study MBBS abroad in WDOMS-listed universities — saving ₹30–40
+              lakh compared with high-cost private MBBS options in other states.</p>
+            <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
+                Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
+                Kazakhstan</span></div>
+            <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="max-width:340px;margin:0 auto">See My MBBS Abroad Options →</a>
+          </div>
+        </div>
+
+        <div id="colleges-section">
+          <div class="result-controls">
+            <div class="view-toggle">
+              <button type="button" class="view-btn active" id="btn-table-view" onclick="setView('table')">Table</button>
+              <button type="button" class="view-btn" id="btn-card-view" onclick="setView('card')">Cards</button>
+            </div>
+            <div class="export-btns">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="downloadPDF()">Download PDF</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="printReport()">Print</button>
+            </div>
+          </div>
+
+          <div class="legend">
+            <span><span class="sw" style="background:var(--green)"></span>75–99% Strong</span>
+            <span><span class="sw" style="background:var(--amber)"></span>45–74% Fair</span>
+            <span><span class="sw" style="background:var(--blue)"></span>Below 45% Low</span>
+          </div>
+          <div class="alert alert-info" style="margin-top:0">
+            <div class="alert-icon">ℹ️</div>
+            <div>Where a plain selected-category rank is unavailable, the tool uses General/UR only as a visible indicative fallback. PwD, Government Institute, Ex-Serviceman, Char Area, TGL/Ex-TGL, community sub-quota and other special routes are not predicted separately.</div>
+          </div>
+
+          <!-- TABLE VIEW -->
+          <div id="view-table">
+            <div class="report-wrap">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>College</th>
+                    <th>District</th>
+                    <th>Seat Type</th>
+                    <th class="center">Seats</th>
+                    <th class="center">2025 R1 Close Rank</th>
+                    <th class="center">Tuition</th>
+                    <th class="center">Possibility</th>
+                  </tr>
+                </thead>
+                <tbody id="report-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- CARD VIEW -->
+          <div id="view-cards" class="hidden"></div>
+
+          <div class="abroad-hook" id="abroad-hook-eligible">
+            <h3>Want more options? 🌍</h3>
+            <p>Students who miss Assam State Quota seats should compare MCC AIQ, special-category, private MBBS and MBBS-abroad options carefully before paying a high non-refundable amount.</p>
+            <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
+                Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
+                Kazakhstan</span></div>
+            <a href="https://rmgoe.org/mbbs-readiness-checker-tool/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="max-width:340px;margin:0 auto">Check Abroad Options →</a>
+          </div>
+        </div>
+
+        <div class="cta-section">
+          <h3>Want expert help with Assam choice filling?</h3>
+          <p>Our counsellors have guided 500+ students. We'll call you within 15 minutes.</p>
+          <div class="cta-btns">
+            <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" class="btn btn-wa" id="wa-cta-link" style="flex:1;min-width:180px">💬 WhatsApp Us</a>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- FEATURES -->
-    <section class="section" style="padding-top:0">
-      <div class="section-eyebrow">Why students trust it</div>
-      <h2 class="section-h2">Built on real counselling data</h2>
-      <p class="section-lead">The prediction compares your AIR with the category-wise 2025 ranks published on the
-        provided Jharkhand cutoff page.</p>
-      <div class="feat-grid">
-        <div class="feat">
-          <div class="feat-ic">📈</div>
-          <div>
-            <h4>Real Jharkhand cutoffs</h4>
-            <p>Category-wise 2025 Round 1 government cutoffs and 2025 overall-low private cutoffs from the provided
-              Medipedia page.</p>
+      <!-- TAB 2 -->
+      <div id="tab-analysis" class="hidden" role="tabpanel" aria-labelledby="tab-btn-analysis">
+        <div class="card" id="analysis-content"></div>
+      </div>
+
+      <!-- TAB 3 -->
+      <div id="tab-next" class="hidden" role="tabpanel" aria-labelledby="tab-btn-next">
+        <div class="card">
+          <div class="card-title">Assam NEET 2026 Counselling — what to do now</div>
+          <div class="card-sub">Indicative Assam state medical counselling flow; verify every date in the official notice</div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">NEET 2026 Result Declared</div>
+              <div class="schedule-date">Expected June–July 2026 · nta.ac.in</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Assam MBBS/BDS Registration &amp; Document Upload</div>
+              <div class="schedule-date">Check the official Assam medical counselling portal for the live schedule</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Provisional Merit List &amp; Grievance Window</div>
+              <div class="schedule-date">Check your candidature type, category and seat-type claims carefully</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Round 1 — Choice Filling and Locking</div>
+              <div class="schedule-date">Fill every acceptable option in true preference order</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Round 1 Seat Allotment and Reporting</div>
+              <div class="schedule-date">Check allotment, reporting instructions, upgrade rules and resignation conditions carefully
+              </div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Round 2, Mop-Up and Stray Vacancy</div>
+              <div class="schedule-date">Vacancies and closing ranks can move substantially — follow every official notice</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-dot"></div>
+            <div>
+              <div class="schedule-title">Final Stray Vacancy / Special Round, if notified</div>
+              <div class="schedule-date">Final opportunities depend on the live vacancy matrix and eligibility rules</div>
+            </div>
           </div>
         </div>
-        <div class="feat">
-          <div class="feat-ic">🎯</div>
-          <div>
-            <h4>Possibility score</h4>
-            <p>Each college shows a clear percentage chance — not just a vague "maybe".</p>
-          </div>
+        <div class="card" style="margin-top:20px">
+          <div class="card-title">Documents checklist (Assam counselling)</div>
+          <div class="card-sub">Keep originals + self-attested copies ready for verification</div>
+          <ul class="checklist">
+            <li>NEET 2026 Admit Card &amp; Scorecard</li>
+            <li>Class 10 Marksheet &amp; Certificate (DOB proof)</li>
+            <li>Class 12 Marksheet &amp; Certificate (PCB marks)</li>
+            <li>Assam domicile / permanent residence documents, where required</li>
+            <li>Valid EWS, OBC/MOBC (NCL), SC, ST (Plains) or ST (Hills) certificate issued by the competent authority, if applicable</li>
+            <li>EWS Certificate in the prescribed format, if claiming EWS reservation</li>
+            <li>Assam counselling registration slip and choice-filling printout</li>
+            <li>Allotment letter and fee-payment receipt, when issued</li>
+            <li>School Leaving Certificate + Gap Certificate if applicable</li>
+            <li>Aadhaar Card &amp; 10+ passport photos (white background)</li>
+          </ul>
         </div>
-        <div class="feat">
-          <div class="feat-ic">🏥</div>
-          <div>
-            <h4>Government + Private</h4>
-            <p>9 unique Jharkhand colleges covered — 6 government and 3 private. Two private colleges also have explicit
-              AIQ cutoff rows, creating 11 comparable cutoff routes.</p>
-          </div>
+        <div class="card" style="margin-top:20px">
+          <div class="card-title">💡 Option-form strategy</div>
+          <ul class="checklist">
+            <li>Fill every acceptable option in true preference order — more valid choices improve safety</li>
+            <li>Order all acceptable Assam government colleges in your genuine preference sequence; do not sort only by last year’s cutoff</li>
+            <li>Check MCC All India Quota choices separately because this predictor uses Assam State Quota data</li>
+            <li>Claim PwD, Government Institute, Ex-Serviceman, Char Area, TGL/Ex-TGL or community sub-quotas only with valid documents and official eligibility</li>
+            <li>Read upgrade, reporting, resignation and security-deposit rules before accepting any seat</li>
+            <li>Keep domicile, category, NCL/EWS and identity documents ready before registration begins</li>
+          </ul>
         </div>
-        <div class="feat">
-          <div class="feat-ic">📄</div>
-          <div>
-            <h4>Downloadable report</h4>
-            <p>Get a clean PDF you can share with your family and keep for counselling.</p>
+        <div class="cta-section">
+          <h3>Need help with your option form?</h3>
+          <p>We'll build your personalised option list based on rank, category and preferences.</p>
+          <div class="cta-btns">
+            <a href="https://wa.me/8448207814" target="_blank" rel="noopener noreferrer" class="btn btn-wa" style="flex:1;min-width:180px">💬 WhatsApp Counsellor</a>
+            <a href="tel:+919999703444" class="btn btn-blue" style="flex:1;min-width:180px">📞 Call
+                Now</a>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- FAQ -->
-    <section class="section" style="padding-top:0">
-      <div class="section-eyebrow">Student questions</div>
-      <h2 class="section-h2">Jharkhand MBBS Counselling FAQs</h2>
-      <div class="faq-wrap" id="faq-wrap"></div>
-    </section>
+    </div>
+  </div>
 
-    <!-- FINAL CTA -->
-    <section class="finalcta">
-      <div class="finalcta-inner">
-        <h2>Don't leave your MBBS seat to chance</h2>
-        <p>Run the predictor, then let our counsellors build your winning option form.</p>
-        <a href="#tool" class="btn btn-primary">Predict My Colleges →</a>
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works">
+    <div class="section-eyebrow">Simple &amp; fast</div>
+    <h2 class="section-h2">How the predictor works</h2>
+    <p class="section-lead">Three steps to see where your NEET rank stands across the Assam government medical colleges included in the supplied dataset.</p>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+        <div class="hiw-num">1</div>
+        <h3>Enter your details</h3>
+        <p>Your NEET 2026 All India Rank, Assam counselling category and domicile — takes under a minute.</p>
       </div>
-    </section>
+      <div class="hiw-card">
+        <div class="hiw-num">2</div>
+        <h3>Smart analysis</h3>
+        <p>Our prediction engine analyzes previous years' cutoff data to estimate your admission chances.</p>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-num">3</div>
+        <h3>Get your college list</h3>
+        <p>See every college with a real admission possibility score — download it as a PDF.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" style="padding-top:0">
+    <div class="section-eyebrow">Why students trust it</div>
+    <h2 class="section-h2">Built on real counselling data</h2>
+    <p class="section-lead">Not guesswork — every prediction is grounded in the supplied latest 2025 Assam state-counselling data.</p>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-ic">📈</div>
+        <div>
+          <h4>Real Assam cutoffs</h4>
+          <p>Category-wise latest 2025 Round 1 ranks extracted from the supplied Assam college dataset.</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="feat-ic">🎯</div>
+        <div>
+          <h4>Possibility score</h4>
+          <p>Each college shows a clear percentage chance — not just a vague "maybe".</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="feat-ic">🏥</div>
+        <div>
+          <h4>Assam government colleges</h4>
+          <p>15 Assam colleges are retained from the supplied file. Thirteen have usable latest 2025 Round 1 ranks; two new colleges are listed without probability scores.</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="feat-ic">📄</div>
+        <div>
+          <h4>Downloadable report</h4>
+          <p>Get a clean PDF you can share with your family and keep for counselling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="padding-top:0">
+    <div class="section-eyebrow">Student questions</div>
+    <h2 class="section-h2">Assam MBBS Counselling FAQs</h2>
+    <div class="faq-wrap" id="faq-wrap"></div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="finalcta">
+    <div class="finalcta-inner">
+      <h2>Don't leave your MBBS seat to chance</h2>
+      <p>Run the predictor, then let our counsellors build your winning option form.</p>
+      <a href="#tool" class="btn btn-primary">Predict My Colleges →</a>
+    </div>
+  </section>
+
   </main>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
@@ -4455,19 +4371,19 @@
           📍 H-51, H Block, Sector 63, Noida, UP 201301<br>
           📞 <a href="tel:+919999703444">+91 99997-03444</a><br>
           ✉️ <a href="mailto:info@rmgoe.org">info@rmgoe.org</a><br>
-          💬 <a href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
-            target="_blank" rel="noopener noreferrer">
-            WhatsApp Us
-          </a>
+          💬 <a
+  href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Assam%20MBBS%20counselling%20guidance."
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  WhatsApp Us
+</a>
         </div>
       </div>
       <div class="footer-bottom">
-        Data source: <a href="https://medipediaoverseas.com/neet-2025-jharkhand-overall-cutoff.php" target="_blank"
-          rel="noopener" style="color:inherit;text-decoration:underline">Medipedia Overseas — NEET 2025 Jharkhand
-          Cut-off</a>.
-        Predictions use 2025 government Round 1 and private overall-low cutoff ranks from that page. The source does not
-        provide fees or seat intake. Actual 2026 cutoffs and eligibility may vary. Verify official Jharkhand notices.
-        RMGOE does not guarantee admission.<br><br>
+        Data source: the supplied Assam medical-college dataset. No Assam-located college was found in the supplied all-India deemed-college list.
+        Predictions use supplied 2025 Round 1 closing-rank fields and are indicative only. Actual 2026 cutoffs, eligibility,
+        seat matrix and fees may vary. Always verify live notices on the official Assam medical counselling portal. RMGOE does not guarantee admission.<br><br>
         © 2026 RM Group of Education. All rights reserved.
       </div>
     </div>
@@ -4476,7 +4392,7 @@
   <!-- STICKY MOBILE BAR -->
   <div class="sticky-bar">
     <a href="tel:+919999703444" class="btn btn-blue" style="flex:1">📞 Call</a>
-    <a href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Jharkhand%20MBBS%20counselling%20guidance."
+    <a href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Assam%20MBBS%20counselling%20guidance."
       target="_blank" rel="noopener noreferrer" class="btn btn-wa" style="flex:1">💬 WhatsApp</a>
   </div>
 
@@ -4485,36 +4401,267 @@
     // CONFIG — set these before going live
     // ============================================================
     const CONFIG = {
-      N8N_WEBHOOK_URL: 'https://n8n.dreamofsoul.com/webhook/jharkhand-college-predictor'
+      N8N_WEBHOOK_URL: 'https://n8n.dreamofsoul.com/webhook/assam-college-predictor'
     };
 
 
     // ============================================================
-    // DATA — Jharkhand NEET UG 2025 cutoff data
-    // Government colleges: 2025 Round 1 rank/score from the supplied page.
-    // Private colleges: "Overall Low Cut Off 2025" rank/score from the page.
-    // Two private colleges include explicit AIQ rows, preserved separately.
-    // Seat intake and tuition are not available on the supplied page.
+    // DATA — Assam NEET UG counselling, supplied latest 2025 Round 1 ranks
+    // Category keys: OPEN, EWS, OBC, SC, STP and STH.
+    // The source separates Scheduled Tribe (Plains) and Scheduled Tribe (Hills).
+    // Exact base-category entries are used; PWD, Government Institute,
+    // Ex-Serviceman, Char Area, community sub-quota and other special entries
+    // are intentionally not predicted separately.
+    // Assam State Quota records are evaluated only for Assam-domicile users.
+    // No Assam-located deemed medical college was found in the supplied
+    // all-India deemed-college list, so DEEMED_COLLEGES is empty.
+    // Two newly listed colleges without usable supplied cutoff ranks are
+    // retained in NEW_COLLEGES_WITHOUT_CUTOFF but are not probability-scored.
     // ============================================================
     const COLLEGES = [
-      { id: 1, name: "Rajendra Institute of Medical Sciences", district: "Ranchi", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 10383, EWS: 17626, BC1: 13410, BC2: 14545, SC: 118805, ST: 252463 }, score: { UR: 555, EWS: 540, BC1: 547, BC2: 545, SC: 452, ST: 379 } },
-      { id: 2, name: "M.G.M. Medical College", district: "Jamshedpur", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 15589, EWS: 22321, BC1: 16793, BC2: 17555, SC: 147850, ST: 309744 }, score: { UR: 543, EWS: 532, BC1: 541, BC2: 540, SC: 434, ST: 353 } },
-      { id: 3, name: "Shaheed Nirmal Mahato Medical College", district: "Dhanbad", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 19619, EWS: 30624, BC1: 20383, BC2: 21726, SC: 165960, ST: 336717 }, score: { UR: 536, EWS: 521, BC1: 535, BC2: 533, SC: 424, ST: 341 } },
-      { id: 4, name: "Sheikh Bhikhari Medical College", district: "Hazaribagh", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 23558, EWS: 34176, BC1: 24526, BC2: 25304, SC: 174743, ST: 365430 }, score: { UR: 531, EWS: 517, BC1: 529, BC2: 528, SC: 419, ST: 329 } },
-      { id: 5, name: "Phulo Jhano Medical College", district: "Dumka", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 27092, EWS: 36034, BC1: 28338, BC2: 27653, SC: 197536, ST: 389347 }, score: { UR: 526, EWS: 515, BC1: 524, BC2: 525, SC: 407, ST: 320 } },
-      { id: 6, name: "Medinirai Medical College", district: "Palamu", type: "govt", quota: "Government / State Quota", cutoffBasis: "2025 Round 1", cutoff: { UR: 29682, EWS: 38150, BC1: 30272, BC2: 30366, SC: 200284, ST: 424526 }, score: { UR: 523, EWS: 513, BC1: 522, BC2: 522, SC: 405, ST: 307 } }
-    ];
+      {
+            "id": 1,
+            "name": "Assam Medical College, Dibrugarh",
+            "district": "Dibrugarh",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 250,
+            "fee": 31000,
+            "cutoff": {
+                  "OPEN": 24477,
+                  "EWS": 31554,
+                  "OBC": 108742,
+                  "SC": 98540,
+                  "STP": 156990,
+                  "STH": 275694
+            }
+      },
+      {
+            "id": 2,
+            "name": "Gauhati Medical College, Guwahati",
+            "district": "Guwahati",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 250,
+            "fee": 2400,
+            "cutoff": {
+                  "OPEN": 15227,
+                  "EWS": 22100,
+                  "OBC": 70941,
+                  "SC": 77229,
+                  "STP": 132902,
+                  "STH": 211377
+            }
+      },
+      {
+            "id": 3,
+            "name": "Jorhat Medical College & Hospital , Jorhat",
+            "district": "Jorhat",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 125,
+            "fee": 5000,
+            "cutoff": {
+                  "OPEN": 37983,
+                  "EWS": 49694,
+                  "OBC": 122457,
+                  "SC": 131043,
+                  "STP": 183276,
+                  "STH": 344181
+            }
+      },
+      {
+            "id": 4,
+            "name": "Silchar Medical College, Silchar",
+            "district": "Silchar",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 150,
+            "fee": 17900,
+            "cutoff": {
+                  "OPEN": 36814,
+                  "EWS": 44196,
+                  "OBC": 138770,
+                  "SC": 137010,
+                  "STP": 206624,
+                  "STH": 305907
+            }
+      },
+      {
+            "id": 5,
+            "name": "Lakhimpur Medical College",
+            "district": "Lakhimpur",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 100,
+            "fee": 24900,
+            "cutoff": {
+                  "OPEN": 66732,
+                  "EWS": 68096,
+                  "OBC": 152227,
+                  "SC": 193012,
+                  "STP": 231187,
+                  "STH": 366428
+            }
+      },
+      {
+            "id": 6,
+            "name": "Diphu Medical College & Hospital, Diphu, Assam",
+            "district": "Diphu",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 100,
+            "fee": 20500,
+            "cutoff": {
+                  "OPEN": 64773,
+                  "EWS": 66489,
+                  "OBC": 162365,
+                  "SC": 188743,
+                  "STP": 241946,
+                  "STH": 342563
+            }
+      },
+      {
+            "id": 7,
+            "name": "Tezpur Medical College & Hospital, Tezpur",
+            "district": "Tezpur",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 125,
+            "fee": 26475,
+            "cutoff": {
+                  "OPEN": 47151,
+                  "EWS": 54995,
+                  "OBC": 132667,
+                  "SC": 151707,
+                  "STP": 196488,
+                  "STH": 318761
+            }
+      },
+      {
+            "id": 8,
+            "name": "Fakhruddin Ali Ahmed Medical College, Barpeta, Assam",
+            "district": "Barpeta",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 125,
+            "fee": 24200,
+            "cutoff": {
+                  "OPEN": 43436,
+                  "EWS": 52921,
+                  "OBC": 151343,
+                  "SC": 169143,
+                  "STP": 220057,
+                  "STH": 387455
+            }
+      },
+      {
+            "id": 9,
+            "name": "Dhubri Medical College, Dhubri",
+            "district": "Dhubri",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 100,
+            "fee": 2400,
+            "cutoff": {
+                  "OPEN": 58940,
+                  "EWS": 59800,
+                  "OBC": 179322,
+                  "SC": 193493,
+                  "STP": 277027,
+                  "STH": 427155
+            }
+      },
+      {
+            "id": 10,
+            "name": "Nalbari Medical College, Nalbari",
+            "district": "Nalbari",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 100,
+            "fee": 1200,
+            "cutoff": {
+                  "OPEN": 61365,
+                  "EWS": 61457,
+                  "OBC": 167106,
+                  "SC": 169205,
+                  "STP": 261273,
+                  "STH": 414499
+            }
+      },
+      {
+            "id": 11,
+            "name": "Nagaon Medical College",
+            "district": "Nagaon",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 100,
+            "fee": 12000,
+            "cutoff": {
+                  "OPEN": 57966,
+                  "EWS": 62325,
+                  "OBC": 169651,
+                  "SC": 178394,
+                  "STP": 265862,
+                  "STH": 434185
+            }
+      },
+      {
+            "id": 12,
+            "name": "Kokrajhar Medical College",
+            "district": "Kokrajhar",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 100,
+            "fee": 1200,
+            "cutoff": {
+                  "OPEN": 63686,
+                  "EWS": 66310,
+                  "OBC": 189697,
+                  "SC": 192905,
+                  "STP": 270583,
+                  "STH": 431405
+            }
+      },
+      {
+            "id": 13,
+            "name": "Tinsukia Medical College",
+            "district": "Makum",
+            "type": "govt",
+            "quota": "Assam State Quota",
+            "seats": 100,
+            "fee": 0,
+            "cutoff": {
+                  "OPEN": 64348,
+                  "EWS": 69495,
+                  "OBC": 186556,
+                  "SC": 186834,
+                  "STP": 276084,
+                  "STH": 433634
+            }
+      }
+];
 
-    const PRIVATE_COLLEGES = [
-      { id: 101, name: "Manipal TATA Medical College (MTMC)", district: "Jamshedpur", type: "private", quota: "Private / State Counselling", cutoffBasis: "2025 Overall Low", eligibleOtherState: false, cutoff: { UR: 39718, EWS: 48587, BC1: 37627, BC2: 84414, SC: 233432, ST: 497811 }, score: { UR: 511, EWS: 503, BC1: 514, BC2: 475, SC: 388, ST: 281 } },
-      { id: 102, name: "Laxmi Chandravanshi Medical College & Hospital", district: "Palamu", type: "private", quota: "Private / State Counselling", cutoffBasis: "2025 Overall Low", eligibleOtherState: false, cutoff: { UR: 359140, EWS: 489561, BC1: 396080, BC2: 180963, SC: 676445, ST: 678046 }, score: { UR: 332, EWS: 284, BC1: 317, BC2: 416, SC: 230, ST: 229 } },
-      { id: 103, name: "Laxmi Chandravanshi Medical College & Hospital", district: "Palamu", type: "private", quota: "Private / AIQ", cutoffBasis: "2025 Overall Low — AIQ", eligibleOtherState: true, categoryBasis: "AIQ", cutoff: { UR: 373876, EWS: 373876, BC1: 373876, BC2: 373876, SC: 373876, ST: 373876 }, score: { UR: 326, EWS: 326, BC1: 326, BC2: 326, SC: 326, ST: 326 } },
-      { id: 104, name: "Netaji Subhash Medical College and Hospital", district: "Adityapur, Seraikela-Kharsawan", type: "private", quota: "Private / State Counselling", cutoffBasis: "2025 Overall Low", eligibleOtherState: false, cutoff: { UR: 888022, EWS: 917644, BC1: 1230559, BC2: 1050303, SC: 1275202, ST: 1252046 }, score: { UR: 181, EWS: 176, BC1: 124, BC2: 152, SC: 118, ST: 121 } },
-      { id: 105, name: "Netaji Subhash Medical College and Hospital", district: "Adityapur, Seraikela-Kharsawan", type: "private", quota: "Private / AIQ", cutoffBasis: "2025 Overall Low — AIQ", eligibleOtherState: true, categoryBasis: "AIQ", cutoff: { UR: 723819, EWS: 723819, BC1: 723819, BC2: 723819, SC: 723819, ST: 723819 }, score: { UR: 218, EWS: 218, BC1: 218, BC2: 218, SC: 218, ST: 218 } }
-    ];
+    const PRIVATE_COLLEGES = [];
 
     const DEEMED_COLLEGES = [];
-    const NEW_COLLEGES_WITHOUT_CUTOFF = [];
+
+    const NEW_COLLEGES_WITHOUT_CUTOFF = [
+      {
+            "name": "Pragjyotishpur Medical College",
+            "district": "Guwahati",
+            "type": "Government",
+            "seats": 100,
+            "fee": 1200
+      },
+      {
+            "name": "ESIC Medical College and Hospital, Beltola",
+            "district": "Guwahati",
+            "type": "Government / ESIC",
+            "seats": 50,
+            "fee": 0
+      }
+];
 
     // ============================================================
     // STATE
@@ -4527,12 +4674,12 @@
     let domicileVal = 'yes';
 
     const CAT_LABEL = {
-      UR: 'General / UR',
+      OPEN: 'General / UR',
       EWS: 'EWS',
-      BC1: 'BC-I',
-      BC2: 'BC-II',
+      OBC: 'OBC / MOBC (NCL)',
       SC: 'SC',
-      ST: 'ST'
+      STP: 'ST (Plains)',
+      STH: 'ST (Hills)'
     };
 
     // ============================================================
@@ -4543,9 +4690,9 @@
       const ratio = closingRank / studentRank; // >1 = safely inside
       let pct;
       if (ratio >= 1.7) pct = 97;
-      else if (ratio >= 1.0) pct = 74 + (ratio - 1.0) / (1.7 - 1.0) * 23;
-      else if (ratio >= 0.85) pct = 48 + (ratio - 0.85) / (1.0 - 0.85) * 26;
-      else if (ratio >= 0.70) pct = 15 + (ratio - 0.70) / (0.85 - 0.70) * 33;
+      else if (ratio >= 1.0) pct = 74 + (ratio - 1.0) / (1.7 - 1.0) * 23;   // 74–97
+      else if (ratio >= 0.85) pct = 48 + (ratio - 0.85) / (1.0 - 0.85) * 26; // 48–74
+      else if (ratio >= 0.70) pct = 15 + (ratio - 0.70) / (0.85 - 0.70) * 33;// 15–48
       else return null;
       return Math.max(5, Math.min(99, Math.round(pct)));
     }
@@ -4565,19 +4712,9 @@
     function showErr(field, show) {
       const e = document.getElementById('err-' + field);
       const inp = document.getElementById('inp-' + field);
-
-      if (e) {
-        e.classList.toggle('show', show);
-      }
-
-      if (inp) {
-        inp.classList.toggle('err', show);
-        inp.setAttribute('aria-invalid', String(show));
-      }
-
-      if (field === 'phone') {
-        document.getElementById('phone-wrap')?.classList.toggle('err', show);
-      }
+      if (e) e.classList.toggle('show', show);
+      if (inp) inp.classList.toggle('err', show);
+      if (field === 'phone') document.getElementById('phone-wrap').classList.toggle('err', show);
     }
 
     document.getElementById('inp-phone').addEventListener('input', function () {
@@ -4586,31 +4723,22 @@
 
     function setDomicile(v) {
       domicileVal = v;
-
-      document.querySelectorAll('#domicile-toggle input[name="domicile"]').forEach(radio => {
-        const isActive = radio.value === v;
-        radio.checked = isActive;
-        radio.closest('.toggle-btn')?.classList.toggle('active', isActive);
+      document.querySelectorAll('#domicile-toggle .toggle-btn').forEach(button => {
+        const isActive = button.dataset.val === v;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
       });
     }
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    );
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function runAfterLayout(callback) {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(callback);
-      });
+      requestAnimationFrame(() => requestAnimationFrame(callback));
     }
 
     function safeScrollIntoView(target, block = 'start') {
-      const element =
-        typeof target === 'string'
-          ? document.getElementById(target)
-          : target;
-
+      const element = typeof target === 'string' ? document.getElementById(target) : target;
       if (!element) return;
-
       runAfterLayout(() => {
         element.scrollIntoView({
           behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
@@ -4620,21 +4748,14 @@
     }
 
     function safeFocus(target) {
-      const element =
-        typeof target === 'string'
-          ? document.getElementById(target)
-          : target;
-
+      const element = typeof target === 'string' ? document.getElementById(target) : target;
       if (!element) return;
-
       runAfterLayout(() => {
-        try {
-          element.focus({ preventScroll: true });
-        } catch {
-          element.focus();
-        }
+        try { element.focus({ preventScroll: true }); }
+        catch { element.focus(); }
       });
     }
+
     // ============================================================
     // NAV
     // ============================================================
@@ -4655,14 +4776,14 @@
       panel.innerHTML = `
         <div class="result-ready-card">
           <div class="result-ready-badge">✓</div>
-          <h3>Your Jharkhand NEET college report is ready</h3>
+          <h3>Your Assam NEET college report is ready</h3>
           <p>We have generated your personalised college prediction report. Your submitted details stay visible here and the full-width report is available below.</p>
 
           <div class="result-profile-grid">
             <div class="result-profile-item"><small>Name</small><b>${escapeHTML(state.name || '-')}</b></div>
             <div class="result-profile-item"><small>AIR</small><b>${state.rank ? state.rank.toLocaleString('en-IN') : '-'}</b></div>
             <div class="result-profile-item"><small>Category</small><b>${CAT_LABEL[state.category] || '-'}</b></div>
-            <div class="result-profile-item"><small>Domicile</small><b>${state.domicile === 'yes' ? 'Jharkhand' : 'Other State'}</b></div>
+            <div class="result-profile-item"><small>Domicile</small><b>${state.domicile === 'yes' ? 'Assam' : 'Other State'}</b></div>
           </div>
 
           <div class="alert alert-success" style="margin:0 0 14px">
@@ -4671,13 +4792,7 @@
           </div>
 
           <div class="result-ready-actions">
-            <button
-  class="btn btn-primary"
-  type="button"
-  onclick="safeScrollIntoView('screen-results', 'start')"
->
-  View Full Report ↓
-</button>
+            <button class="btn btn-primary" type="button" onclick="safeScrollIntoView('screen-results', 'start')">View Full Report ↓</button>
           </div>
         </div>`;
 
@@ -4689,57 +4804,26 @@
       const toolScreens = document.querySelectorAll('.tool-body > .screen');
 
       if (id === 'screen-results') {
-        toolScreens.forEach(screen => {
-          screen.classList.remove('active');
-        });
-
+        toolScreens.forEach(screen => screen.classList.remove('active'));
         const resultPanel = ensureToolResultPanel();
         resultPanel.classList.add('active');
-
-        if (resultsScreen) {
-          resultsScreen.classList.add('active');
-        }
-
+        if (resultsScreen) resultsScreen.classList.add('active');
         document.body.classList.add('results-generated');
-
-        safeScrollIntoView(
-          document.querySelector('.tool-shell'),
-          'start'
-        );
-
+        safeScrollIntoView(document.querySelector('.tool-shell'), 'start');
         return;
       }
 
       document.body.classList.remove('results-generated');
-
-      if (resultsScreen) {
-        resultsScreen.classList.remove('active');
-      }
-
-      toolScreens.forEach(screen => {
-        screen.classList.remove('active');
-      });
-
+      if (resultsScreen) resultsScreen.classList.remove('active');
+      toolScreens.forEach(screen => screen.classList.remove('active'));
       const nextScreen = document.getElementById(id);
-
-      if (nextScreen) {
-        nextScreen.classList.add('active');
-      }
+      if (nextScreen) nextScreen.classList.add('active');
     }
     function setStep(n) {
       for (let i = 1; i <= 3; i++) {
         const s = document.getElementById('step' + i);
-        if (!s) continue;
-
         s.classList.remove('active', 'done');
-        s.removeAttribute('aria-current');
-
-        if (i < n) {
-          s.classList.add('done');
-        } else if (i === n) {
-          s.classList.add('active');
-          s.setAttribute('aria-current', 'step');
-        }
+        if (i < n) s.classList.add('done'); else if (i === n) s.classList.add('active');
       }
     }
 
@@ -4787,10 +4871,7 @@
       }
 
       if (!ok) {
-        safeScrollIntoView(
-          document.querySelector('.field-err.show'),
-          'center'
-        );
+        safeScrollIntoView(document.querySelector('.field-err.show'), 'center');
         return;
       }
 
@@ -4835,6 +4916,7 @@
 
       setStep(2);
       showScreen('screen-otp');
+
       safeScrollIntoView('screen-otp', 'start');
 
       sendOTP();
@@ -4960,13 +5042,9 @@
 
       if (el.value && i < 3) {
         const nextBox = document.getElementById('otp' + (i + 1));
-
         if (nextBox) {
-          try {
-            nextBox.focus({ preventScroll: true });
-          } catch {
-            nextBox.focus();
-          }
+          try { nextBox.focus({ preventScroll: true }); }
+          catch { nextBox.focus(); }
         }
       }
 
@@ -4980,12 +5058,7 @@
     }
 
 
-    let isVerifyingOTP = false;
-
-
     async function verifyOTP() {
-      if (isVerifyingOTP) return;
-      isVerifyingOTP = true;
       const enteredOTP = ['otp0', 'otp1', 'otp2', 'otp3']
         .map(id => document.getElementById(id).value)
         .join('');
@@ -4997,7 +5070,6 @@
       if (!/^\d{4}$/.test(enteredOTP)) {
         err.textContent = 'Please enter the 4-digit OTP.';
         err.classList.add('show');
-        isVerifyingOTP = false;
         return;
       }
 
@@ -5036,8 +5108,6 @@
         safeFocus('otp0');
 
       } finally {
-        isVerifyingOTP = false;
-
         if (verifyBtn) {
           verifyBtn.disabled = false;
           verifyBtn.innerHTML = originalBtnText;
@@ -5095,28 +5165,40 @@
 
       if (domicile === 'yes') {
         COLLEGES.forEach(col => {
-          const closing = col.cutoff[category];
+          const categoryClosing = col.cutoff[category];
+          const closing = categoryClosing || col.cutoff.OPEN;
           if (!closing) return;
           const p = calcPossibility(rank, closing);
           if (p !== null) govt.push({
             ...col,
             closingRank: closing,
-            cutoffScore: col.score[category],
             possibility: p,
-            usedOpenFallback: false
+            usedOpenFallback: category !== 'OPEN' && !categoryClosing
           });
         });
       }
 
       PRIVATE_COLLEGES.forEach(col => {
         if (domicile !== 'yes' && !col.eligibleOtherState) return;
-        const closing = col.cutoff[category];
+        const categoryClosing = col.cutoff[category];
+        const closing = categoryClosing || col.cutoff.OPEN;
         if (!closing) return;
         const p = calcPossibility(rank, closing);
         if (p !== null) privateM.push({
           ...col,
           closingRank: closing,
-          cutoffScore: col.score[category],
+          possibility: p,
+          usedOpenFallback: category !== 'OPEN' && !categoryClosing
+        });
+      });
+
+      DEEMED_COLLEGES.forEach(col => {
+        const p = calcPossibility(rank, col.openRank);
+        if (p !== null) deemedM.push({
+          ...col,
+          type: 'deemed',
+          quota: 'MCC Deemed',
+          closingRank: col.openRank,
           possibility: p,
           usedOpenFallback: false
         });
@@ -5124,7 +5206,11 @@
 
       govt.sort((a, b) => b.possibility - a.possibility);
       privateM.sort((a, b) => b.possibility - a.possibility);
-      const all = [...govt, ...privateM].sort((a, b) => b.possibility - a.possibility);
+      deemedM.sort((a, b) => b.possibility - a.possibility);
+
+      const all = [...govt, ...privateM, ...deemedM]
+        .sort((a, b) => b.possibility - a.possibility);
+
       return { govt, privateM, deemedM, all };
     }
 
@@ -5138,10 +5224,10 @@
         phone: state.phone,
         neet_air: state.rank,
         category: state.category,
-        jharkhand_domicile: state.domicile === 'yes',
+        assam_domicile: state.domicile === 'yes',
         otp_verified: true,
         top_colleges: high.slice(0, 5).map(c => `${c.name} — ${c.quota || typeLabel(c)}`),
-        tool: 'Jharkhand-College-Predictor',
+        tool: 'Assam-College-Predictor',
         source: 'rmgoe',
         timestamp: new Date().toISOString()
       };
@@ -5156,11 +5242,8 @@
 
       const firstMatch = state.results.all[0] || {};
       const top = firstMatch.name ? `${firstMatch.name} — ${firstMatch.quota || typeLabel(firstMatch)}` : 'my options';
-      const waText = `Hi, I used the Jharkhand College Predictor.%0AName: ${encodeURIComponent(state.name)}%0AAIR: ${state.rank}%0ACategory: ${state.category}%0ATop match: ${encodeURIComponent(top)}%0AI'd like to discuss my options.`;
-      const waCtaLink = document.getElementById('wa-cta-link');
-      if (waCtaLink) {
-        waCtaLink.href = `https://wa.me/8448207814?text=${waText}`;
-      }
+      const waText = `Hi, I used the Assam College Predictor.%0AName: ${encodeURIComponent(state.name)}%0AAIR: ${state.rank}%0ACategory: ${state.category}%0ATop match: ${encodeURIComponent(top)}%0AI'd like to discuss my options.`;
+      document.getElementById('wa-cta-link').href = `https://wa.me/8448207814?text=${waText}`;
     }
 
     // ============================================================
@@ -5194,7 +5277,7 @@
       <div>
         <div class="rs-score-lbl">NEET 2026 All India Rank</div>
         <div class="rs-score">${rank.toLocaleString('en-IN')}</div>
-        <div class="rs-meta">${escapeHTML(state.name)} · ${CAT_LABEL[cat]} · ${state.domicile === 'yes' ? 'Jharkhand Domicile' : 'Other State'}</div>
+        <div class="rs-meta">${escapeHTML(state.name)} · ${CAT_LABEL[cat]} · ${state.domicile === 'yes' ? 'Assam Domicile' : 'Other State'}</div>
       </div>
       <div class="rs-pills">
         <div class="rs-pill"><div class="rs-pill-num">${strong}</div><div class="rs-pill-lbl">STRONG</div></div>
@@ -5209,7 +5292,10 @@
         document.getElementById('colleges-section').classList.add('hidden');
         document.getElementById('ineligible-section').classList.remove('hidden');
         document.getElementById('ineligible-message').innerHTML =
-          `At AIR <strong>${rank.toLocaleString('en-IN')}</strong> in <strong>${CAT_LABEL[cat]}</strong>, no Jharkhand option on the supplied 2025 page is close to your rank. NRI, special-category, later vacancy rounds and MBBS-abroad routes should be checked separately.`;
+          `At AIR <strong>${rank.toLocaleString('en-IN')}</strong> in <strong>${CAT_LABEL[cat]}</strong>, no eligible Assam State Quota option in the supplied latest 2025 dataset closed at or near your rank. MCC All India Quota, PwD and other special categories, later rounds and MBBS-abroad routes should be checked separately.`;
+        document.getElementById('report-body').innerHTML = '';
+        document.getElementById('view-cards').innerHTML = '';
+        document.getElementById('analysis-content').innerHTML = '<div class="alert alert-info">No Assam State Quota rank analysis is available for this profile.</div>';
         return;
       }
       document.getElementById('colleges-section').classList.remove('hidden');
@@ -5229,15 +5315,15 @@
       list.forEach(c => {
         const pc = pctClass(c.possibility);
         const cr = c.closingRank ? c.closingRank.toLocaleString('en-IN') : '—';
-        const scoreColor = c.type === 'govt' ? 'color:var(--green);font-weight:700' : 'color:var(--amber);font-weight:700';
+        const feeColor = c.type === 'govt' ? 'color:var(--green);font-weight:700' : (c.type === 'deemed' ? 'color:var(--red);font-weight:700' : 'color:var(--amber);font-weight:700');
         rows += `<tr>
       <td class="col-sno">${n++}</td>
       <td class="col-name">${c.name}</td>
       <td>${c.district}</td>
       <td><span class="type-badge type-${c.type}">${typeLabel(c)}</span></td>
-      <td class="center" style="font-size:11px;font-weight:800">${escapeHTML(c.cutoffBasis || '—')}</td>
+      <td class="center">${c.seats}</td>
       <td class="col-rank center">${cr}</td>
-      <td class="center" style="${scoreColor};white-space:nowrap">${c.cutoffScore ?? '—'}</td>
+      <td class="center" style="${feeColor};white-space:nowrap">${fmtFee(c.fee)}</td>
       <td class="center pct-cell">
         <div class="pct-num pct-${pc}">${c.possibility}%</div>
         <div class="pct-bar"><div class="pct-fill pct-fill-${pc}" style="width:${c.possibility}%"></div></div>
@@ -5253,8 +5339,8 @@
       let html = '';
       function card(c) {
         const pc = pctClass(c.possibility);
-        const scoreCol = c.type === 'govt' ? 'color:var(--green)' : 'color:var(--amber)';
-        const scoreLbl = c.categoryBasis === 'AIQ' ? 'AIQ Cutoff Score' : 'Category Cutoff Score';
+        const feeCol = c.type === 'govt' ? 'color:var(--green)' : (c.type === 'deemed' ? 'color:var(--red)' : 'color:var(--amber)');
+        const feeLbl = c.type === 'private' ? (c.quota + ' Tuition') : 'Tuition';
         return `<div class="college-card">
       <div class="cc-top">
         <div>
@@ -5264,10 +5350,10 @@
         <div class="cc-pct"><div class="pct-num pct-${pc}">${c.possibility}%</div><div class="cc-pct-lbl">${pctLabel(c.possibility)}</div></div>
       </div>
       <div class="cc-stats">
-        <div class="cc-stat"><strong>${escapeHTML(c.cutoffBasis || '—')}</strong>Cutoff Basis</div>
-        <div class="cc-stat"><strong>${c.closingRank ? c.closingRank.toLocaleString('en-IN') : '—'}</strong>2025 Close Rank</div>
-        <div class="cc-stat"><strong style="${scoreCol}">${c.cutoffScore ?? '—'}</strong>${scoreLbl}</div>
-        <div class="cc-stat"><strong>Provided page</strong>Data Source</div>
+        <div class="cc-stat"><strong>${c.seats}</strong>Seats</div>
+        <div class="cc-stat"><strong>${c.closingRank ? c.closingRank.toLocaleString('en-IN') : '—'}</strong>2025 R1 Close Rank</div>
+        <div class="cc-stat"><strong style="${feeCol}">${fmtFee(c.fee)}</strong>${feeLbl}</div>
+        <div class="cc-stat"><strong>${totalFee(c.fee)}</strong>~4.5-Year Tuition</div>
       </div>
     </div>`;
       }
@@ -5276,9 +5362,14 @@
         html += govt.map(card).join('');
       }
       if (privateM.length) {
-        html += `<div class="section-hdr"><h3>Private College Cutoff Options — Jharkhand</h3><span class="count-badge">${privateM.length}</span></div>`;
-        html += '<div class="alert alert-info"><div class="alert-icon">💡</div><div>Private-college values use the page’s <strong>Overall Low Cut Off 2025</strong>. Laxmi Chandravanshi and Netaji Subhash also have separate AIQ rows on the source page, so those options are shown separately.</div></div>';
+        html += `<div class="section-hdr"><h3>Private College Seat Options — Assam Counselling</h3><span class="count-badge">${privateM.length}</span></div>`;
+        html += '<div class="alert alert-info"><div class="alert-icon">💡</div><div>Private colleges are shown as separate <strong>State Quota and Management options</strong> where both fields were supplied. NRI and special sub-category eligibility is not predicted. Reserved-category claims require valid documents.</div></div>';
         html += privateM.slice(0, 18).map(card).join('');
+      }
+      if (deemedM.length) {
+        html += `<div class="section-hdr"><h3>Assam Deemed College from Supplied List</h3><span class="count-badge">${deemedM.length}</span></div>`;
+        html += '<div class="alert alert-warn"><div class="alert-icon">⚠️</div><div>No Assam-located deemed medical college was found in the supplied deemed-college list.</div></div>';
+        html += deemedM.slice(0, 14).map(card).join('');
       }
       wrap.innerHTML = html || '<div class="alert alert-info">No colleges matched.</div>';
     }
@@ -5297,7 +5388,7 @@
       const chance = strong >= 4 ? 'Strong' : strong >= 1 ? 'Moderate' : 'Low';
 
       const govtRanks = COLLEGES
-        .map(c => c.cutoff[cat] || c.cutoff.UR)
+        .map(c => c.cutoff[cat] || c.cutoff.OPEN)
         .filter(Boolean)
         .sort((a, b) => a - b);
 
@@ -5307,24 +5398,25 @@
 
       document.getElementById('analysis-content').innerHTML = `
     <div class="card-title">Your rank analysis</div>
-    <div class="card-sub">How your NEET All India Rank compares with Jharkhand government-college 2025 Round 1 closing ranks for ${CAT_LABEL[cat]} using the supplied 2025 data</div>
+    <div class="card-sub">How your NEET All India Rank sits against Assam government-college Round 1 closing-rank tiers for ${CAT_LABEL[cat]} using the supplied 2025 data</div>
     ${rankBar('Best Government Closing Rank', topTier, rank, 'var(--green)')}
     ${rankBar('Median Government Closing Rank', midTier, rank, 'var(--amber)')}
     ${rankBar('Last Government Closing Rank', lastTier, rank, 'var(--blue)')}
     <div class="analysis-stats-grid" style="display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:12px;margin-top:20px">
       <div style="background:var(--green-lt);padding:16px;border-radius:var(--r-lg);text-align:center"><div style="font-size:26px;font-weight:800;color:var(--green)">${govt.length}</div><div style="font-size:12px;color:var(--green);font-weight:700;margin-top:4px">Government Colleges Matched</div></div>
-      <div style="background:var(--amber-lt);padding:16px;border-radius:var(--r-lg);text-align:center"><div style="font-size:26px;font-weight:800;color:var(--amber)">${privateM.length}</div><div style="font-size:12px;color:var(--amber);font-weight:700;margin-top:4px">Private Seat Options Matched</div></div>
+      <div style="background:var(--amber-lt);padding:16px;border-radius:var(--r-lg);text-align:center"><div style="font-size:26px;font-weight:800;color:var(--amber)">${NEW_COLLEGES_WITHOUT_CUTOFF.length}</div><div style="font-size:12px;color:var(--amber);font-weight:700;margin-top:4px">New Colleges Without Cutoff</div></div>
     </div>
     <div class="alert alert-${chance === 'Strong' ? 'success' : chance === 'Moderate' ? 'warn' : 'info'}" style="margin-top:18px">
       <div class="alert-icon">${chance === 'Strong' ? '🎯' : chance === 'Moderate' ? '⚡' : '💡'}</div>
-      <div><strong>Jharkhand government-seat chance: ${state.domicile === 'yes' ? chance : 'Not evaluated'}</strong><br>${state.domicile !== 'yes'
-          ? `Jharkhand government and state-category private options are excluded because Other State was selected. Only the two explicit AIQ rows on the supplied page are evaluated.`
+      <div><strong>Assam government-seat chance: ${state.domicile === 'yes' ? chance : 'Not evaluated'}</strong><br>${
+        state.domicile !== 'yes'
+          ? `Assam State Quota options are excluded because Other State was selected. The supplied files contain no Assam deemed-college record and no separately usable other-state private quota record.`
           : chance === 'Strong'
             ? `You have ${strong} government colleges with 75%+ possibility. Fill every acceptable choice in true preference order.`
             : chance === 'Moderate'
               ? `You have ${strong} strong government option(s). Stay active through all counselling rounds.`
-              : `Government chances are limited in this cutoff model. Compare private State Quota, All India/Management, NRI and other eligible routes carefully.`
-        }</div>
+              : `Government chances are limited in this cutoff model. Compare MCC All India Quota, later Assam rounds, valid special-category routes and other affordable MBBS options carefully.`
+      }</div>
     </div>
     <div style="margin-top:16px;padding:16px;background:var(--paper);border-radius:var(--r-lg)">
       <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px">Category: ${CAT_LABEL[cat]}</div>
@@ -5334,7 +5426,8 @@
         Your AIR: <strong>${rank.toLocaleString('en-IN')}</strong>
       </div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px">
-        The supplied page includes UR, EWS, BC-I, BC-II, SC and ST, plus a few special rows such as Deaf, Blind and PH. This simplified predictor uses the six plain categories only.
+        The supplied Assam file also contains PwD, Government Institute, Ex-Serviceman, Char Area, community sub-quota and other special-category entries.
+        This predictor uses only General/UR, EWS, OBC/MOBC (NCL), SC, ST (Plains) and ST (Hills). It does not separately predict PwD, GI, Ex-Serviceman, Char Area, TGL/Ex-TGL, community sub-quota or other special routes.
       </div>
     </div>`;
     }
@@ -5349,9 +5442,7 @@
       ['tab-colleges', 'tab-analysis', 'tab-next'].forEach(panelId => {
         document.getElementById(panelId)?.classList.add('hidden');
       });
-
       document.getElementById(id)?.classList.remove('hidden');
-
       document.querySelectorAll('.tab').forEach(tab => {
         const isActive = tab === el;
         tab.classList.toggle('active', isActive);
@@ -5396,7 +5487,7 @@
       const low = list.filter(c => c.possibility < 45).length;
       const top = list[0] || null;
       const date = reportDate();
-      const domicile = state.domicile === 'yes' ? 'Jharkhand Domicile' : 'Other State';
+      const domicile = state.domicile === 'yes' ? 'Assam Domicile' : 'Other State';
 
       const rows = list.map((c, i) => {
         const pc = pctClass(c.possibility);
@@ -5408,9 +5499,9 @@
             <td style="width:30%"><div class="pro-college-name">${escapeHTML(c.name)}</div></td>
             <td style="width:12%">${escapeHTML(c.district)}</td>
             <td style="width:9%"><span class="pro-badge ${badgeType}">${escapeHTML(typeLabel(c))}</span></td>
-            <td style="width:12%;text-align:center">${escapeHTML(c.cutoffBasis || '—')}</td>
+            <td style="width:7%;text-align:center">${escapeHTML(c.seats)}</td>
             <td style="width:13%;text-align:center;font-weight:800">${closingRank}</td>
-            <td style="width:9%;text-align:center;font-weight:800;${c.type === 'govt' ? 'color:#087344' : 'color:#a45a00'}">${c.cutoffScore ?? '—'}</td>
+            <td style="width:11%;text-align:center;font-weight:800;${c.type === 'govt' ? 'color:#087344' : 'color:#a45a00'}">${escapeHTML(fmtFee(c.fee))}</td>
             <td style="width:14%;text-align:center"><span class="pro-prob pro-prob-${pc}">${c.possibility}% · ${possibilityBand(c.possibility)}</span></td>
           </tr>`;
       }).join('');
@@ -5420,8 +5511,8 @@
           <div class="pro-report-header">
             <div>
               <div class="pro-report-brand">RM Group of Education</div>
-              <h1>Jharkhand NEET 2026 College Prediction Report</h1>
-              <p>Personalised report based on NEET AIR, Jharkhand category, domicile and the 2025 cutoff ranks/scores published on the supplied page.</p>
+              <h1>Assam NEET 2026 College Prediction Report</h1>
+              <p>Personalised report based on NEET All India Rank, Assam category, domicile and supplied Assam 2025 Round 1 cutoff trends.</p>
             </div>
             <div class="pro-report-date">
               Generated<br><b>${date}</b>
@@ -5431,7 +5522,7 @@
           <div class="pro-report-grid">
             <div class="pro-report-card"><small>Student Name</small><b>${escapeHTML(state.name || '-')}</b></div>
             <div class="pro-report-card"><small>All India Rank</small><b>${state.rank ? state.rank.toLocaleString('en-IN') : '-'}</b></div>
-            <div class="pro-report-card"><small>Jharkhand Category</small><b>${escapeHTML(CAT_LABEL[state.category] || '-')}</b></div>
+            <div class="pro-report-card"><small>Assam Category</small><b>${escapeHTML(CAT_LABEL[state.category] || '-')}</b></div>
             <div class="pro-report-card"><small>Domicile</small><b>${escapeHTML(domicile)}</b></div>
             <div class="pro-report-card"><small>Total Matches</small><b>${list.length} Colleges</b></div>
             <div class="pro-report-card"><small>Strong Options</small><b>${strong}</b></div>
@@ -5451,9 +5542,9 @@
                 <th style="width:30%">College</th>
                 <th style="width:12%">District</th>
                 <th style="width:9%">Type</th>
-                <th style="width:12%;text-align:center">Cutoff Basis</th>
-                <th style="width:12%;text-align:center">Close Rank 2025</th>
-                <th style="width:9%;text-align:center">Score</th>
+                <th style="width:7%;text-align:center">Seats</th>
+                <th style="width:13%;text-align:center">Close Rank R1 2025</th>
+                <th style="width:11%;text-align:center">Tuition</th>
                 <th style="width:14%;text-align:center">Possibility</th>
               </tr>
             </thead>
@@ -5463,12 +5554,12 @@
           </table>
 
           <div class="pro-report-note">
-            <b>Important:</b> Government predictions use 2025 Round 1 ranks and private predictions use 2025 overall-low ranks from the supplied page. The source does not provide seat intake or tuition fees, so this report does not display or estimate them. Actual 2026 allotment depends on eligibility, seat matrix, category movement, choices and counselling round. This report does not guarantee admission.
+            <b>Important:</b> This is a prediction based on supplied Assam counselling 2025 Round 1 closing ranks. Actual 2026 cutoffs may vary due to exam difficulty, seat matrix, category movement, option form, Round 2/3 and stray vacancy rounds. Government tuition is shown from the supplied fee fields. Hostel, mess, security and miscellaneous charges may be additional. This report does not guarantee admission.
           </div>
 
           <div class="pro-report-footer">
             RM Group of Education · H-51, Sector 63, Noida · +91 99997-03444 · rmgoe.org<br>
-            Data reference: Medipedia Overseas, “NEET 2025 Jharkhand Cut-off” page supplied by the user. Verify all final information on official counselling portals.
+            Data reference: supplied Assam government-college cutoff data. No Assam college was present in the supplied deemed list. Always verify final notices and counselling updates on the official portals.
           </div>
         </div>`;
     }
@@ -5516,40 +5607,26 @@
     let jsPDFLoadPromise = null;
 
     function loadJsPDF() {
-      if (window.jspdf?.jsPDF) {
-        return Promise.resolve();
-      }
-
-      if (jsPDFLoadPromise) {
-        return jsPDFLoadPromise;
-      }
+      if (window.jspdf?.jsPDF) return Promise.resolve();
+      if (jsPDFLoadPromise) return jsPDFLoadPromise;
 
       jsPDFLoadPromise = new Promise((resolve, reject) => {
         const script = document.createElement('script');
-
-        script.src =
-          'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
         script.async = true;
-
-        script.onload = () => {
-          if (window.jspdf?.jsPDF) {
-            resolve();
-          } else {
-            reject(new Error('jsPDF loaded but was not initialised.'));
-          }
-        };
-
+        script.onload = () => window.jspdf?.jsPDF
+          ? resolve()
+          : reject(new Error('jsPDF loaded but was not initialised.'));
         script.onerror = () => {
           jsPDFLoadPromise = null;
           reject(new Error('Unable to load jsPDF.'));
         };
-
         document.head.appendChild(script);
       });
 
       return jsPDFLoadPromise;
     }
+
     async function downloadPDF() {
       const list = reportList();
       if (!list.length) {
@@ -5561,21 +5638,12 @@
         await loadJsPDF();
       } catch (error) {
         console.error(error);
-
-        alert(
-          'The PDF generator could not be loaded. Please check your internet connection or use the Print option.'
-        );
-
+        alert('The PDF generator could not be loaded. Please check your internet connection or use the Print option.');
         return;
       }
 
       const { jsPDF } = window.jspdf;
-
-      const doc = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: 'a4'
-      });
+      const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
       const W = 297;
       const H = 210;
       const M = 12;
@@ -5595,7 +5663,7 @@
       const low = list.filter(c => c.possibility < 45).length;
       const top = list[0] || null;
       const date = reportDate();
-      const domicile = state.domicile === 'yes' ? 'Jharkhand Domicile' : 'Other State';
+      const domicile = state.domicile === 'yes' ? 'Assam Domicile' : 'Other State';
 
       function setColor(arr) { doc.setTextColor(arr[0], arr[1], arr[2]); }
       function setFill(arr) { doc.setFillColor(arr[0], arr[1], arr[2]); }
@@ -5618,7 +5686,7 @@
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(11);
         doc.setTextColor(255, 255, 255);
-        doc.text('Jharkhand NEET 2026 College Prediction Report', M, 9.5);
+        doc.text('Assam NEET 2026 College Prediction Report', M, 9.5);
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(7.5);
         doc.text('RM Group of Education  |  rmgoe.org  |  +91 99997-03444', W - M, 9.5, { align: 'right' });
@@ -5629,7 +5697,7 @@
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(6.6);
         setColor(muted);
-        doc.text('Prediction uses 2025 government Round 1 and private overall-low ranks from the supplied Jharkhand cutoff page. Final 2026 cutoffs may vary; admission is not guaranteed.', M, H - 5);
+        doc.text('Prediction is based on supplied Assam 2025 Round 1 counselling trends. Final 2026 cutoffs may vary. This report does not guarantee admission.', M, H - 5);
         doc.text('Page ' + pageNo + ' / ' + totalPages, W - M, H - 5, { align: 'right' });
       }
       function summaryCard(x, y, w, h, label, value, color) {
@@ -5652,7 +5720,7 @@
         doc.setFontSize(7.2);
         doc.setTextColor(255, 255, 255);
         let x = M;
-        const headers = ['#', 'College', 'District', 'Type', 'Cutoff Basis', 'Close Rank 25', 'Score', 'Possibility'];
+        const headers = ['#', 'College', 'District', 'Type', 'Seats', 'Close Rank R1 25', 'Tuition/yr', 'Possibility'];
         COLS.forEach((c, idx) => {
           const tx = c.a === 'center' ? x + c.w / 2 : x + 2;
           doc.text(headers[idx], tx, y + 5.3, { align: c.a });
@@ -5676,9 +5744,9 @@
           c.name,
           c.district,
           typeLabel(c),
-          c.cutoffBasis || '-',
+          String(c.seats || '-'),
           c.closingRank ? c.closingRank.toLocaleString('en-IN') : '-',
-          String(c.cutoffScore ?? '-'),
+          fmtFee(c.fee),
           c.possibility + '% ' + possibilityBand(c.possibility)
         ];
 
@@ -5688,7 +5756,7 @@
           doc.setFont('helvetica', idx === 1 || idx === 7 ? 'bold' : 'normal');
           doc.setFontSize(idx === 1 ? 7.2 : 7);
           if (idx === 1) setColor(navy);
-          else if (idx === 6) setColor(c.type === 'govt' ? green : amber);
+          else if (idx === 6) setColor(c.type === 'govt' ? green : (c.type === 'deemed' ? red : amber));
           else if (idx === 7) setColor(possibilityColor(c.possibility));
           else setColor(text);
           doc.text(pdfTruncate(values[idx], col.w - 4), tx, y + 5.1, { align });
@@ -5714,11 +5782,11 @@
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(16);
       setColor(navy);
-      doc.text('Personalised Jharkhand NEET College Prediction', M + 5, 32);
+      doc.text('Personalised Assam NEET College Prediction', M + 5, 32);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8.5);
       setColor(muted);
-      doc.text('Generated on ' + date + ' using the submitted profile and supplied Jharkhand 2025 cutoff ranks/scores.', M + 5, 39);
+      doc.text('Generated on ' + date + ' using submitted profile and supplied Assam 2025 Round 1 cutoff trends.', M + 5, 39);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(8.5);
       setColor(orange);
@@ -5730,7 +5798,7 @@
       const cardW = (W - 2 * M - 21) / 4;
       summaryCard(M, cardY, cardW, 16, 'Student', state.name || '-', navy);
       summaryCard(M + cardW + 7, cardY, cardW, 16, 'All India Rank', state.rank ? state.rank.toLocaleString('en-IN') : '-', orange);
-      summaryCard(M + (cardW + 7) * 2, cardY, cardW, 16, 'Jharkhand Category', CAT_LABEL[state.category] || '-', navy);
+      summaryCard(M + (cardW + 7) * 2, cardY, cardW, 16, 'Assam Category', CAT_LABEL[state.category] || '-', navy);
       summaryCard(M + (cardW + 7) * 3, cardY, cardW, 16, 'Domicile', domicile, navy);
 
       summaryCard(M, cardY + 21, cardW, 16, 'Total Matches', String(list.length), navy);
@@ -5780,7 +5848,7 @@
       setColor([124, 58, 8]);
       doc.text('Important:', M + 4, y + 10);
       doc.setFont('helvetica', 'normal');
-      doc.text('Indicative prediction using supplied Jharkhand 2025 cutoff data. Actual allotment depends on 2026 eligibility, seat matrix, choices and counselling rounds.', M + 22, y + 10);
+      doc.text('Indicative prediction based on supplied Assam 2025 Round 1 trends. Actual allotment depends on 2026 seat matrix, options filled, category movement and counselling rounds.', M + 22, y + 10);
 
       const pages = doc.internal.getNumberOfPages();
       for (let p = 1; p <= pages; p++) {
@@ -5788,7 +5856,7 @@
         pageFooter(p, pages);
       }
 
-      doc.save('Jharkhand_NEET_College_Report_' + safeFileName(state.name) + '.pdf');
+      doc.save('Assam_NEET_College_Report_' + safeFileName(state.name) + '.pdf');
     }
 
     function truncate(doc, text, maxW) {
@@ -5804,16 +5872,13 @@
     // FAQ
     // ============================================================
     const FAQS = [
-      ['Which rank should I enter?', 'Enter your NEET All India Rank (AIR) exactly as shown on the NEET result. Do not enter score, state merit rank or category rank.'],
-      ['Which Jharkhand categories are supported?', 'The tool supports UR, EWS, BC-I, BC-II, SC and ST because these plain categories are available for the listed colleges on the supplied 2025 cutoff page.'],
-      ['Can an Other State student use this tool?', 'Yes. The tool excludes government and state-category private records, then evaluates only the explicit AIQ cutoff rows shown for Laxmi Chandravanshi and Netaji Subhash.'],
-      ['Why do two private colleges appear twice?', 'The source page gives both an AIQ row and category-wise rows for Laxmi Chandravanshi and Netaji Subhash. The tool preserves these as separate cutoff routes.'],
-      ['Which cutoff is used for government colleges?', 'The prediction uses the 2025 Round 1 rank and score shown on the supplied page for each supported category.'],
-      ['Which cutoff is used for private colleges?', 'The page labels its private values as Overall Low Cut Off 2025. Those rank and score values are used as the private reference.'],
-      ['Are special categories included?', 'No. Deaf, Blind, PH and other special rows are excluded because they require separate eligibility and documentation rules.'],
-      ['Why are fees and seats not displayed?', 'The supplied page does not provide tuition fees or seat intake. The predictor shows cutoff basis and cutoff score instead of inventing unsupported figures.'],
-      ['Does a high possibility guarantee admission?', 'No. The percentage only compares your AIR with the supplied 2025 reference rank. Actual 2026 admission depends on eligibility, seat matrix, category movement, choices and counselling round.'],
-      ['Which documents should I prepare?', 'Keep the NEET admit card and scorecard, Class 10 and 12 certificates and marksheets, ID proof, photographs, domicile documents where required, and valid EWS, BC-I, BC-II, SC, ST or PwD certificates when claimed.']
+      ['Which rank should I enter?', 'Enter your NEET All India Rank exactly as shown on the result. Do not enter your score, Assam state merit serial number or category rank.'],
+      ['Which Assam categories are supported?', 'The predictor supports General/UR, EWS, OBC/MOBC (NCL), SC, ST (Plains) and ST (Hills) using the supplied latest Round 1 category data.'],
+      ['Are special Assam quotas included?', 'No. PwD, Government Institute, Ex-Serviceman, Char Area, TGL/Ex-TGL, community sub-quotas and similar special entries are not predicted separately.'],
+      ['Can a non-Assam student use it?', 'You may enter your details, but the supplied ranks are for Assam State Quota counselling. Other-state candidates should separately check MCC All India Quota and official eligibility rules.'],
+      ['Are Pragjyotishpur and ESIC Beltola included?', 'They are listed in the source coverage, but no usable supplied cutoff was available, so the tool does not assign them a probability percentage.'],
+      ['Are Assam deemed colleges included?', 'No Assam-located college was found in the supplied all-India deemed-college list, so the deemed-college dataset is empty.'],
+      ['Does the percentage guarantee admission?', 'No. It is an indicative comparison with supplied previous cutoff ranks. Actual allotment depends on the 2026 seat matrix, choices, eligibility, category movement and counselling rounds.']
     ];
     function buildFAQ() {
       const wrap = document.getElementById('faq-wrap');
@@ -5821,13 +5886,8 @@
 
       wrap.innerHTML = FAQS.map(([q, a], i) => `
         <div class="faq" id="faq${i}">
-          <button
-            type="button"
-            class="faq-q"
-            aria-expanded="false"
-            aria-controls="faq-answer-${i}"
-            onclick="toggleFaq(${i}, this)"
-          >
+          <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-answer-${i}"
+            onclick="toggleFaq(${i}, this)">
             <span>${q}</span><span class="chev" aria-hidden="true">▾</span>
           </button>
           <div class="faq-a" id="faq-answer-${i}"><p>${a}</p></div>
@@ -5843,9 +5903,11 @@
       button?.setAttribute('aria-expanded', String(open));
     }
 
-    // Build the FAQ immediately so agents and assistive technology
-    // can inspect it in the initial accessibility tree.
-    buildFAQ();
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(buildFAQ, { timeout: 1200 });
+    } else {
+      setTimeout(buildFAQ, 250);
+    }
 
   </script>
 
