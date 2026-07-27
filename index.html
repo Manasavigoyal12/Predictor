@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <!--
-  Gujarat College Predictor deployment:
+  Himachal Pradesh College Predictor deployment:
   1. Keep this HTML file, banner.webp, send-otp.php, verify-otp.php and the fontawesome folder in the same directory.
   2. Update CONFIG.N8N_WEBHOOK_URL before deployment if your webhook address is different.
-  3. College records, fees and NEET 2025 Round 1 ranks are taken from the supplied Gujarat and deemed-college files.
-  4. Recheck eligibility, fees and cutoffs after the official Gujarat NEET UG 2026 prospectus/data is published.
+  3. College records, fees and NEET 2025 Round 1 ranks are taken from the supplied Himachal Pradesh file; the deemed list was checked and contained no Himachal Pradesh medical college.
+  4. Recheck eligibility, fees and cutoffs after the official Himachal Pradesh NEET UG 2026 prospectus/data is published.
 -->
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gujarat NEET 2026 College Predictor | Government, GMERS, Private &amp; Deemed MBBS Tool</title>
-  <meta name="description" content="Predict Gujarat MBBS college chances using supplied NEET 2025 Round 1 ranks for government, GMERS, municipal, private, management and Gujarat deemed-college options.">
+  <title>Himachal Pradesh NEET 2026 College Predictor | Government &amp; Private MBBS Tool</title>
+  <meta name="description" content="Predict your chances at IGMC Shimla, RPGMC Tanda, GMC Hamirpur, GMC Nahan, GMC Chamba, SLBS GMC Mandi and Maharishi Markandeshwar Medical College using supplied Himachal Pradesh NEET 2025 Round 1 cutoff data.">
   <!-- Prioritise the hero image used as the LCP element. -->
   <link rel="preload" as="image" href="banner.webp" type="image/webp" fetchpriority="high">
 
@@ -33,7 +33,7 @@
   <header class="site-header">
     <div class="header-wrap">
 
-      <a class="header-logo" href="#top" aria-label="Gujarat NEET College Predictor">
+      <a class="header-logo" href="#top" aria-label="Himachal Pradesh NEET College Predictor">
         <img src="https://rmgoe.org/frontend-assets/images/rm_new_logo.png" alt="RM Group of Education"
           width="180" height="46" decoding="async">
       </a>
@@ -45,7 +45,7 @@
           <span>Call Now</span>
         </a>
 
-        <a href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Gujarat%20MBBS%20counselling%20guidance."
+        <a href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Himachal%20Pradesh%20MBBS%20counselling%20guidance."
           target="_blank" rel="noopener noreferrer" class="header-btn whatsapp-btn"
           aria-label="Chat with RM Group of Education on WhatsApp">
           <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
@@ -65,18 +65,18 @@
       <div class="hero-content">
         <div class="hero-badge">
           <span class="dot"></span>
-          Built on supplied NEET 2025 Gujarat counselling data
+          Built on supplied NEET 2025 Himachal Pradesh counselling data
         </div>
 
         <h1>
-          Which Gujarat medical college<br>
+          Which Himachal Pradesh medical college<br>
           fits your <b>NEET 2026 rank?</b>
         </h1>
 
         <p class="hero-sub">
-          Get an instant, personalised prediction across B. J. Medical College, Gujarat government colleges,
-          GMERS colleges, municipal colleges, private Government Quota, Management Quota and Gujarat deemed options —
-          using the supplied NEET 2025 Round 1 closing-rank data.
+          Get an instant, personalised prediction across IGMC Shimla, RPGMC Tanda, GMC Hamirpur, GMC Nahan,
+          Pt. JLNGMC Chamba, SLBS GMC Mandi and Maharishi Markandeshwar Medical College —
+          with separate HP Quota and Management options wherever the supplied data provides them.
         </p>
 
         <a href="#tool" class="hero-btn">
@@ -109,7 +109,7 @@
           <div class="tool-head">
             <div>
               <div class="tool-title">Enter your NEET 2026 details</div>
-              <div class="tool-desc">Fill the details below to check your personalised Gujarat college prediction.
+              <div class="tool-desc">Fill the details below to check your personalised Himachal Pradesh college prediction.
               </div>
             </div>
 
@@ -120,8 +120,8 @@
           </div>
 
           <form id="predictor-form" class="form-grid"
-            toolname="predict_gujarat_mbbs"
-            tooldescription="Validates student details and prepares an indicative Gujarat MBBS college prediction using NEET All India Rank, category and domicile before OTP verification."
+            toolname="predict_himachal_pradesh_mbbs"
+            tooldescription="Validates student details and prepares an indicative Himachal Pradesh MBBS college prediction using NEET All India Rank, category and domicile before OTP verification."
             onsubmit="event.preventDefault(); goToOTP();">
 
             <div class="form-row">
@@ -178,14 +178,14 @@
             <div class="form-row full">
               <label for="inp-cat">
                 <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
-                Gujarat Category<span class="req" aria-hidden="true">*</span>
+                Himachal Pradesh Category<span class="req" aria-hidden="true">*</span>
               </label>
               <select class="inp" id="inp-cat" name="category" required aria-describedby="err-cat"
-                toolparamdescription="The student's Gujarat counselling category.">
+                toolparamdescription="The student's Himachal Pradesh counselling category.">
                 <option value="">Select your category</option>
                 <option value="OPEN">General / UR</option>
                 <option value="EWS">EWS</option>
-                <option value="SEBC">SEBC</option>
+                <option value="OBC">OBC (NCL)</option>
                 <option value="SC">SC</option>
                 <option value="ST">ST</option>
               </select>
@@ -195,19 +195,19 @@
             <fieldset class="form-row full domicile-fieldset">
               <legend class="form-row-label">
                 <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                Gujarat Domicile?<span class="req" aria-hidden="true">*</span>
+                Himachal Pradesh Domicile?<span class="req" aria-hidden="true">*</span>
               </legend>
               <div class="toggle-wrap" id="domicile-toggle">
                 <label class="toggle-btn active" data-val="yes">
                   <input type="radio" name="domicile" value="yes" checked required
                     onchange="setDomicile(this.value)"
-                    toolparamdescription="Whether the student holds valid Gujarat domicile.">
-                  <span>Yes — Gujarat</span>
+                    toolparamdescription="Whether the student holds valid Himachal Pradesh domicile.">
+                  <span>Yes — Himachal Pradesh</span>
                 </label>
                 <label class="toggle-btn" data-val="no">
                   <input type="radio" name="domicile" value="no"
                     onchange="setDomicile(this.value)"
-                    toolparamdescription="Whether the student is applying without Gujarat domicile.">
+                    toolparamdescription="Whether the student is applying without Himachal Pradesh domicile.">
                   <span>No — Other State</span>
                 </label>
               </div>
@@ -309,7 +309,7 @@
     <div class="results-main">
 
       <div id="print-only-head">
-        <h1 style="font-size:18px;color:var(--navy);margin-bottom:4px">Gujarat NEET 2026 — College Prediction
+        <h1 style="font-size:18px;color:var(--navy);margin-bottom:4px">Himachal Pradesh NEET 2026 — College Prediction
           Report</h1>
         <p style="font-size:12px;color:var(--muted)">RM Group of Education · rmgoe.org · +91 99997-03444</p>
       </div>
@@ -330,15 +330,8 @@
         <div id="non-domicile-alert" class="hidden">
           <div class="alert alert-warn">
             <div class="alert-icon">⚠️</div>
-            <div>You selected <strong>non-Gujarat domicile</strong>. The tool excludes Gujarat government and private Government Quota
-              seats. It shows private Management options and the Gujarat college taken from the supplied
-              deemed list. Final eligibility, NRI rules and vacancy-round conditions must be checked in the official prospectus.</div>
+            <div>You selected <strong>non-Himachal Pradesh domicile</strong>. The tool excludes Himachal Pradesh government and private HP Quota seats. It shows only the supplied private Management option. Final eligibility and counselling conditions must be checked in the official prospectus.</div>
           </div>
-        </div>
-
-        <div class="alert alert-info" style="margin-bottom:16px">
-          <div class="alert-icon">ℹ️</div>
-          <div><strong>Data coverage:</strong> 37 Gujarat colleges have usable supplied 2025 Round 1 closing ranks. Five additional source colleges without a usable Round 1 rank are not probability-scored.</div>
         </div>
 
         <div id="ineligible-section" class="hidden">
@@ -349,7 +342,7 @@
           <div class="abroad-hook">
             <h3>MBBS is not over 🌍</h3>
             <p>Thousands of students with similar ranks study MBBS abroad in WDOMS-listed universities — saving ₹30–40
-              lakh compared with some high-cost private Management and NRI options.</p>
+              lakh compared with some high-cost private All India/Management and NRI options.</p>
             <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
                 Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
                 Kazakhstan</span></div>
@@ -360,12 +353,12 @@
         <div id="colleges-section">
           <div class="result-controls">
             <div class="view-toggle">
-              <button class="view-btn active" id="btn-table-view" onclick="setView('table')">Table</button>
-              <button class="view-btn" id="btn-card-view" onclick="setView('card')">Cards</button>
+              <button type="button" class="view-btn active" id="btn-table-view" onclick="setView('table')">Table</button>
+              <button type="button" class="view-btn" id="btn-card-view" onclick="setView('card')">Cards</button>
             </div>
             <div class="export-btns">
-              <button class="btn btn-secondary btn-sm" onclick="downloadPDF()">Download PDF</button>
-              <button class="btn btn-secondary btn-sm" onclick="printReport()">Print</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="downloadPDF()">Download PDF</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="printReport()">Print</button>
             </div>
           </div>
 
@@ -377,7 +370,7 @@
           <div class="alert alert-info" style="margin-top:0">
             <div class="alert-icon">ℹ️</div>
             <div>Where the supplied 2025 file does not contain a plain category closing rank, the tool uses the
-              General/UR closing rank as an indicative fallback. PH/PwD, NRI, minority, local and other special-quota routes are not predicted separately.</div>
+              General/UR closing rank as an indicative fallback. Special sub-categories such as Backward Area, Single Girl Child, Defence, Ex-Servicemen, Freedom Fighter, Tibetan Refugee, NRI and PwD are not predicted separately.</div>
           </div>
 
           <!-- TABLE VIEW -->
@@ -406,7 +399,7 @@
 
           <div class="abroad-hook" id="abroad-hook-eligible">
             <h3>Want more options? 🌍</h3>
-            <p>Students who miss Gujarat State Quota seats should compare private management, NRI and MBBS-abroad options carefully before paying a high non-refundable amount.</p>
+            <p>Students who miss Himachal Pradesh HP Quota seats should compare private HP Quota, Management and MBBS-abroad options carefully before paying a high non-refundable amount.</p>
             <div class="abroad-countries"><span class="country-pill">🇬🇪 Georgia</span><span class="country-pill">🇳🇵
                 Nepal</span><span class="country-pill">🇷🇺 Russia</span><span class="country-pill">🇰🇿
                 Kazakhstan</span></div>
@@ -415,11 +408,11 @@
         </div>
 
         <div class="cta-section">
-          <h3>Want expert help with Gujarat choice filling?</h3>
+          <h3>Want expert help with Himachal Pradesh choice filling?</h3>
           <p>Our counsellors have guided 500+ students. We'll call you within 15 minutes.</p>
           <div class="cta-btns">
             <a class="btn btn-wa"
-              href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Gujarat%20MBBS%20counselling%20guidance."
+              href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Himachal%20Pradesh%20MBBS%20counselling%20guidance."
               id="wa-cta-link" rel="noopener noreferrer" style="flex:1;min-width:180px"
               target="_blank">💬 WhatsApp Us</a>
           </div>
@@ -434,8 +427,8 @@
       <!-- TAB 3 -->
       <div id="tab-next" class="hidden" role="tabpanel">
         <div class="card">
-          <div class="card-title">Gujarat NEET 2026 Counselling — what to do now</div>
-          <div class="card-sub">Expected Gujarat centralized medical counselling flow based on previous-year patterns</div>
+          <div class="card-title">Himachal Pradesh NEET 2026 Counselling — what to do now</div>
+          <div class="card-sub">Expected Himachal Pradesh centralized medical counselling flow based on previous-year patterns</div>
           <div class="schedule-item">
             <div class="schedule-dot"></div>
             <div>
@@ -446,8 +439,8 @@
           <div class="schedule-item">
             <div class="schedule-dot"></div>
             <div>
-              <div class="schedule-title">Gujarat MBBS/BDS Registration &amp; Document Upload</div>
-              <div class="schedule-date">Expected after NEET result · check the official Gujarat counselling portal</div>
+              <div class="schedule-title">Himachal Pradesh MBBS/BDS Registration &amp; Document Upload</div>
+              <div class="schedule-date">Expected after NEET result · check the official Himachal Pradesh counselling portal</div>
             </div>
           </div>
           <div class="schedule-item">
@@ -488,16 +481,16 @@
           </div>
         </div>
         <div class="card" style="margin-top:20px">
-          <div class="card-title">Documents checklist (Gujarat counselling)</div>
+          <div class="card-title">Documents checklist (Himachal Pradesh counselling)</div>
           <div class="card-sub">Keep originals + self-attested copies ready for verification</div>
           <ul class="checklist">
             <li>NEET 2026 Admit Card &amp; Scorecard</li>
             <li>Class 10 Marksheet &amp; Certificate (DOB proof)</li>
             <li>Class 12 Marksheet &amp; Certificate (PCB marks)</li>
-            <li>Gujarat Residence / Domicile Certificate, where required</li>
-            <li>Valid EWS, SEBC, SC or ST certificate issued by the competent authority, if applicable</li>
+            <li>Himachal Pradesh Residence / Domicile Certificate, where required</li>
+            <li>Valid OBC (NCL), SC or ST certificate issued by the competent Himachal Pradesh authority, if applicable</li>
             <li>EWS Certificate in the prescribed format, if claiming EWS reservation</li>
-            <li>Gujarat counselling registration slip and choice-filling printout</li>
+            <li>Himachal Pradesh counselling registration slip and choice-filling printout</li>
             <li>Allotment letter and fee-payment receipt, when issued</li>
             <li>School Leaving Certificate + Gap Certificate if applicable</li>
             <li>Aadhaar Card &amp; 10+ passport photos (white background)</li>
@@ -507,9 +500,9 @@
           <div class="card-title">💡 Option-form strategy</div>
           <ul class="checklist">
             <li>Fill every acceptable option in true preference order — more valid choices improve safety</li>
-            <li>Order: top government → remaining government → private Government Quota → private Management → deemed-list option</li>
-            <li>Compare private Government Quota fees carefully against management and NRI tuition</li>
-            <li>Claim PH/PwD, NRI, minority, local or other special quotas only with valid documents and official eligibility</li>
+            <li>Order: top government → remaining government → private HP Quota → private Management</li>
+            <li>Compare private HP Quota fees carefully against Management tuition</li>
+            <li>Claim eligible Himachal Pradesh sub-categories such as Backward Area, Single Girl Child, Defence, Ex-Servicemen, Freedom Fighter, Tibetan Refugee or PwD only with valid documents</li>
             <li>Read upgrade, reporting, resignation and security-deposit rules before accepting any seat</li>
             <li>Keep domicile, category, EWS and identity documents ready before registration begins</li>
           </ul>
@@ -519,7 +512,7 @@
           <p>We'll build your personalised option list based on rank, category and preferences.</p>
           <div class="cta-btns">
             <a class="btn btn-wa"
-              href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Gujarat%20MBBS%20counselling%20guidance."
+              href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Himachal%20Pradesh%20MBBS%20counselling%20guidance."
               rel="noopener noreferrer" style="flex:1;min-width:180px"
               target="_blank">💬 WhatsApp Counsellor</a>
             <a class="btn btn-blue" href="tel:+919999703444"
@@ -535,12 +528,12 @@
   <section class="section" id="how-it-works">
     <div class="section-eyebrow">Simple &amp; fast</div>
     <h2 class="section-h2">How the predictor works</h2>
-    <p class="section-lead">Three steps to see where your NEET rank stands across the Gujarat government and private medical colleges included in the supplied dataset.</p>
+    <p class="section-lead">Three steps to see where your NEET rank stands across the Himachal Pradesh government and private medical colleges included in the supplied dataset.</p>
     <div class="hiw-grid">
       <div class="hiw-card">
         <div class="hiw-num">1</div>
         <h3>Enter your details</h3>
-        <p>Your NEET 2026 All India Rank, Gujarat counselling category and domicile — takes under a minute.</p>
+        <p>Your NEET 2026 All India Rank, Himachal Pradesh counselling category and domicile — takes under a minute.</p>
       </div>
       <div class="hiw-card">
         <div class="hiw-num">2</div>
@@ -559,13 +552,13 @@
   <section class="section" style="padding-top:0">
     <div class="section-eyebrow">Why students trust it</div>
     <h2 class="section-h2">Built on real counselling data</h2>
-    <p class="section-lead">Not guesswork — every prediction is grounded in the supplied 2025 Gujarat government and private-college counselling data.</p>
+    <p class="section-lead">Not guesswork — every prediction is grounded in the supplied 2025 Round 1 Himachal Pradesh government and private-college counselling data.</p>
     <div class="feat-grid">
       <div class="feat">
         <div class="feat-ic">📈</div>
         <div>
-          <h3>Real Gujarat cutoffs</h3>
-          <p>Category-wise 2025 Round 1 closing ranks extracted from the supplied Gujarat college dataset.</p>
+          <h3>Real Himachal Pradesh cutoffs</h3>
+          <p>Category-wise 2025 Round 1 HP Quota and Management closing ranks extracted from the supplied Himachal Pradesh college dataset.</p>
         </div>
       </div>
       <div class="feat">
@@ -579,7 +572,7 @@
         <div class="feat-ic">🏥</div>
         <div>
           <h3>Government + Private</h3>
-          <p>42 Gujarat colleges covered from the supplied files. Thirty-seven have usable 2025 Round 1 closing ranks; Government/Local Quota and Management Quota are shown as separate seat options where available.</p>
+          <p>7 Himachal Pradesh colleges covered — 6 government and 1 private. The private college is shown as separate HP Quota and Management seat options.</p>
         </div>
       </div>
       <div class="feat">
@@ -595,7 +588,7 @@
   <!-- FAQ -->
   <section class="section" style="padding-top:0">
     <div class="section-eyebrow">Student questions</div>
-    <h2 class="section-h2">Gujarat MBBS Counselling FAQs</h2>
+    <h2 class="section-h2">Himachal Pradesh MBBS Counselling FAQs</h2>
     <div class="faq-wrap" id="faq-wrap"></div>
   </section>
 
@@ -628,7 +621,7 @@
           📞 <a href="tel:+919999703444">+91 99997-03444</a><br>
           ✉️ <a href="mailto:info@rmgoe.org">info@rmgoe.org</a><br>
           💬 <a
-  href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Gujarat%20MBBS%20counselling%20guidance."
+  href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Himachal%20Pradesh%20MBBS%20counselling%20guidance."
   target="_blank"
   rel="noopener noreferrer"
 >
@@ -637,9 +630,9 @@
         </div>
       </div>
       <div class="footer-bottom">
-        Data source: the supplied Gujarat government/private college dataset and only the Gujarat entry from the supplied all-India deemed-college list.
+        Data source: the supplied Himachal Pradesh government/private college dataset. No Himachal Pradesh college was found in the supplied all-India deemed-college list.
         Predictions use supplied 2025 Round 1 closing-rank fields and are indicative only. Actual 2026 cutoffs, eligibility,
-        seat matrix and fees may vary. Always verify live notices on the official Gujarat UG medical admission portal. RMGOE does not guarantee admission.<br><br>
+        seat matrix and fees may vary. Always verify the latest notices on the official Himachal Pradesh counselling portal. RMGOE does not guarantee admission.<br><br>
         © 2026 RM Group of Education. All rights reserved.
       </div>
     </div>
@@ -649,11 +642,11 @@
   <div class="sticky-bar">
     <a class="btn btn-blue" href="tel:+919999703444" style="flex:1">📞 Call</a>
     <a class="btn btn-wa"
-      href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Gujarat%20MBBS%20counselling%20guidance."
+      href="https://wa.me/918448207814?text=Hello%2C%20I%20want%20Himachal%20Pradesh%20MBBS%20counselling%20guidance."
       rel="noopener noreferrer" style="flex:1" target="_blank">💬 WhatsApp</a>
   </div>
 
-  <script>const CONFIG={N8N_WEBHOOK_URL:'https://n8n.dreamofsoul.com/webhook/gujarat-college-predictor'};const COLLEGES=[{"id":1,"name":"Narendra Modi Medical College, Ahmedabad","district":"Ahmedabad","type":"govt","quota":"Government / State Quota","seats":200,"fee":914000,"cutoff":{"OPEN":88004,"EWS":96461,"SEBC":105118,"SC":146086,"ST":457163}},{"id":2,"name":"B J Medical College","district":"Ahmedabad","type":"govt","quota":"Government / State Quota","seats":250,"fee":25000,"cutoff":{"OPEN":2246,"EWS":5870,"SEBC":10092,"SC":21018,"ST":116074}},{"id":3,"name":"GMERS Medical College, Vadnagar","district":"Vadnagar, Mehsana","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":60678,"EWS":65131,"SEBC":73341,"SC":135038,"ST":428217}},{"id":4,"name":"GMERS Medical College, Himmatnagar","district":"Hadiyol, Himmatnagar","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":50365,"EWS":54693,"SEBC":67127,"SC":125955,"ST":411939}},{"id":5,"name":"GMERS Medical College, Junagadh","district":"Junagadh","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":46965,"EWS":51025,"SEBC":59924,"SC":108256,"ST":420370}},{"id":6,"name":"GMERS Medical College, Valsad","district":"Valsad","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":44192,"EWS":48981,"SEBC":62053,"SC":135379,"ST":376321}},{"id":7,"name":"GMERS Medical College, Dharpur, Patan","district":"Dharpur Patan","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":57151,"EWS":65410,"SEBC":72517,"SC":127625,"ST":431704}},{"id":8,"name":"GMERS Medical College, Gandhinagar","district":"Gandhinagar","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":31776,"EWS":34381,"SEBC":47979,"SC":94053,"ST":374669}},{"id":9,"name":"GMERS Medical College, Gotri, Vadodara","district":"Gotri, Vadodara","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":34424,"EWS":37597,"SEBC":52319,"SC":100272,"ST":369658}},{"id":10,"name":"GMERS Medical College, Sola, Ahmedabad","district":"Sola, Ahmedabad","type":"govt","quota":"Government / State Quota","seats":200,"fee":375000,"cutoff":{"OPEN":23877,"EWS":28057,"SEBC":43514,"SC":82510,"ST":336422}},{"id":11,"name":"Government Medical College, Surat","district":"Surat","type":"govt","quota":"Government / State Quota","seats":250,"fee":25000,"cutoff":{"OPEN":11576,"EWS":15259,"SEBC":27253,"SC":58503,"ST":257623}},{"id":12,"name":"Government Medical College, Bhavnagar","district":"Bhavnagar","type":"govt","quota":"Government / State Quota","seats":200,"fee":25000,"cutoff":{"OPEN":24202,"EWS":26447,"SEBC":39217,"SC":80255,"ST":316928}},{"id":13,"name":"MP Shah Medical College","district":"Jamnagar","type":"govt","quota":"Government / State Quota","seats":250,"fee":25000,"cutoff":{"OPEN":19551,"EWS":22316,"SEBC":34226,"SC":73694,"ST":309900}},{"id":14,"name":"Pandit Deendayal Upadhyay Medical College","district":"Rajkot","type":"govt","quota":"Government / State Quota","seats":200,"fee":25000,"cutoff":{"OPEN":14834,"EWS":18043,"SEBC":35640,"SC":71149,"ST":298376}},{"id":15,"name":"Smt. N.H.L.Municipal Medical College","district":"Ahmedabad","type":"govt","quota":"Local Quota (verify eligibility)","seats":250,"fee":830000,"cutoff":{"OPEN":58880,"EWS":80579,"SEBC":104972,"SC":129736,"ST":654610}},{"id":16,"name":"Surat Municipal Institute of Medical Education & Research","district":"Surat","type":"govt","quota":"Local Quota (verify eligibility)","seats":250,"fee":1002000,"cutoff":{"OPEN":80608,"EWS":92593,"SEBC":129171,"SC":172640,"ST":542446}},{"id":17,"name":"GMERS Medical College, Navsari","district":"Navsari","type":"govt","quota":"Government / State Quota","seats":100,"fee":375000,"cutoff":{"OPEN":62212,"EWS":65783,"SEBC":75061,"SC":145402,"ST":400220}},{"id":18,"name":"GMERS Medical College, Rajpipla","district":"Rajpipla","type":"govt","quota":"Government / State Quota","seats":100,"fee":375000,"cutoff":{"OPEN":65963,"EWS":68501,"SEBC":77339,"SC":140647,"ST":412911}},{"id":19,"name":"GMERS Medical College Morbi","district":"Morbi","type":"govt","quota":"Government / State Quota","seats":100,"fee":375000,"cutoff":{"OPEN":56046,"EWS":58376,"SEBC":73699,"SC":131780,"ST":440784}},{"id":20,"name":"GMERS Medical College Godhra","district":"Godhra","type":"govt","quota":"Government / State Quota","seats":100,"fee":375000,"cutoff":{"OPEN":68816,"EWS":70106,"SEBC":77958,"SC":145195,"ST":431926}},{"id":21,"name":"GMERS Medical College Porbandar","district":"Porbandar","type":"govt","quota":"Government / State Quota","seats":100,"fee":375000,"cutoff":{"OPEN":66505,"EWS":67520,"SEBC":75809,"SC":129869,"ST":439845}}];const PRIVATE_COLLEGES=[{"id":1001,"name":"Narendra Modi Medical College, Ahmedabad","district":"Ahmedabad","type":"private","quota":"Management Quota","seats":200,"fee":2300000,"eligibleOtherState":!0,"cutoff":{"OPEN":215207,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1002,"name":"Banas Medical College and Research Institute, Palanpur, Gujarat","district":"Palanpur, Gujarat","type":"private","quota":"Government Quota","seats":200,"fee":894000,"cutoff":{"OPEN":97652,"EWS":106834,"SEBC":116211,"SC":189206,"ST":549015},"eligibleOtherState":!1},{"id":1003,"name":"Banas Medical College and Research Institute, Palanpur, Gujarat","district":"Palanpur, Gujarat","type":"private","quota":"Management Quota","seats":200,"fee":1819000,"eligibleOtherState":!0,"cutoff":{"OPEN":184117,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1004,"name":"CU Shah Medical College, Surendra Nagar","district":"Surendra Nagar","type":"private","quota":"Government Quota","seats":100,"fee":974000,"cutoff":{"OPEN":94894,"EWS":100739,"SEBC":109676,"SC":156277,"ST":510799},"eligibleOtherState":!1},{"id":1005,"name":"CU Shah Medical College, Surendra Nagar","district":"Surendra Nagar","type":"private","quota":"Management Quota","seats":100,"fee":2200000,"eligibleOtherState":!0,"cutoff":{"OPEN":220961,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1006,"name":"Dr. M.K. Shah Medical College & Research Centre, Ahmedabad","district":"Ahmedabad","type":"private","quota":"Government Quota","seats":250,"fee":1082000,"cutoff":{"OPEN":115682,"EWS":131876,"SEBC":155676,"SC":167208,"ST":513505},"eligibleOtherState":!1},{"id":1007,"name":"Dr. M.K. Shah Medical College & Research Centre, Ahmedabad","district":"Ahmedabad","type":"private","quota":"Management Quota","seats":250,"fee":2164000,"eligibleOtherState":!0,"cutoff":{"OPEN":207815,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1008,"name":"Dr. N.D. Desai Faculty of Medical Science and Research, Nadiad","district":"Nadiad","type":"private","quota":"Government Quota","seats":150,"fee":1099000,"cutoff":{"OPEN":127039,"EWS":134028,"SEBC":164199,"SC":173054,"ST":523191},"eligibleOtherState":!1},{"id":1009,"name":"Dr. N.D. Desai Faculty of Medical Science and Research, Nadiad","district":"Nadiad","type":"private","quota":"Management Quota","seats":150,"fee":2250000,"eligibleOtherState":!0,"cutoff":{"OPEN":231045,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1010,"name":"Dr.Kiran C.Patel Medical College and Research Institute","district":"Bharuch","type":"private","quota":"Government Quota","seats":200,"fee":950000,"cutoff":{"OPEN":124345,"EWS":133072,"SEBC":141832,"SC":197732,"ST":534240},"eligibleOtherState":!1},{"id":1011,"name":"Dr.Kiran C.Patel Medical College and Research Institute","district":"Bharuch","type":"private","quota":"Management Quota","seats":200,"fee":1900000,"eligibleOtherState":!0,"cutoff":{"OPEN":219384,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1012,"name":"GCS Medical College, Ahmedabad","district":"Ahmedabad","type":"private","quota":"Government Quota","seats":150,"fee":974000,"cutoff":{"OPEN":79259,"EWS":85077,"SEBC":92958,"SC":141443,"ST":460170},"eligibleOtherState":!1},{"id":1013,"name":"GCS Medical College, Ahmedabad","district":"Ahmedabad","type":"private","quota":"Management Quota","seats":150,"fee":1827000,"eligibleOtherState":!0,"cutoff":{"OPEN":159444,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1014,"name":"Gujarat Adani Institute of Medical Sciences, Bhuj","district":"Bhuj","type":"private","quota":"Government Quota","seats":150,"fee":974000,"cutoff":{"OPEN":108034,"EWS":113238,"SEBC":124551,"SC":158767,"ST":554782},"eligibleOtherState":!1},{"id":1015,"name":"Nootan Medical College and Research Centre, Mehsana","district":"Mehsana","type":"private","quota":"Government Quota","seats":150,"fee":975000,"cutoff":{"OPEN":129942,"EWS":137855,"SEBC":150844,"SC":188797,"ST":557338},"eligibleOtherState":!1},{"id":1016,"name":"Nootan Medical College and Research Centre, Mehsana","district":"Mehsana","type":"private","quota":"Management Quota","seats":150,"fee":1875000,"eligibleOtherState":!0,"cutoff":{"OPEN":195166,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1017,"name":"Parul Institute of Medical Sciences & Research, Vadodara","district":"Vadodara","type":"private","quota":"Government Quota","seats":200,"fee":1120000,"cutoff":{"OPEN":147276,"EWS":153945,"SEBC":174795,"SC":183198,"ST":542867},"eligibleOtherState":!1},{"id":1018,"name":"Parul Institute of Medical Sciences & Research, Vadodara","district":"Vadodara","type":"private","quota":"Management Quota","seats":200,"fee":2090000,"eligibleOtherState":!0,"cutoff":{"OPEN":226995,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1019,"name":"Pramukhswami Medical College, Karmsad","district":"Karmsad","type":"private","quota":"Government Quota","seats":150,"fee":1120000,"cutoff":{"OPEN":113326,"EWS":126314,"SEBC":144757,"SC":168081,"ST":516863},"eligibleOtherState":!1},{"id":1020,"name":"Pramukhswami Medical College, Karmsad","district":"Karmsad","type":"private","quota":"Management Quota","seats":150,"fee":2030000,"eligibleOtherState":!0,"cutoff":{"OPEN":213751,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1021,"name":"Shantabaa Medical College, Amreli","district":"Amreli","type":"private","quota":"Government Quota","seats":200,"fee":961000,"cutoff":{"OPEN":117936,"EWS":123398,"SEBC":132347,"SC":173776,"ST":555991},"eligibleOtherState":!1},{"id":1022,"name":"Shantabaa Medical College, Amreli","district":"Amreli","type":"private","quota":"Management Quota","seats":200,"fee":1900000,"eligibleOtherState":!0,"cutoff":{"OPEN":205086,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1023,"name":"Zydus Medical College & Hospital, Dahod","district":"Dahod","type":"private","quota":"Government Quota","seats":200,"fee":1049000,"cutoff":{"OPEN":143002,"EWS":150719,"SEBC":171334,"SC":195631,"ST":526326},"eligibleOtherState":!1},{"id":1024,"name":"Zydus Medical College & Hospital, Dahod","district":"Dahod","type":"private","quota":"Management Quota","seats":200,"fee":2098000,"eligibleOtherState":!0,"cutoff":{"OPEN":241841,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1025,"name":"Ananya College of Medicine & Research","district":"Gandhinagar","type":"private","quota":"Government Quota","seats":150,"fee":1014000,"cutoff":{"OPEN":143908,"EWS":146963,"SEBC":167804,"SC":194397,"ST":556382},"eligibleOtherState":!1},{"id":1026,"name":"Ananya College of Medicine & Research","district":"Gandhinagar","type":"private","quota":"Management Quota","seats":150,"fee":1940000,"eligibleOtherState":!0,"cutoff":{"OPEN":218758,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1027,"name":"SAL Institute of Medical Sciences, Ahmedabad","district":"Ahmedabad","type":"private","quota":"Government Quota","seats":150,"fee":1066000,"cutoff":{"OPEN":132587,"EWS":138997,"SEBC":164234,"SC":175613,"ST":527521},"eligibleOtherState":!1},{"id":1028,"name":"SAL Institute of Medical Sciences, Ahmedabad","district":"Ahmedabad","type":"private","quota":"Management Quota","seats":150,"fee":1971000,"eligibleOtherState":!0,"cutoff":{"OPEN":193937,"EWS":null,"SEBC":null,"SC":null,"ST":null}},{"id":1029,"name":"Bhagyoday Medical College","district":"Mehsana","type":"private","quota":"Government Quota","seats":100,"fee":1014000,"cutoff":{"OPEN":144758,"EWS":148630,"SEBC":165541,"SC":194968,"ST":558485},"eligibleOtherState":!1},{"id":1030,"name":"Bhagyoday Medical College","district":"Mehsana","type":"private","quota":"Management Quota","seats":100,"fee":1940000,"eligibleOtherState":!0,"cutoff":{"OPEN":221156,"EWS":null,"SEBC":null,"SC":null,"ST":null}}];const DEEMED_COLLEGES=[{"id":2001,"name":"SBKS Medical Institute & Research Centre, Sumandeep Vidyapeeth","district":"Vadodara","seats":250,"fee":2388750,"openRank":340315}];const NEW_COLLEGES_WITHOUT_CUTOFF=[{"name":"Medical College, Baroda","district":"Baroda","type":"Govt.","seats":250,"fee":25000},{"name":"Kiran Medical College, Surat","district":"Surat","type":"Trust","seats":150,"fee":1014000},{"name":"Swaminarayan Institute of Medical Sciences & Research","district":"Gandhinagar","type":"Trust","seats":150,"fee":1014000},{"name":"Matushri Prabhaben Khodabhai Boghara Medical College Atkot","district":"Rajkot","type":"Pvt","seats":150,"fee":1014000},{"name":"Brahmanand College of Medicine and Research","district":"Junagadh","type":"Pvt","seats":0,"fee":0}];let state={name:'',email:'',phone:'',rank:0,category:'',domicile:'yes',timerInterval:null,results:{}};let currentView='table';let domicileVal='yes';const CAT_LABEL={OPEN:'General / Open',EWS:'EWS',SEBC:'SEBC',SC:'SC',ST:'ST'};function calcPossibility(studentRank,closingRank){if(!closingRank)return null;const ratio=closingRank/studentRank;let pct;if(ratio>=1.7)pct=97;else if(ratio>=1.0)pct=74+(ratio-1.0)/(1.7-1.0)*23;else if(ratio>=0.85)pct=48+(ratio-0.85)/(1.0-0.85)*26;else if(ratio>=0.70)pct=15+(ratio-0.70)/(0.85-0.70)*33;else return null;return Math.max(5,Math.min(99,Math.round(pct)))}
+  <script>const CONFIG={N8N_WEBHOOK_URL:'https://n8n.dreamofsoul.com/webhook/himachal-college-predictor'};const COLLEGES=[{id:1,name:"Dr. Radhakrishnan Government Medical College",district:"Hamirpur",type:"govt",quota:"Government / HP Quota",seats:120,fee:40000,cutoff:{OPEN:55055,EWS:83475,OBC:59821,SC:118035,ST:110168}},{id:2,name:"Dr. Rajendra Prasad Government Medical College",district:"Tanda, Kangra",type:"govt",quota:"Government / HP Quota",seats:120,fee:40000,cutoff:{OPEN:33112,EWS:58636,OBC:36955,SC:80878,ST:71068}},{id:3,name:"Government Medical College, Nahan",district:"Nahan, Sirmour",type:"govt",quota:"Government / HP Quota",seats:120,fee:40000,cutoff:{OPEN:65164,EWS:96495,OBC:66337,SC:128029,ST:135857}},{id:4,name:"Indira Gandhi Medical College",district:"Shimla",type:"govt",quota:"Government / HP Quota",seats:120,fee:40000,cutoff:{OPEN:23123,EWS:44784,OBC:29486,SC:59095,ST:64330}},{id:5,name:"Pt. Jawahar Lal Nehru Government Medical College",district:"Chamba",type:"govt",quota:"Government / HP Quota",seats:120,fee:40000,cutoff:{OPEN:74889,EWS:103923,OBC:77052,SC:137599,ST:138714}},{id:6,name:"Shri Lal Bahadur Shastri Government Medical College",district:"Mandi",type:"govt",quota:"Government / HP Quota",seats:120,fee:40000,cutoff:{OPEN:42091,EWS:64460,OBC:46140,SC:100697,ST:81450}}];const PRIVATE_COLLEGES=[{id:101,name:"Maharishi Markandeshwar Medical College & Hospital",district:"Solan",type:"private",quota:"HP Quota",seats:150,fee:847000,eligibleOtherState:!1,cutoff:{OPEN:93953,EWS:null,OBC:97453,SC:202655,ST:164418}},{id:102,name:"Maharishi Markandeshwar Medical College & Hospital",district:"Solan",type:"private",quota:"Management Quota",seats:150,fee:1597000,eligibleOtherState:!0,cutoff:{OPEN:261437,EWS:null,OBC:371947,SC:551744,ST:557965}}];const DEEMED_COLLEGES=[];const NEW_COLLEGES_WITHOUT_CUTOFF=[...COLLEGES,...PRIVATE_COLLEGES].filter(c=>!c.cutoff.OPEN);let state={name:'',email:'',phone:'',rank:0,category:'',domicile:'yes',timerInterval:null,results:{}};let currentView='table';let domicileVal='yes';const CAT_LABEL={OPEN:'General / Open',EWS:'EWS',OBC:'OBC (NCL)',SC:'SC',ST:'ST'};function calcPossibility(studentRank,closingRank){if(!closingRank)return null;const ratio=closingRank/studentRank;let pct;if(ratio>=1.7)pct=97;else if(ratio>=1.0)pct=74+(ratio-1.0)/(1.7-1.0)*23;else if(ratio>=0.85)pct=48+(ratio-0.85)/(1.0-0.85)*26;else if(ratio>=0.70)pct=15+(ratio-0.70)/(0.85-0.70)*33;else return null;return Math.max(5,Math.min(99,Math.round(pct)))}
 function pctClass(p){return p>=75?'hi':p>=45?'mid':'lo'}
 function pctLabel(p){return p>=75?'Strong':p>=45?'Fair':'Low'}
 function validEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
@@ -665,14 +658,14 @@ function ensureToolResultPanel(){let panel=document.getElementById('screen-tool-
 const top=(state.results&&state.results.all&&state.results.all[0])?state.results.all[0]:null;const strong=(state.results&&state.results.all?state.results.all:[]).filter(c=>c.possibility>=75).length;const fair=(state.results&&state.results.all?state.results.all:[]).filter(c=>c.possibility>=45&&c.possibility<75).length;const topName=top?`${top.name} — ${top.quota || typeLabel(top)}`:'your matched colleges';panel.innerHTML=`
         <div class="result-ready-card">
           <div class="result-ready-badge">✓</div>
-          <h3>Your Gujarat NEET college report is ready</h3>
+          <h3>Your Himachal Pradesh NEET college report is ready</h3>
           <p>We have generated your personalised college prediction report. Your submitted details stay visible here and the full-width report is available below.</p>
 
           <div class="result-profile-grid">
             <div class="result-profile-item"><small>Name</small><b>${escapeHTML(state.name || '-')}</b></div>
             <div class="result-profile-item"><small>AIR</small><b>${state.rank ? state.rank.toLocaleString('en-IN') : '-'}</b></div>
             <div class="result-profile-item"><small>Category</small><b>${CAT_LABEL[state.category] || '-'}</b></div>
-            <div class="result-profile-item"><small>Domicile</small><b>${state.domicile === 'yes' ? 'Gujarat' : 'Other State'}</b></div>
+            <div class="result-profile-item"><small>Domicile</small><b>${state.domicile === 'yes' ? 'Himachal Pradesh' : 'Other State'}</b></div>
           </div>
 
           <div class="alert alert-success" style="margin:0 0 14px">
@@ -724,8 +717,8 @@ async function resendOTP(){resetOTPBoxes();await sendOTP()}
 function backToPhone(){clearInterval(state.timerInterval);document.getElementById('otp-section').classList.add('hidden');document.getElementById('send-otp-section').classList.remove('hidden');resetOTPBoxes();showScreen('screen-input');setStep(1)}
 function predict(rank,category,domicile){const govt=[],privateM=[],deemedM=[];if(domicile==='yes'){COLLEGES.forEach(col=>{const categoryClosing=col.cutoff[category];const closing=categoryClosing||col.cutoff.OPEN;if(!closing)return;const p=calcPossibility(rank,closing);if(p!==null)govt.push({...col,closingRank:closing,possibility:p,usedOpenFallback:category!=='OPEN'&&!categoryClosing})})}
 PRIVATE_COLLEGES.forEach(col=>{if(domicile!=='yes'&&!col.eligibleOtherState)return;const categoryClosing=col.cutoff[category];const closing=categoryClosing||col.cutoff.OPEN;if(!closing)return;const p=calcPossibility(rank,closing);if(p!==null)privateM.push({...col,closingRank:closing,possibility:p,usedOpenFallback:category!=='OPEN'&&!categoryClosing})});DEEMED_COLLEGES.forEach(col=>{const p=calcPossibility(rank,col.openRank);if(p!==null)deemedM.push({...col,type:'deemed',quota:'MCC Deemed',closingRank:col.openRank,possibility:p,usedOpenFallback:!1})});govt.sort((a,b)=>b.possibility-a.possibility);privateM.sort((a,b)=>b.possibility-a.possibility);deemedM.sort((a,b)=>b.possibility-a.possibility);const all=[...govt,...privateM,...deemedM].sort((a,b)=>b.possibility-a.possibility);return{govt,privateM,deemedM,all}}
-function fireWebhook(event){const high=(state.results.all||[]).filter(c=>c.possibility>=75);const payload={event,name:state.name,email:state.email,phone:state.phone,neet_air:state.rank,category:state.category,gujarat_domicile:state.domicile==='yes',otp_verified:!0,top_colleges:high.slice(0,5).map(c=>`${c.name} — ${c.quota || typeLabel(c)}`),tool:'Gujarat-College-Predictor',source:'rmgoe',timestamp:new Date().toISOString()};if(CONFIG.N8N_WEBHOOK_URL&&CONFIG.N8N_WEBHOOK_URL!=='YOUR_N8N_WEBHOOK_URL'){fetch(CONFIG.N8N_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(error=>console.error('Lead webhook failed:',error))}
-const firstMatch=state.results.all[0]||{};const top=firstMatch.name?`${firstMatch.name} — ${firstMatch.quota || typeLabel(firstMatch)}`:'my options';const waText=`Hi, I used the Gujarat College Predictor.%0AName: ${encodeURIComponent(state.name)}%0AAIR: ${state.rank}%0ACategory: ${state.category}%0ATop match: ${encodeURIComponent(top)}%0AI'd like to discuss my options.`;document.getElementById('wa-cta-link').href=`https://wa.me/918448207814?text=${waText}`}
+function fireWebhook(event){const high=(state.results.all||[]).filter(c=>c.possibility>=75);const payload={event,name:state.name,email:state.email,phone:state.phone,neet_air:state.rank,category:state.category,himachal_pradesh_domicile:state.domicile==='yes',otp_verified:!0,top_colleges:high.slice(0,5).map(c=>`${c.name} — ${c.quota || typeLabel(c)}`),tool:'Himachal-Pradesh-College-Predictor',source:'rmgoe',timestamp:new Date().toISOString()};if(CONFIG.N8N_WEBHOOK_URL&&CONFIG.N8N_WEBHOOK_URL!=='YOUR_N8N_WEBHOOK_URL'){fetch(CONFIG.N8N_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(error=>console.error('Lead webhook failed:',error))}
+const firstMatch=state.results.all[0]||{};const top=firstMatch.name?`${firstMatch.name} — ${firstMatch.quota || typeLabel(firstMatch)}`:'my options';const waText=`Hi, I used the Himachal Pradesh College Predictor.%0AName: ${encodeURIComponent(state.name)}%0AAIR: ${state.rank}%0ACategory: ${state.category}%0ATop match: ${encodeURIComponent(top)}%0AI'd like to discuss my options.`;document.getElementById('wa-cta-link').href=`https://wa.me/918448207814?text=${waText}`}
 function typeLabel(c){return c.quota||({govt:'Government',private:'Private',deemed:'Deemed'}[c.type]||c.type)}
 function fmtFee(n){if(!n)return'—';if(n>=100000){const l=(n/100000);return'₹'+(l%1===0?l.toFixed(0):l.toFixed(1))+'L/yr'}
 return'₹'+Math.round(n/1000)+'K/yr'}
@@ -735,14 +728,14 @@ function buildResults(){const{govt,privateM,deemedM,all}=state.results;const cat
       <div>
         <div class="rs-score-lbl">NEET 2026 All India Rank</div>
         <div class="rs-score">${rank.toLocaleString('en-IN')}</div>
-        <div class="rs-meta">${escapeHTML(state.name)} · ${CAT_LABEL[cat]} · ${state.domicile === 'yes' ? 'Gujarat Domicile' : 'Other State'}</div>
+        <div class="rs-meta">${escapeHTML(state.name)} · ${CAT_LABEL[cat]} · ${state.domicile === 'yes' ? 'Himachal Pradesh Domicile' : 'Other State'}</div>
       </div>
       <div class="rs-pills">
         <div class="rs-pill"><div class="rs-pill-num">${strong}</div><div class="rs-pill-lbl">STRONG</div></div>
         <div class="rs-pill"><div class="rs-pill-num">${fair}</div><div class="rs-pill-lbl">FAIR</div></div>
         <div class="rs-pill"><div class="rs-pill-num">${low}</div><div class="rs-pill-lbl">LOW</div></div>
       </div>
-    </div>`;document.getElementById('non-domicile-alert').classList.toggle('hidden',state.domicile!=='no');if(!all.length){document.getElementById('colleges-section').classList.add('hidden');document.getElementById('ineligible-section').classList.remove('hidden');document.getElementById('ineligible-message').innerHTML=`At AIR <strong>${rank.toLocaleString('en-IN')}</strong> in <strong>${CAT_LABEL[cat]}</strong>, no eligible Gujarat seat option in the supplied 2025 dataset closed at or near your rank. NRI, special-category, later vacancy rounds and MBBS-abroad routes should be checked separately.`;return}
+    </div>`;document.getElementById('non-domicile-alert').classList.toggle('hidden',state.domicile!=='no');if(!all.length){document.getElementById('colleges-section').classList.add('hidden');document.getElementById('ineligible-section').classList.remove('hidden');document.getElementById('ineligible-message').innerHTML=`At AIR <strong>${rank.toLocaleString('en-IN')}</strong> in <strong>${CAT_LABEL[cat]}</strong>, no eligible Himachal Pradesh seat option in the supplied 2025 dataset closed at or near your rank. NRI, special-category, later vacancy rounds and MBBS-abroad routes should be checked separately.`;return}
 document.getElementById('colleges-section').classList.remove('hidden');document.getElementById('ineligible-section').classList.add('hidden');renderTable(all);renderCards(govt,privateM,deemedM);setView(window.matchMedia('(max-width: 760px)').matches?'card':'table');buildAnalysis(rank,cat,govt,privateM,deemedM)}
 function renderTable(list){const tbody=document.getElementById('report-body');if(!list.length){tbody.innerHTML=`<tr><td colspan="8" class="center" style="padding:24px;color:var(--muted)">No colleges matched — talk to our counsellor for options.</td></tr>`;return}
 let rows='',n=1;list.forEach(c=>{const pc=pctClass(c.possibility);const cr=c.closingRank?c.closingRank.toLocaleString('en-IN'):'—';const feeColor=c.type==='govt'?'color:var(--green);font-weight:700':(c.type==='deemed'?'color:var(--red);font-weight:700':'color:var(--amber);font-weight:700');rows+=`<tr>
@@ -774,13 +767,13 @@ function renderCards(govt,privateM,deemedM){const wrap=document.getElementById('
       </div>
     </div>`}
 if(govt.length){html+=`<div class="section-hdr"><h3>Government Colleges</h3><span class="count-badge">${govt.length}</span></div>`;html+=govt.map(card).join('')}
-if(privateM.length){html+=`<div class="section-hdr"><h3>Private College Seat Options — Gujarat Counselling</h3><span class="count-badge">${privateM.length}</span></div>`;html+='<div class="alert alert-info"><div class="alert-icon">💡</div><div>Private colleges are shown as separate <strong>State Quota and Management options</strong> where both fields were supplied. NRI and special sub-category eligibility is not predicted. Reserved-category claims require valid documents.</div></div>';html+=privateM.slice(0,18).map(card).join('')}
-if(deemedM.length){html+=`<div class="section-hdr"><h3>Gujarat Deemed College from Supplied List</h3><span class="count-badge">${deemedM.length}</span></div>`;html+='<div class="alert alert-warn"><div class="alert-icon">⚠️</div><div>SBKS Medical Institute & Research Centre, Sumandeep Vidyapeeth, Vadodara is the only Gujarat college found in the supplied deemed-college list. Its supplied 2025 Round 1 closing rank is used for this indicative comparison.</div></div>';html+=deemedM.slice(0,14).map(card).join('')}
+if(privateM.length){html+=`<div class="section-hdr"><h3>Private College Seat Options — Himachal Pradesh Counselling</h3><span class="count-badge">${privateM.length}</span></div>`;html+='<div class="alert alert-info"><div class="alert-icon">💡</div><div>The private college is shown as separate <strong>HP Quota and Management options</strong> because both fields were supplied. NRI and special sub-category eligibility is not predicted. Reserved-category claims require valid documents.</div></div>';html+=privateM.slice(0,18).map(card).join('')}
+if(deemedM.length){html+=`<div class="section-hdr"><h3>Himachal Pradesh Deemed College Options</h3><span class="count-badge">${deemedM.length}</span></div>`;html+='<div class="alert alert-warn"><div class="alert-icon">⚠️</div><div>No Himachal Pradesh medical college was found in the supplied deemed-college list.</div></div>';html+=deemedM.slice(0,14).map(card).join('')}
 wrap.innerHTML=html||'<div class="alert alert-info">No colleges matched.</div>'}
 function setView(v){currentView=v;document.getElementById('view-table').classList.toggle('hidden',v!=='table');document.getElementById('view-cards').classList.toggle('hidden',v!=='card');document.getElementById('btn-table-view').classList.toggle('active',v==='table');document.getElementById('btn-card-view').classList.toggle('active',v==='card')}
 function buildAnalysis(rank,cat,govt,privateM,deemedM){const strong=govt.filter(c=>c.possibility>=75).length;const chance=strong>=4?'Strong':strong>=1?'Moderate':'Low';const govtRanks=COLLEGES.map(c=>c.cutoff[cat]||c.cutoff.OPEN).filter(Boolean).sort((a,b)=>a-b);const topTier=govtRanks[0];const midTier=govtRanks[Math.floor(govtRanks.length/2)];const lastTier=govtRanks[govtRanks.length-1];document.getElementById('analysis-content').innerHTML=`
     <div class="card-title">Your rank analysis</div>
-    <div class="card-sub">How your NEET All India Rank sits against Gujarat government-college Round 1 closing-rank tiers for ${CAT_LABEL[cat]} using the supplied 2025 data</div>
+    <div class="card-sub">How your NEET All India Rank sits against Himachal Pradesh government-college Round 1 closing-rank tiers for ${CAT_LABEL[cat]} using the supplied 2025 data</div>
     ${rankBar('Best Government Closing Rank', topTier, rank, 'var(--green)')}
     ${rankBar('Median Government Closing Rank', midTier, rank, 'var(--amber)')}
     ${rankBar('Last Government Closing Rank', lastTier, rank, 'var(--blue)')}
@@ -790,14 +783,14 @@ function buildAnalysis(rank,cat,govt,privateM,deemedM){const strong=govt.filter(
     </div>
     <div class="alert alert-${chance === 'Strong' ? 'success' : chance === 'Moderate' ? 'warn' : 'info'}" style="margin-top:18px">
       <div class="alert-icon">${chance === 'Strong' ? '🎯' : chance === 'Moderate' ? '⚡' : '💡'}</div>
-      <div><strong>Gujarat government-seat chance: ${state.domicile === 'yes' ? chance : 'Not evaluated'}</strong><br>${
+      <div><strong>Himachal Pradesh government-seat chance: ${state.domicile === 'yes' ? chance : 'Not evaluated'}</strong><br>${
         state.domicile !== 'yes'
-          ? `Gujarat government and private Government Quota options are excluded because Other State was selected.Only marked Management options and the supplied deemed-list option are evaluated.`
+          ? `Himachal Pradesh government and private HP Quota options are excluded because Other State was selected.Only the supplied private Management option is evaluated.`
           : chance === 'Strong'
             ? `You have ${strong}government colleges with 75%+possibility.Fill every acceptable choice in!0 preference order.`
             : chance === 'Moderate'
               ? `You have ${strong}strong government option(s).Stay active through all counselling rounds.`
-              : `Government chances are limited in this cutoff model.Compare private Government Quota,Management,NRI and other eligible routes carefully.`
+              : `Government chances are limited in this cutoff model.Compare private HP Quota,Management,NRI and other eligible routes carefully.`
       }</div>
     </div>
     <div style="margin-top:16px;padding:16px;background:var(--paper);border-radius:var(--r-lg)">
@@ -808,8 +801,8 @@ function buildAnalysis(rank,cat,govt,privateM,deemedM){const strong=govt.filter(
         Your AIR: <strong>${rank.toLocaleString('en-IN')}</strong>
       </div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:10px">
-        The supplied Gujarat file also contains PH/PwD, NRI, local, management and other quota fields.
-        This predictor uses only the plain OPEN/EWS/SEBC/SC/ST category fields and does not separately predict PH/PwD, NRI, minority, local or other special-quota routes.
+        The supplied Himachal Pradesh file also contains Backward Area, Single Girl Child, Defence, Ex-Servicemen, Freedom Fighter, Tibetan Refugee, NRI and PwD fields.
+        This predictor uses only the plain OPEN/EWS/OBC/SC/ST category fields and does not separately predict Backward Area, Single Girl Child, Defence, Ex-Servicemen, Freedom Fighter, Tibetan Refugee, PwD, NRI or other special routes.
       </div>
     </div>`}
 function rankBar(label,closing,rank,color){if(!closing)return'';const w=Math.min(100,Math.round(closing/rank*100));return `<div class="score-bar-wrap"><div class="score-lbl"><span>${label}</span><span>AIR ≤ ${closing.toLocaleString('en-IN')}</span></div><div class="score-bg"><div class="score-fill" style="width:${w}%;background:${color}"></div></div></div>`}
@@ -819,7 +812,7 @@ function escapeHTML(value){return String(value??'').replace(/&/g,'&amp;').replac
 function safeFileName(value){return String(value||'Student').trim().replace(/[^a-z0-9]+/gi,'_').replace(/^_+|_+$/g,'')||'Student'}
 function reportDate(){return new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
 function possibilityBand(p){if(p>=75)return'Strong';if(p>=45)return'Fair';return'Low'}
-function buildProfessionalReportHTML(){const list=reportList();const strong=list.filter(c=>c.possibility>=75).length;const fair=list.filter(c=>c.possibility>=45&&c.possibility<75).length;const low=list.filter(c=>c.possibility<45).length;const top=list[0]||null;const date=reportDate();const domicile=state.domicile==='yes'?'Gujarat Domicile':'Other State';const rows=list.map((c,i)=>{const pc=pctClass(c.possibility);const badgeType=c.type==='govt'?'pro-badge-govt':(c.type==='deemed'?'pro-badge-deemed':'pro-badge-private');const closingRank=c.closingRank?c.closingRank.toLocaleString('en-IN'):'—';return `
+function buildProfessionalReportHTML(){const list=reportList();const strong=list.filter(c=>c.possibility>=75).length;const fair=list.filter(c=>c.possibility>=45&&c.possibility<75).length;const low=list.filter(c=>c.possibility<45).length;const top=list[0]||null;const date=reportDate();const domicile=state.domicile==='yes'?'Himachal Pradesh Domicile':'Other State';const rows=list.map((c,i)=>{const pc=pctClass(c.possibility);const badgeType=c.type==='govt'?'pro-badge-govt':(c.type==='deemed'?'pro-badge-deemed':'pro-badge-private');const closingRank=c.closingRank?c.closingRank.toLocaleString('en-IN'):'—';return `
           <tr>
             <td style="width:4%;text-align:center;font-weight:800;color:#64748b">${i + 1}</td>
             <td style="width:30%"><div class="pro-college-name">${escapeHTML(c.name)}</div></td>
@@ -834,8 +827,8 @@ function buildProfessionalReportHTML(){const list=reportList();const strong=list
           <div class="pro-report-header">
             <div>
               <div class="pro-report-brand">RM Group of Education</div>
-              <h1>Gujarat NEET 2026 College Prediction Report</h1>
-              <p>Personalised report based on NEET All India Rank, Gujarat category, domicile and supplied Gujarat 2025 Round 1 cutoff trends.</p>
+              <h1>Himachal Pradesh NEET 2026 College Prediction Report</h1>
+              <p>Personalised report based on NEET All India Rank, Himachal Pradesh category, domicile and supplied Himachal Pradesh 2025 Round 1 cutoff trends.</p>
             </div>
             <div class="pro-report-date">
               Generated<br><b>${date}</b>
@@ -845,7 +838,7 @@ function buildProfessionalReportHTML(){const list=reportList();const strong=list
           <div class="pro-report-grid">
             <div class="pro-report-card"><small>Student Name</small><b>${escapeHTML(state.name || '-')}</b></div>
             <div class="pro-report-card"><small>All India Rank</small><b>${state.rank ? state.rank.toLocaleString('en-IN') : '-'}</b></div>
-            <div class="pro-report-card"><small>Gujarat Category</small><b>${escapeHTML(CAT_LABEL[state.category] || '-')}</b></div>
+            <div class="pro-report-card"><small>Himachal Pradesh Category</small><b>${escapeHTML(CAT_LABEL[state.category] || '-')}</b></div>
             <div class="pro-report-card"><small>Domicile</small><b>${escapeHTML(domicile)}</b></div>
             <div class="pro-report-card"><small>Total Matches</small><b>${list.length} Colleges</b></div>
             <div class="pro-report-card"><small>Strong Options</small><b>${strong}</b></div>
@@ -877,12 +870,12 @@ function buildProfessionalReportHTML(){const list=reportList();const strong=list
           </table>
 
           <div class="pro-report-note">
-            <b>Important:</b> This is a prediction based on supplied Gujarat counselling 2025 Round 1 closing ranks. Actual 2026 cutoffs may vary due to exam difficulty, seat matrix, category movement, option form, Round 2/3 and stray vacancy rounds. Government, private Government Quota, Management and deemed-list tuition are shown from the supplied fee fields. Hostel, mess, security, miscellaneous and NRI charges may be additional. This report does not guarantee admission.
+            <b>Important:</b> This is a prediction based on supplied Himachal Pradesh counselling 2025 Round 1 closing ranks. Actual 2026 cutoffs may vary due to exam difficulty, seat matrix, category movement, option form, Round 2/3 and stray vacancy rounds. Government, private HP Quota and Management tuition are shown from the supplied fee fields. Hostel, mess, security, miscellaneous and NRI charges may be additional. This report does not guarantee admission.
           </div>
 
           <div class="pro-report-footer">
             RM Group of Education · H-51, Sector 63, Noida · +91 99997-03444 · rmgoe.org<br>
-            Data reference: supplied Gujarat government/private-college 2025 cutoff data and the Gujarat entry from the supplied deemed list. Always verify final notices and counselling updates on the official portals.
+            Data reference: supplied Himachal Pradesh government/private-college 2025 cutoff data. The supplied deemed list contained no Himachal Pradesh medical college. Always verify final notices and counselling updates on the official portals.
           </div>
         </div>`}
 function printReport(){const list=reportList();if(!list.length){alert('Please generate the report first.');return}
@@ -890,24 +883,24 @@ const old=document.getElementById('professionalPrintReport');if(old)old.remove()
 let jsPDFLoadPromise=null;function loadJsPDF(){if(window.jspdf?.jsPDF)return Promise.resolve();if(jsPDFLoadPromise)return jsPDFLoadPromise;jsPDFLoadPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';script.async=!0;script.onload=()=>window.jspdf?.jsPDF?resolve():reject(new Error('jsPDF loaded but was not initialised.'));script.onerror=()=>{jsPDFLoadPromise=null;reject(new Error('Unable to load jsPDF.'))};document.head.appendChild(script)});return jsPDFLoadPromise}
 async function downloadPDF(){const list=reportList();if(!list.length){alert('Please generate the report first.');return}
 try{await loadJsPDF()}catch(error){console.error(error);alert('The PDF generator could not be loaded. Please check your internet connection or use the Print option.');return}
-const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});const W=297;const H=210;const M=12;const navy=[8,36,71];const blue=[13,109,204];const orange=[242,90,42];const green=[8,115,68];const amber=[164,90,0];const red=[180,35,24];const border=[220,232,245];const light=[248,251,255];const text=[30,43,62];const muted=[100,116,139];const strong=list.filter(c=>c.possibility>=75).length;const fair=list.filter(c=>c.possibility>=45&&c.possibility<75).length;const low=list.filter(c=>c.possibility<45).length;const top=list[0]||null;const date=reportDate();const domicile=state.domicile==='yes'?'Gujarat Domicile':'Other State';function setColor(arr){doc.setTextColor(arr[0],arr[1],arr[2])}
+const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});const W=297;const H=210;const M=12;const navy=[8,36,71];const blue=[13,109,204];const orange=[242,90,42];const green=[8,115,68];const amber=[164,90,0];const red=[180,35,24];const border=[220,232,245];const light=[248,251,255];const text=[30,43,62];const muted=[100,116,139];const strong=list.filter(c=>c.possibility>=75).length;const fair=list.filter(c=>c.possibility>=45&&c.possibility<75).length;const low=list.filter(c=>c.possibility<45).length;const top=list[0]||null;const date=reportDate();const domicile=state.domicile==='yes'?'Himachal Pradesh Domicile':'Other State';function setColor(arr){doc.setTextColor(arr[0],arr[1],arr[2])}
 function setFill(arr){doc.setFillColor(arr[0],arr[1],arr[2])}
 function setDraw(arr){doc.setDrawColor(arr[0],arr[1],arr[2])}
 function cleanText(value){return String(value??'').replace(/[₹]/g,'Rs ').replace(/[·]/g,'-').replace(/[–—]/g,'-').replace(/[✓]/g,'Yes')}
 function pdfTruncate(value,maxW){let text=cleanText(value);if(doc.getTextWidth(text)<=maxW)return text;while(text.length>3&&doc.getTextWidth(text+'..')>maxW)text=text.slice(0,-1);return text+'..'}
 function possibilityColor(p){if(p>=75)return green;if(p>=45)return amber;return blue}
-function pageHeader(){setFill(navy);doc.rect(0,0,W,16,'F');doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(255,255,255);doc.text('Gujarat NEET 2026 College Prediction Report',M,9.5);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text('RM Group of Education  |  rmgoe.org  |  +91 99997-03444',W-M,9.5,{align:'right'})}
-function pageFooter(pageNo,totalPages){setDraw(border);doc.line(M,H-9,W-M,H-9);doc.setFont('helvetica','normal');doc.setFontSize(6.6);setColor(muted);doc.text('Prediction is based on supplied Gujarat 2025 Round 1 counselling trends. Final 2026 cutoffs may vary. This report does not guarantee admission.',M,H-5);doc.text('Page '+pageNo+' / '+totalPages,W-M,H-5,{align:'right'})}
+function pageHeader(){setFill(navy);doc.rect(0,0,W,16,'F');doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(255,255,255);doc.text('Himachal Pradesh NEET 2026 College Prediction Report',M,9.5);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.text('RM Group of Education  |  rmgoe.org  |  +91 99997-03444',W-M,9.5,{align:'right'})}
+function pageFooter(pageNo,totalPages){setDraw(border);doc.line(M,H-9,W-M,H-9);doc.setFont('helvetica','normal');doc.setFontSize(6.6);setColor(muted);doc.text('Prediction is based on supplied Himachal Pradesh 2025 Round 1 counselling trends. Final 2026 cutoffs may vary. This report does not guarantee admission.',M,H-5);doc.text('Page '+pageNo+' / '+totalPages,W-M,H-5,{align:'right'})}
 function summaryCard(x,y,w,h,label,value,color){setFill([255,255,255]);setDraw(border);doc.roundedRect(x,y,w,h,2.5,2.5,'FD');doc.setFont('helvetica','bold');doc.setFontSize(6.8);setColor(muted);doc.text(label.toUpperCase(),x+3,y+5.2);doc.setFontSize(10.2);setColor(color||navy);doc.text(pdfTruncate(value,w-6),x+3,y+11.8)}
 function tableHeader(y){setFill(navy);setDraw(navy);doc.roundedRect(M,y,W-2*M,8,1.4,1.4,'F');doc.setFont('helvetica','bold');doc.setFontSize(7.2);doc.setTextColor(255,255,255);let x=M;const headers=['#','College','District','Type','Seats','Close Rank R1 25','Tuition/yr','Possibility'];COLS.forEach((c,idx)=>{const tx=c.a==='center'?x+c.w/2:x+2;doc.text(headers[idx],tx,y+5.3,{align:c.a});x+=c.w});return y+8}
 function drawTableRow(c,i,y){const rowH=7.8;if(i%2===1){setFill(light);doc.rect(M,y,W-2*M,rowH,'F')}
 setDraw(border);doc.setLineWidth(0.12);doc.line(M,y+rowH,W-M,y+rowH);let x=M;const values=[String(i+1),c.name,c.district,typeLabel(c),String(c.seats||'-'),c.closingRank?c.closingRank.toLocaleString('en-IN'):'-',fmtFee(c.fee),c.possibility+'% '+possibilityBand(c.possibility)];COLS.forEach((col,idx)=>{const align=col.a;const tx=align==='center'?x+col.w/2:x+2;doc.setFont('helvetica',idx===1||idx===7?'bold':'normal');doc.setFontSize(idx===1?7.2:7);if(idx===1)setColor(navy);else if(idx===6)setColor(c.type==='govt'?green:(c.type==='deemed'?red:amber));else if(idx===7)setColor(possibilityColor(c.possibility));else setColor(text);doc.text(pdfTruncate(values[idx],col.w-4),tx,y+5.1,{align});x+=col.w})}
-const COLS=[{w:9,a:'center'},{w:78,a:'left'},{w:32,a:'left'},{w:22,a:'left'},{w:16,a:'center'},{w:31,a:'center'},{w:28,a:'center'},{w:37,a:'center'}];pageHeader();setFill([237,246,255]);doc.roundedRect(M,23,W-2*M,23,3,3,'F');doc.setFont('helvetica','bold');doc.setFontSize(16);setColor(navy);doc.text('Personalised Gujarat NEET College Prediction',M+5,32);doc.setFont('helvetica','normal');doc.setFontSize(8.5);setColor(muted);doc.text('Generated on '+date+' using submitted profile and supplied Gujarat 2025 Round 1 cutoff trends.',M+5,39);doc.setFont('helvetica','bold');doc.setFontSize(8.5);setColor(orange);doc.text('Top Match: '+cleanText(top?top.name:'-'),W-M-5,33,{align:'right'});setColor(muted);doc.text('Total Matched Colleges: '+list.length,W-M-5,40,{align:'right'});const cardY=52;const cardW=(W-2*M-21)/4;summaryCard(M,cardY,cardW,16,'Student',state.name||'-',navy);summaryCard(M+cardW+7,cardY,cardW,16,'All India Rank',state.rank?state.rank.toLocaleString('en-IN'):'-',orange);summaryCard(M+(cardW+7)*2,cardY,cardW,16,'Gujarat Category',CAT_LABEL[state.category]||'-',navy);summaryCard(M+(cardW+7)*3,cardY,cardW,16,'Domicile',domicile,navy);summaryCard(M,cardY+21,cardW,16,'Total Matches',String(list.length),navy);summaryCard(M+cardW+7,cardY+21,cardW,16,'Strong Options',String(strong),green);summaryCard(M+(cardW+7)*2,cardY+21,cardW,16,'Fair Options',String(fair),amber);summaryCard(M+(cardW+7)*3,cardY+21,cardW,16,'Low Options',String(low),blue);let y=96;doc.setFont('helvetica','bold');doc.setFontSize(11);setColor(navy);doc.text('College Prediction Data',M,y);doc.setFont('helvetica','normal');doc.setFontSize(7.5);setColor(muted);doc.text('Possibility bands: Strong 75-99%, Fair 45-74%, Low below 45%',W-M,y,{align:'right'});y+=5;y=tableHeader(y);list.forEach((c,i)=>{if(y>190){doc.addPage();pageHeader();y=23;doc.setFont('helvetica','bold');doc.setFontSize(10);setColor(navy);doc.text('College Prediction Data continued',M,y);y+=5;y=tableHeader(y)}
+const COLS=[{w:9,a:'center'},{w:78,a:'left'},{w:32,a:'left'},{w:22,a:'left'},{w:16,a:'center'},{w:31,a:'center'},{w:28,a:'center'},{w:37,a:'center'}];pageHeader();setFill([237,246,255]);doc.roundedRect(M,23,W-2*M,23,3,3,'F');doc.setFont('helvetica','bold');doc.setFontSize(16);setColor(navy);doc.text('Personalised Himachal Pradesh NEET College Prediction',M+5,32);doc.setFont('helvetica','normal');doc.setFontSize(8.5);setColor(muted);doc.text('Generated on '+date+' using submitted profile and supplied Himachal Pradesh 2025 Round 1 cutoff trends.',M+5,39);doc.setFont('helvetica','bold');doc.setFontSize(8.5);setColor(orange);doc.text('Top Match: '+cleanText(top?top.name:'-'),W-M-5,33,{align:'right'});setColor(muted);doc.text('Total Matched Colleges: '+list.length,W-M-5,40,{align:'right'});const cardY=52;const cardW=(W-2*M-21)/4;summaryCard(M,cardY,cardW,16,'Student',state.name||'-',navy);summaryCard(M+cardW+7,cardY,cardW,16,'All India Rank',state.rank?state.rank.toLocaleString('en-IN'):'-',orange);summaryCard(M+(cardW+7)*2,cardY,cardW,16,'Himachal Pradesh Category',CAT_LABEL[state.category]||'-',navy);summaryCard(M+(cardW+7)*3,cardY,cardW,16,'Domicile',domicile,navy);summaryCard(M,cardY+21,cardW,16,'Total Matches',String(list.length),navy);summaryCard(M+cardW+7,cardY+21,cardW,16,'Strong Options',String(strong),green);summaryCard(M+(cardW+7)*2,cardY+21,cardW,16,'Fair Options',String(fair),amber);summaryCard(M+(cardW+7)*3,cardY+21,cardW,16,'Low Options',String(low),blue);let y=96;doc.setFont('helvetica','bold');doc.setFontSize(11);setColor(navy);doc.text('College Prediction Data',M,y);doc.setFont('helvetica','normal');doc.setFontSize(7.5);setColor(muted);doc.text('Possibility bands: Strong 75-99%, Fair 45-74%, Low below 45%',W-M,y,{align:'right'});y+=5;y=tableHeader(y);list.forEach((c,i)=>{if(y>190){doc.addPage();pageHeader();y=23;doc.setFont('helvetica','bold');doc.setFontSize(10);setColor(navy);doc.text('College Prediction Data continued',M,y);y+=5;y=tableHeader(y)}
 drawTableRow(c,i,y);y+=7.8});if(y>183){doc.addPage();pageHeader();y=24}
-setFill([255,248,236]);setDraw([245,210,168]);doc.roundedRect(M,y+4,W-2*M,13,2.5,2.5,'FD');doc.setFont('helvetica','bold');doc.setFontSize(7.5);setColor([124,58,8]);doc.text('Important:',M+4,y+10);doc.setFont('helvetica','normal');doc.text('Indicative prediction based on supplied Gujarat 2025 Round 1 trends. Actual allotment depends on 2026 seat matrix, options filled, category movement and counselling rounds.',M+22,y+10);const pages=doc.internal.getNumberOfPages();for(let p=1;p<=pages;p++){doc.setPage(p);pageFooter(p,pages)}
-doc.save('Gujarat_NEET_College_Report_'+safeFileName(state.name)+'.pdf')}
+setFill([255,248,236]);setDraw([245,210,168]);doc.roundedRect(M,y+4,W-2*M,13,2.5,2.5,'FD');doc.setFont('helvetica','bold');doc.setFontSize(7.5);setColor([124,58,8]);doc.text('Important:',M+4,y+10);doc.setFont('helvetica','normal');doc.text('Indicative prediction based on supplied Himachal Pradesh 2025 Round 1 HP Quota and Management trends. Actual allotment depends on 2026 seat matrix, options filled, category movement and counselling rounds.',M+22,y+10);const pages=doc.internal.getNumberOfPages();for(let p=1;p<=pages;p++){doc.setPage(p);pageFooter(p,pages)}
+doc.save('Himachal_Pradesh_NEET_College_Report_'+safeFileName(state.name)+'.pdf')}
 function truncate(doc,text,maxW){const value=String(text||'');if(doc.getTextWidth(value)<=maxW)return value;let t=value;while(doc.getTextWidth(t+'..')>maxW&&t.length>3)t=t.slice(0,-1);return t+'..'}
-const FAQS=[['Which rank should I enter in the predictor?','Enter your NEET All India Rank (AIR) exactly as shown on the NEET result. Do not enter your score, Gujarat state merit number, category rank or counselling serial number.'],['Which Gujarat categories are supported?','The predictor supports General/Open, EWS, SEBC, SC and ST using the supplied 2025 Round 1 GQ or LQ category fields. PH/PwD, NRI, minority and other special quotas are not predicted separately.'],['Can a student from another state use this tool?','Yes. Select Other State honestly. The tool excludes Gujarat Government, Government Quota and Local Quota options, then evaluates supplied Management Quota options and the Gujarat deemed-college option. Final eligibility must be checked in the official prospectus.'],['Why can the same college appear twice?','Where the supplied Gujarat row contains both a Government/Local Quota closing rank and an MQ closing rank, the predictor treats them as separate seat options because their eligibility, tuition and cutoffs differ.'],['Which Gujarat college was taken from the deemed list?','SBKS Medical Institute & Research Centre, Sumandeep Vidyapeeth, Vadodara is the only Gujarat entry found in the supplied all-India deemed-college list. Colleges from other states were excluded.'],['Why are some Gujarat colleges not showing?','Five colleges in the supplied Gujarat file do not have a usable 2025 Round 1 closing rank. They are retained in the source-data list but excluded from possibility calculations until a supported cutoff is available.'],['What happens when my category cutoff is missing?','The tool uses the General/Open closing rank as an indicative fallback. This is only an estimate; official category eligibility, certificate rules and allotment conditions always prevail.'],['Are NRI, PH/PwD and minority seats included?','No. These routes have separate eligibility, documentation and cutoff rules. The simplified predictor uses General/Open, EWS, SEBC, SC and ST plus supplied Management and deemed Open ranks.'],['Are the fees final?','No. The report shows the supplied annual tuition field. Hostel, mess, security deposit, university charges, miscellaneous fees, NRI fees and future revisions may be additional.'],['Does a high possibility guarantee admission?','No. The percentage compares your AIR with supplied 2025 Round 1 closing ranks. Actual allotment depends on the 2026 seat matrix, merit movement, category, eligibility, choices filled and counselling round.']];function buildFAQ(){const wrap=document.getElementById('faq-wrap');if(!wrap||wrap.dataset.ready==='true')return;wrap.innerHTML=FAQS.map(([q,a],i)=>`
+const FAQS=[['Which rank should I enter in the predictor?','Enter your NEET All India Rank (AIR) exactly as shown on the NEET result. Do not enter your score, Himachal Pradesh state merit rank, category rank or counselling serial number.'],['Which Himachal Pradesh categories are supported?','The predictor supports General/Open, EWS, OBC, SC and ST using the supplied 2025 Round 1 HP Quota fields. Backward Area, Single Girl Child, Defence, Ex-Servicemen, Freedom Fighter, Tibetan Refugee, NRI and PwD routes are not predicted separately.'],['Can a student from another state use this tool?','Yes. Select Other State honestly. The tool excludes Himachal Pradesh government and private HP Quota options, then evaluates only the supplied private Management option. Final eligibility must be checked in the official prospectus.'],['Why does Maharishi Markandeshwar Medical College appear twice?','The supplied file provides separate HP Quota and Management tuition fields and separate 2025 Round 1 closing ranks. The tool therefore treats them as different seat options.'],['Were any Himachal Pradesh colleges found in the deemed list?','No. The supplied all-India deemed-college list does not contain a Himachal Pradesh medical college, so no out-of-state deemed college has been added.'],['What happens when my category cutoff is missing?','The tool uses the General/Open closing rank as an indicative fallback and marks the row internally. This is only an estimate; official category eligibility, certificate rules and allotment conditions always prevail.'],['Are special-category and NRI seats included?','No. The source contains separate Backward Area, Single Girl Child, Defence, Ex-Servicemen, Freedom Fighter, Tibetan Refugee, NRI and PwD values. These routes have separate eligibility rules and are not predicted in this simplified model.'],['Are the fees final?','No. The report shows the supplied annual tuition field. Hostel, mess, security deposit, university charges, miscellaneous fees, NRI fees and future revisions may be additional.'],['Does a high possibility guarantee admission?','No. The percentage compares your AIR with supplied 2025 Round 1 closing ranks. Actual allotment depends on the 2026 seat matrix, merit movement, category, eligibility, choices filled and counselling round.'],['Which documents should I keep ready?','Keep your NEET admit card and scorecard, Class 10 and 12 certificates and marksheets, identity proof, photographs, Himachal Pradesh domicile documents where required, category certificate, and any special-category certificate claimed in the official application.']];function buildFAQ(){const wrap=document.getElementById('faq-wrap');if(!wrap||wrap.dataset.ready==='true')return;wrap.innerHTML=FAQS.map(([q,a],i)=>`
     <div class="faq" id="faq${i}">
       <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-answer-${i}"
         onclick="toggleFaq(${i}, this)">
